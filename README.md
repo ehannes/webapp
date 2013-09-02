@@ -1,4 +1,4 @@
-webbapp
+webapp
 =======
 
-Webb-application with Eric, Joakim, Gustav &amp; Hannes
+Web application with Eric, Joakim, Gustav &amp; Hannes
