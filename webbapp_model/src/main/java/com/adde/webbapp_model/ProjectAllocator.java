@@ -13,16 +13,12 @@ import java.util.List;
  * @author gusdavi
  */
 public class ProjectAllocator {
-    //List<List<Long>> getProjectsByUserID;
-    //List<List<Long>> getUsersByProjectID;
-
     HashMap<Long, List<Long>> getProjectsByUserID;
     HashMap<Long, List<Long>> getUsersByProjectID;
 
     public void addProject(long userID, String name) {
         Project p = new Project(userID, name);
         long pid = p.getID();
-        ProjectRegistry.add(p);
         List<Long> pidsForThisUser = getProjectsByUserID.get(userID);
         if (pidsForThisUser == null) {
             pidsForThisUser = new LinkedList<Long>();
@@ -36,5 +32,11 @@ public class ProjectAllocator {
         }
         usersInThisProject.add(userID);
         getUsersByProjectID.put(pid, usersInThisProject);
+        
+        ProjectRegistry.getInstance().add(p);
+    }
+    
+    public void addCollaborator(long collaboratorId, long projectId){
+        
     }
 }
