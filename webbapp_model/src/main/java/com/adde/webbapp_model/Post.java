@@ -3,13 +3,17 @@ package com.adde.webbapp_model;
 import java.util.Date;
 
 public class Post {
-    long authorId;
+    User author;
     Date dateCreated;
     Date dateModified;
     String msg;
     
-    public Post(long authorId, String msg){
-        this.authorId = authorId;
+    /**
+     * @param author Author
+     * @param msg Message
+     */
+    public Post(User author, String msg){
+        this.author = author;
         this.msg = msg;
         dateCreated = new Date();
         dateModified = dateCreated;
@@ -23,8 +27,8 @@ public class Post {
         return dateModified;
     }
     
-    public long getAuthor(){
-        return authorId;
+    public User getAuthor(){
+        return author;
     }
     
     public String getMsg(){
