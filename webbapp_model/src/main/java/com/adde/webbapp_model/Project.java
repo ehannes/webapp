@@ -8,7 +8,7 @@ package com.adde.webbapp_model;
  *
  * @author Gustav
  */
-class Project {
+public class Project {
 
     Project(long userID, String name) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

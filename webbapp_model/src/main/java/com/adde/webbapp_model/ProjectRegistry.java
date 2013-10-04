@@ -8,9 +8,13 @@ package com.adde.webbapp_model;
  *
  * @author Gustav
  */
-class ProjectRegistry {
+public class ProjectRegistry {
 
     static void add(Project p) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    static ProjectRegistry getInstance() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
