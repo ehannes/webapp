@@ -1,15 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adde.webbapp_model;
 
 import java.util.Date;
 
-/**
- *
- * @author Gustav
- */
 public class Post {
     long authorId;
     Date dateCreated;
@@ -19,6 +11,8 @@ public class Post {
     public Post(long authorId, String msg){
         this.authorId = authorId;
         this.msg = msg;
+        dateCreated = new Date();
+        dateModified = dateCreated;
     }
     
     public Date getDateCreated(){
@@ -39,5 +33,6 @@ public class Post {
     
     public void setMsg(String msg){
         this.msg = msg;
+        dateModified = new Date();
     }
 }

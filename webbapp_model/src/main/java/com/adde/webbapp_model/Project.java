@@ -1,21 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adde.webbapp_model;
 
-/**
- *
- * @author Gustav
- */
 public class Project {
 
-    Project(long userID, String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Project() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    long getID() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }
