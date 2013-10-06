@@ -1,5 +1,7 @@
 package com.adde.webbapp_model;
 
+import java.util.Date;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static org.junit.Assert.*;
@@ -25,7 +27,7 @@ public class ArticleTest {
     }
     
     @Test
-    public void testArticle() {
+    public void testAuthorContent() {
         Logger.getAnonymousLogger().log(Level.INFO, "Article1:{0}", article1.toString());
         
         //Correct Author and Content?
@@ -34,5 +36,21 @@ public class ArticleTest {
         
         //Printing dates
         Logger.getAnonymousLogger().log(Level.INFO, "Article created: {0} and modified {1}", new Object[]{article1.getDateCreated(), article1.getDateModified()});
+    }
+    
+    @Test
+    public void testUpdatedEditors() {
+        article1.update(user1, "updatedcontent1");
+        
+        // Check if the updated content is correct
+        assertTrue(article1.getContent().equals("updatedcontent1"));
+        
+        // Check if the user has been added to the editors
+        assertTrue(article1.getEditEntries().containsValue(user1));
+        
+    }
+    
+    @Test
+    public void testCreatedModified() {
     }
 }

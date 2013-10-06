@@ -8,7 +8,7 @@ import java.util.Random;
 public class Article {
 
     private User author;
-    //List<User> editors;
+    // Possibly use another data structure or a new class for this.
     private HashMap<Date, User> editors;
     private String content;
     private Date dateCreated;
