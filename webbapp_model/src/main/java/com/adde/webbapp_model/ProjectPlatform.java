@@ -21,9 +21,13 @@ public class ProjectPlatform {
         Logger.getAnonymousLogger().log(Level.INFO, "ProjectPlatform alive {0}", this.hashCode());
     }
     
-    public void addUser(User user) {
+    public void addUser(User user) throws Exception {
         if (user == null) {
             throw new IllegalArgumentException("Nulls not allowed");
+        }
+        if(users.contains(user)) {
+            // TODO: more specific exception?
+            throw new Exception("Duplicate users not allowed");
         }
         users.add(user);
     }
@@ -41,5 +45,15 @@ public class ProjectPlatform {
     
     public List<Project> getProjects() {
         return projects;
+    }
+    
+    public List<Project> getProjectsByUser(User user) {
+        List<Project> userProjects = new ArrayList<Project>();
+        for(Project p : projects) {
+            if(p.getUsers().contains(user)) {
+                userProjects.add(p);
+            }
+        }
+        return userProjects;
     }
 }
