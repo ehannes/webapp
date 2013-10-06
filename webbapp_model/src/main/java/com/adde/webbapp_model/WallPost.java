@@ -3,7 +3,7 @@ package com.adde.webbapp_model;
 import java.util.List;
 
 public class WallPost extends Post {
-    List<Post> comments;
+    private List<Post> comments;
     
     /**
      * @param author Author

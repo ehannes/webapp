@@ -3,10 +3,10 @@ package com.adde.webbapp_model;
 import java.util.Date;
 
 public class Post {
-    User author;
-    Date dateCreated;
-    Date dateModified;
-    String msg;
+    private User author;
+    private Date dateCreated;
+    private Date dateModified;
+    private String msg;
     
     /**
      * @param author Author

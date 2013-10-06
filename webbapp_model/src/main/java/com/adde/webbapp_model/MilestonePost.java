@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public class MilestonePost extends DeadlinePost {
-    List<User> assignedTo;
+    private List<User> assignedTo;
     
     /**
      * @param author Author

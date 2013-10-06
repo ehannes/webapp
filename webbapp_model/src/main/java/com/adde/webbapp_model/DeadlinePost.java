@@ -3,9 +3,9 @@ package com.adde.webbapp_model;
 import java.util.Date;
 
 public class DeadlinePost extends Post {
-    Date deadline;
-    User responsibleUser;
-    int priority;
+    private Date deadline;
+    private User responsibleUser;
+    private int priority;
     
     /**
      * @param author Author

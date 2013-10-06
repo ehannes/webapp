@@ -6,12 +6,12 @@ import java.util.Map;
 
 public class Article {
 
-    User author;
+    private User author;
     //List<User> editors;
-    HashMap<Date, User> editors;
-    String content;
-    Date dateCreated;
-    Date dateModified;
+    private HashMap<Date, User> editors;
+    private String content;
+    private Date dateCreated;
+    private Date dateModified;
 
     public Article(User author, String content) {
         this.author = author;
