@@ -3,6 +3,7 @@ package com.adde.webbapp_model;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class Article {
 
@@ -12,6 +13,7 @@ public class Article {
     private String content;
     private Date dateCreated;
     private Date dateModified;
+    private Long id;
 
     public Article(User author, String content) {
         this.author = author;
@@ -20,6 +22,7 @@ public class Article {
         editors = new HashMap<Date, User>();
         dateCreated = new Date();
         dateModified = dateCreated;
+        id = new Long(new Random().nextInt(1000));
     }
 
     public void update(User editor, String newContent) {
@@ -46,5 +49,15 @@ public class Article {
 
     public Date getDateModified() {
         return dateModified;
+    }
+    
+    public Long getId() {
+        return id;
+    }
+    
+    @Override
+    public String toString() {
+        return "Article{Id: " + id + " Author: " + author + " Content: " + content
+                + " dateCreated: " + dateCreated + " dateModified: " + dateModified;
     }
 }

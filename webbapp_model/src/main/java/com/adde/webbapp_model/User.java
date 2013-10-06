@@ -15,7 +15,6 @@ import java.util.Random;
 public class User {
     private Long id; //Not primitive type yet because random function below
     private String name;
-    //List<WallPost> wallposts
     
     public User(String name) {
         id = new Long(new Random().nextInt(1000));
@@ -41,7 +40,7 @@ public class User {
     
     @Override
     public String toString(){
-        return "User{Name: " + name + " Id: " + id;
+        return "User{Name: " + name + " Id: " + id + "}";
     }
     
     @Override
