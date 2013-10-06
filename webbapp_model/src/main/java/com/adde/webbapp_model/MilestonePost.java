@@ -1,29 +1,33 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adde.webbapp_model;
 
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MilestonePost extends DeadlinePost {
     private List<User> assignedTo;
-    
-    /**
-     * @param author Author
-     * @param responsibleUser Responsible user
-     * @param msg Message
-     * @param deadline Deadline
-     * @param priority Priority between 1 and 5
-     * @param assignedTo Users the milestone is assigned to
-     */
+
     public MilestonePost(User author, User responsibleUser, String msg,
             Date deadline, int priority, List<User> assignedTo){
         super(author, responsibleUser, msg, deadline, priority);
+        this.assignedTo = assignedTo;
     }
-    
+
     public List<User> getAssignedTo(){
         return assignedTo;
+    }
+    
+    //Only accepts non-null lists, also no duplicates!
+    public boolean setAssignedTo(List<User> newAssignedTo){
+        if(newAssignedTo == null){
+            return false;
+        }
+        assignedTo = new LinkedList<User>();
+        for(User u : newAssignedTo){
+            if(!assignedTo.contains(u)){
+                assignedTo.add(u);
+            }
+        }
+        return true;
     }
 }
