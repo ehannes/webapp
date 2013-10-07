@@ -1,7 +1,7 @@
 
 package com.adde.webbapp_model;
 
-import com.adde.webbapp_model.DeadlinePost.Priority;
+import com.adde.webbapp_model.TodoPost.Priority;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,8 +19,7 @@ public class Project {
     private final long id;
     private User admin;
     private List<User> collaborators;
-    private List<DeadlinePost> deadlinePosts;
-    private List<MilestonePost> milestonePosts;
+    private List<TodoPost> deadlinePosts;
     private List<Article> articles;
     private List<WallPost> wallPosts;
 
@@ -29,7 +28,7 @@ public class Project {
         this.name = name;
         this.admin = admin;
         this.collaborators = new ArrayList<User>();
-        this.deadlinePosts = new ArrayList<DeadlinePost>();
+        this.deadlinePosts = new ArrayList<TodoPost>();
         this.milestonePosts = new ArrayList<MilestonePost>();
         this.articles = new ArrayList<Article>();
         this.wallPosts = new ArrayList<WallPost>();
@@ -40,7 +39,7 @@ public class Project {
         this.name = name;
         this.admin = admin;
         this.collaborators = new ArrayList<User>();
-        this.deadlinePosts = new ArrayList<DeadlinePost>();
+        this.deadlinePosts = new ArrayList<TodoPost>();
         this.milestonePosts = new ArrayList<MilestonePost>();
         this.articles = new ArrayList<Article>();
         this.wallPosts = new ArrayList<WallPost>();
@@ -75,7 +74,7 @@ public class Project {
         return collaborators;
     }
 
-    public List<DeadlinePost> getDeadlinePosts() {
+    public List<TodoPost> getDeadlinePosts() {
         return deadlinePosts;
     }
 
@@ -101,7 +100,7 @@ public class Project {
 
     public void createDeadlinePost(User author, User responsibleUser, String msg,
             Date deadline, Priority priority) {
-        deadlinePosts.add(new DeadlinePost(author, responsibleUser, msg,
+        deadlinePosts.add(new TodoPost(author, responsibleUser, msg,
                 deadline, priority));
     }
 
@@ -127,7 +126,7 @@ public class Project {
         articles.remove(a);
     }
 
-    public void deleteDeadlinePost(DeadlinePost d) {
+    public void deleteDeadlinePost(TodoPost d) {
         deadlinePosts.remove(d);
     }
 

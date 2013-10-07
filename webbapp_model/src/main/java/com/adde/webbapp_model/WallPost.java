@@ -15,26 +15,24 @@ public class WallPost extends Post {
         return comments;
     }
     
-    public boolean addComment(User author, String msg){
-        return comments.add(new Post(author, msg));
+    public void addComment(User author, String msg){
+        comments.add(new Post(author, msg));
     }
     
-    public boolean addComment(Post comment){
-        return comments.add(comment);
+    public void addComment(Post comment){
+        comments.add(comment);
     }
     
-    public boolean removeComment(Post comment){
-        return comments.remove(comment);
+    public void removeComment(Post comment){
+        comments.remove(comment);
     }
     
-    public boolean removeCommentsByUser(User user) {
-        boolean result = true;
+    public void removeCommentsByUser(User user) {
         for(Post comment : comments){
             if(comment.getAuthor().equals(user)){
-                result = result && comments.remove(comment);
+                comments.remove(comment);
             }
         }
-        return result;
     }
     
     @Override

@@ -4,7 +4,7 @@
  */
 package com.adde.webbapp_model;
 
-import com.adde.webbapp_model.DeadlinePost.Priority;
+import com.adde.webbapp_model.TodoPost.Priority;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -106,7 +106,7 @@ public class ProjectTest {
 
         //deadlinepost
         project2.createDeadlinePost(testUser, testUser, "this is a DeadlinePost", date, Priority.LOW);
-        List<DeadlinePost> deadlinePost = project2.getDeadlinePosts();
+        List<TodoPost> deadlinePost = project2.getDeadlinePosts();
         assertTrue(deadlinePost.size() == 1);
 
         project2.deleteDeadlinePost(deadlinePost.get(0));
