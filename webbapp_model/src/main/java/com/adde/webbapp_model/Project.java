@@ -4,27 +4,34 @@
  */
 package com.adde.webbapp_model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
 /**
- *
+ *Missing: delete posts
+ * 
  * @author Joakim Danielsson
  */
 public class Project {
 
     private String name;
     private Long id;
-    private List<User> users;
-    private List<DeadlinePost> deadlinePosts;
-    private List<MilestonePost> milestonePosts;
-    private List<Article> articles;
-    private List<WallPost> wallPosts;
+    private List<User> users = new ArrayList<User>();
+    private List<DeadlinePost> deadlinePosts = new ArrayList<DeadlinePost>();
+    private List<MilestonePost> milestonePosts = new ArrayList<MilestonePost>();
+    private List<Article> articles = new ArrayList<Article>();
+    private List<WallPost> wallPosts = new ArrayList<WallPost>();
 
-    public Project(String name, long id) {
+    public Project(String name) {
         id = new Long(new Random().nextInt(1000));
+        this.name = name;
+    }
+    
+    public Project(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -103,7 +110,7 @@ public class Project {
         }
         if(o instanceof Project) {
             Project p = (Project) o;
-            if(p.id == this.id) { //equal if same id
+            if(p.getId() == this.id) { //equal if same id
                 return true;
             }
         }
