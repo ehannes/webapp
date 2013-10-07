@@ -51,11 +51,10 @@ public class Article {
         return dateModified;
     }
     
-    public Long getId() {
+    public long getId() {
         return id;
     }
     
-    // Equals means same id. Sufficient?
     @Override
     public boolean equals(Object other) {
         if(this == other) {
@@ -63,7 +62,6 @@ public class Article {
         }
         if(other instanceof Article) {
             Article o = (Article) other;
-            // Extract the primitive type for comparison
             if(o.getId() == this.id) {
                 return true;
             }

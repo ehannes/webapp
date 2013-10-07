@@ -2,7 +2,7 @@ package com.adde.webbapp_model;
 
 /**
  *
- * @author hajo, modified by Eric Ahlberg (eahlberg@gmail.com)
+ * @author Eric Ahlberg (eahlberg@gmail.com)
  */
 public class ProjectPlatformFactory {
     
@@ -18,8 +18,18 @@ public class ProjectPlatformFactory {
         return p;
     }
     
-    
+    // Fix exception handling
     private static void initTestData(ProjectPlatform p) {
         // TODO: add test data
+        
+        //p.addUser(new User("Bengt"));
+        //p.addUser(new User("Eva"));
+        
+        // TODO: look into connection between User and Projects, add empty constructor in Project.
+        
+        /*
+         p.addProject(new Project("Evas web application"));
+         p.addProject(new Project("Bengts blog"));
+         */
     }
 }
