@@ -47,30 +47,55 @@ public class ProjectTest {
         project1.setName("ProjectGroup1");
         assertTrue(project1.getName().equals("ProjectGroup1"));
         
-        //add elements
+        //add and remove elements
         Date date = new Date();
         User testUser = new User("kalle");
         List<User> testUsers = new ArrayList<User>();
         
+        //user
         project2.addUser(testUser);
         List<User> users = project2.getUsers();
         assertTrue(users.size()==1);
         
+        project2.deleteUser(testUser.getId());
+        assertFalse(users.size()==1);
+        assertTrue(users.isEmpty());
+        
+        //article
         project2.addArticle(testUser, "this is an article");
         List<Article> articles = project2.getArticles();
         assertTrue(articles.size() == 1);
         
+        project2.deleteArticle(articles.get(0).getId());
+        assertFalse(articles.size()==1);
+        assertTrue(articles.isEmpty());
+        
+        //deadlinepost
         project2.addDeadlinePost(testUser, testUser, "this is a DeadlinePost", date, 1);
         List<DeadlinePost> deadlinePost = project2.getDeadlinePosts();
         assertTrue(deadlinePost.size() == 1);
         
+        project2.deleteDeadlinePost(deadlinePost.get(0).getId());
+        assertFalse(deadlinePost.size()==1);
+        assertTrue(deadlinePost.isEmpty());
+        
+        //milestonepost
         project2.addMilestonePost(testUser, testUser, "this is a MilestonePost", date, 1, testUsers);
-        List<MilestonePost> milstonePosts = project2.getMilestonePosts();
-        assertTrue(milstonePosts.size() == 1);        
+        List<MilestonePost> milestonePosts = project2.getMilestonePosts();
+        assertTrue(milestonePosts.size() == 1);     
+        
+        project2.deleteMilestonePost(milestonePosts.get(0).getId());
+        assertFalse(milestonePosts.size()==1);
+        assertTrue(milestonePosts.isEmpty());
     
+        //wallpost
         project2.addWallPost(testUser, "this is a wallpost");
         List<WallPost> wallPosts = project2.getWallPosts();
         assertTrue(wallPosts.size() == 1);   
+        
+        project2.deleteWallPost(wallPosts.get(0).getId());
+        assertFalse(wallPosts.size()==1);
+        assertTrue(wallPosts.isEmpty());
     }
     
 }

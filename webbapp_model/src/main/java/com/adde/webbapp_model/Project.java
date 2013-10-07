@@ -11,8 +11,8 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
- *Missing: delete posts
- * 
+ *
+ *
  * @author Joakim Danielsson
  */
 public class Project {
@@ -29,7 +29,7 @@ public class Project {
         id = new Long(new Random().nextInt(1000));
         this.name = name;
     }
-    
+
     public Project(Long id, String name) {
         this.id = id;
         this.name = name;
@@ -47,10 +47,10 @@ public class Project {
         return id;
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return users;
     }
-    
+
     public List<DeadlinePost> getDeadlinePosts() {
         return deadlinePosts;
     }
@@ -67,10 +67,10 @@ public class Project {
         return wallPosts;
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         users.add(user);
     }
-    
+
     public void addDeadlinePost(User author, User responsibleUser, String msg,
             Date deadline, int priority) {
         deadlinePosts.add(new DeadlinePost(author, responsibleUser, msg,
@@ -82,35 +82,75 @@ public class Project {
         milestonePosts.add(new MilestonePost(author, responsibleUser, msg,
                 deadline, priority, assignedTo));
     }
-    
-    public void addArticle(User author, String content){
+
+    public void addArticle(User author, String content) {
         articles.add(new Article(author, content));
     }
-    
-    public void addWallPost(User author, String msg){
-        wallPosts.add(new WallPost(author,msg));
+
+    public void addWallPost(User author, String msg) {
+        wallPosts.add(new WallPost(author, msg));
+    }
+
+    public void deleteUser(Long id) {
+        for (int i = users.size() - 1; i > -1; i--) {
+            if (users.get(i).getId().equals(id)) {
+                users.remove(i);
+            }
+        }
+    }
+
+    public void deleteArticle(Long id) {
+        for (int i = articles.size() - 1; i > -1; i--) {
+            if (articles.get(i).getId().equals(id)) {
+                articles.remove(i);
+            }
+        }
+    }
+
+    public void deleteDeadlinePost(Long id) {
+        for (int i = deadlinePosts.size() - 1; i > -1; i--) {
+            if (deadlinePosts.get(i).getId().equals(id)) {
+                deadlinePosts.remove(i);
+            }
+        }
+    }
+
+    public void deleteMilestonePost(Long id) {
+        for (int i = milestonePosts.size() - 1; i > -1; i--) {
+            if (milestonePosts.get(i).getId().equals(id)) {
+                milestonePosts.remove(i);
+            }
+        }
+    }
+
+    public void deleteWallPost(Long id) {
+        for (int i = wallPosts.size() - 1; i > -1; i--) {
+            if (wallPosts.get(i).getId().equals(id)) {
+                wallPosts.remove(i);
+            }
+        }
     }
     
     @Override
-    public String toString(){
+    public String toString() {
         return "Project{Name: " + name + " Id: " + id;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 71 * hash + Objects.hashCode(this.id);
         return hash;
     }
-    
+
     @Override
-    public boolean equals(Object o){
-        if(o == null) {
+    public boolean equals(Object o) {
+        if (o == null) {
             return false;
         }
-        if(o instanceof Project) {
+        if (o instanceof Project) {
             Project p = (Project) o;
-            if(p.getId() == this.id) { //equal if same id
+            if (p.getId() == this.id) { //equal if same id
                 return true;
             }
         }
