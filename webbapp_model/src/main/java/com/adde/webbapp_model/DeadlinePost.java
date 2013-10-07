@@ -5,16 +5,15 @@ import java.util.Date;
 public class DeadlinePost extends Post {
     private Date deadline;
     private User responsibleUser;
-    private int priority;
-    public static final int PRIORITY_MIN = 1;
-    public static final int PRIORITY_MAX = 5;
+    public static enum priority{LOW, MEDIUM, HIGH};
+    private priority currentPrio;
     
     public DeadlinePost(User author, User responsibleUser, String msg,
-            Date deadline, int priority){
+            Date deadline, priority p){
         super(author, msg);
         this.responsibleUser = responsibleUser;
         this.deadline = deadline;
-        privSetPriority(priority);
+        privSetPriority(p);
     }
     
     public void setDeadline(Date deadline) {
@@ -25,19 +24,13 @@ public class DeadlinePost extends Post {
         this.responsibleUser = responsibleUser;
     }
 
-    public void setPriority(int priority){
-        privSetPriority(priority);
+    public void setPriority(priority p){
+        privSetPriority(p);
     }
     
     //to reduce code duplication
-    private void privSetPriority(int priority) {
-        if(priority < PRIORITY_MIN){
-            this.priority = PRIORITY_MIN;
-        } else if(priority > PRIORITY_MAX){
-            this.priority = PRIORITY_MAX;
-        } else{
-            this.priority = priority;
-        }
+    private void privSetPriority(priority p) {
+        currentPrio = p;
     }
 
     public Date getDeadline() {
@@ -48,15 +41,15 @@ public class DeadlinePost extends Post {
         return responsibleUser;
     }
 
-    public int getPriority() {
-        return priority;
+    public priority getPriority() {
+        return currentPrio;
     }
     
     @Override
     public String toString(){
         return "DeadlinePost{author=" + getAuthor() + ", responsibleUser="
                 + responsibleUser + ", msg=" + getMsg() + ", deadline="
-                + deadline + ", priority=" + priority + ", dateCreated="
+                + deadline + ", currentPrio=" + currentPrio + ", dateCreated="
                 + getDateCreated() + ", dateModified=" + getDateModified()
                 + '}';
     }

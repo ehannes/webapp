@@ -1,5 +1,6 @@
 package com.adde.webbapp_model;
 
+import com.adde.webbapp_model.DeadlinePost.priority;
 import java.util.Date;
 import java.util.LinkedList;
 import org.junit.Test;
@@ -18,8 +19,6 @@ public class PostsTest {
     
     private static final String STR1 = "PostContent";
     private static final String STR2 = "EditedPostContent";
-    private static final int PRIORITY1 = 1;
-    private static final int PRIORITY30 = 30;
     
     @Before
     public void setup(){
@@ -86,18 +85,14 @@ public class PostsTest {
     @Test
     public void DeadlinePostTest(){
         deadlinePost = new DeadlinePost(user1, user2, STR1, date1,
-                PRIORITY1);
+                priority.LOW);
         assertTrue(deadlinePost.getMsg().equals(STR1));
         assertTrue(deadlinePost.getDeadline().equals(date1));
         assertTrue(deadlinePost.getResponsibleUser().equals(user2));
-        assertTrue(deadlinePost.getPriority() == PRIORITY1);
+        assertTrue(deadlinePost.getPriority() == priority.MEDIUM);
         
         deadlinePost.setDeadline(date2);
         assertTrue(deadlinePost.getDeadline().equals(date2));
-        
-        deadlinePost.setPriority(PRIORITY30);
-        assertTrue(deadlinePost.getPriority() ==
-                Math.min(DeadlinePost.PRIORITY_MAX, PRIORITY30));
         
         deadlinePost.setResponsibleUser(user1);
         assertTrue(deadlinePost.getResponsibleUser().equals(user1));
@@ -113,7 +108,7 @@ public class PostsTest {
         assignedTo2.add(user2);
         
         milestonePost = new MilestonePost(user1, user2, STR1, date1,
-                PRIORITY30, assignedTo1);
+                priority.MEDIUM, assignedTo1);
         assertTrue(milestonePost.getAssignedTo().isEmpty());
         
         milestonePost.setAssignedTo(assignedTo2);
@@ -121,8 +116,5 @@ public class PostsTest {
         //does not allow duplicates!
         System.out.println("milestonePost.getAssignedTo().size() == " + milestonePost.getAssignedTo().size());
         assertTrue(milestonePost.getAssignedTo().size() == 2);
-        
-        assertTrue(milestonePost.getPriority() ==
-                Math.min(DeadlinePost.PRIORITY_MAX, PRIORITY30));
     }
 }
