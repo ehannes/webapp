@@ -19,20 +19,23 @@ public class Project {
 
     private String name;
     private final long id;
+    private User admin;
     private List<User> users = new ArrayList<User>();
     private List<DeadlinePost> deadlinePosts = new ArrayList<DeadlinePost>();
     private List<MilestonePost> milestonePosts = new ArrayList<MilestonePost>();
     private List<Article> articles = new ArrayList<Article>();
     private List<WallPost> wallPosts = new ArrayList<WallPost>();
 
-    public Project(String name) {
+    public Project(String name, User admin) {
         id = new Long(new Random().nextInt(1000));
         this.name = name;
+        this.admin = admin;
     }
 
-    public Project(long id, String name) {
+    public Project(long id, String name, User admin) {
         this.id = id;
         this.name = name;
+        this.admin = admin;
     }
 
     public String getName() {
@@ -45,6 +48,14 @@ public class Project {
 
     public long getId() {
         return id;
+    }
+    
+    public boolean setAdmin(User currentAdmin, User newAdmin){
+        if(currentAdmin.equals(admin)){
+            admin = newAdmin;
+            return true;
+        }
+        return false;
     }
 
     public List<User> getUsers() {
@@ -71,23 +82,23 @@ public class Project {
         users.add(user);
     }
 
-    public void addDeadlinePost(User author, User responsibleUser, String msg,
+    public void createDeadlinePost(User author, User responsibleUser, String msg,
             Date deadline, int priority) {
         deadlinePosts.add(new DeadlinePost(author, responsibleUser, msg,
                 deadline, priority));
     }
 
-    public void addMilestonePost(User author, User responsibleUser, String msg,
+    public void createMilestonePost(User author, User responsibleUser, String msg,
             Date deadline, int priority, List<User> assignedTo) {
         milestonePosts.add(new MilestonePost(author, responsibleUser, msg,
                 deadline, priority, assignedTo));
     }
 
-    public void addArticle(User author, String content) {
+    public void createArticle(User author, String content) {
         articles.add(new Article(author, content));
     }
 
-    public void addWallPost(User author, String msg) {
+    public void createWallPost(User author, String msg) {
         wallPosts.add(new WallPost(author, msg));
     }
 
