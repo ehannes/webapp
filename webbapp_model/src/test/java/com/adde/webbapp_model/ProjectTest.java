@@ -21,11 +21,14 @@ import org.junit.Test;
 public class ProjectTest {
 
     Project project1, project2;
+    User testUser;
 
     @Before
     public void before() {
-        project1 = new Project("Project1");
-        project2 = new Project("Project2");
+        
+        testUser = new User("kalle");
+        project1 = new Project("Project1", testUser);
+        project2 = new Project("Project2", testUser);
     }
 
     @Test
@@ -39,20 +42,24 @@ public class ProjectTest {
         assertFalse(project2.equals(project1));
 
         //New Project with same Id as Project1. Though they have different names, Project1 and 3 should now be equal
-        Project project3 = new Project(project1.getId(), "project3");
+        Project project3 = new Project(project1.getId(), "project3", testUser);
         assertTrue(project3.equals(project1));
         assertTrue(project1.equals(project3));
 
         //Change name
         project1.setName("ProjectGroup1");
         assertTrue(project1.getName().equals("ProjectGroup1"));
+        
+        //Change admin
+        User newTestUser = new User("Lisa");
+        assertFalse(project1.setAdmin(newTestUser, newTestUser));
+        assertTrue(project1.setAdmin(testUser, newTestUser));
     }
 
     @Test
     public void addRemoveTest() {
         //add and remove elements
         Date date = new Date();
-        User testUser = new User("kalle");
         List<User> testUsers = new ArrayList<User>();
 
         //user
@@ -65,7 +72,7 @@ public class ProjectTest {
         assertTrue(users.isEmpty());
 
         //article
-        project2.addArticle(testUser, "this is an article");
+        project2.createArticle(testUser, "this is an article");
         List<Article> articles = project2.getArticles();
         assertTrue(articles.size() == 1);
 
@@ -74,7 +81,7 @@ public class ProjectTest {
         assertTrue(articles.isEmpty());
 
         //deadlinepost
-        project2.addDeadlinePost(testUser, testUser, "this is a DeadlinePost", date, 1);
+        project2.createDeadlinePost(testUser, testUser, "this is a DeadlinePost", date, 1);
         List<DeadlinePost> deadlinePost = project2.getDeadlinePosts();
         assertTrue(deadlinePost.size() == 1);
 
@@ -83,7 +90,7 @@ public class ProjectTest {
         assertTrue(deadlinePost.isEmpty());
 
         //milestonepost
-        project2.addMilestonePost(testUser, testUser, "this is a MilestonePost", date, 1, testUsers);
+        project2.createMilestonePost(testUser, testUser, "this is a MilestonePost", date, 1, testUsers);
         List<MilestonePost> milestonePosts = project2.getMilestonePosts();
         assertTrue(milestonePosts.size() == 1);
 
@@ -92,7 +99,7 @@ public class ProjectTest {
         assertTrue(milestonePosts.isEmpty());
 
         //wallpost
-        project2.addWallPost(testUser, "this is a wallpost");
+        project2.createWallPost(testUser, "this is a wallpost");
         List<WallPost> wallPosts = project2.getWallPosts();
         assertTrue(wallPosts.size() == 1);
 
