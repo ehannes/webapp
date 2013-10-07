@@ -9,6 +9,10 @@ import java.util.Random;
  * Editors?
  * Hur göra med Title? Ska allt uppdateras i update() eller två separata metoder
  * för title och content?
+ * 
+ * Features (ev.):
+ * - taggar
+ * - söka igenom olika artiklar
  */
 public class Article {
 
@@ -98,8 +102,6 @@ public class Article {
         hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
-
-
     
     @Override
     public String toString() {

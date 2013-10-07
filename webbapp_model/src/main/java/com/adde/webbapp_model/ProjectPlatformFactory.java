@@ -11,7 +11,6 @@ public class ProjectPlatformFactory {
     private ProjectPlatformFactory() {
     }
 
-    // If initTestData there will be some data to use
     public static ProjectPlatform getProjectPlatform(boolean initTestData) {
         ProjectPlatform p = new ProjectPlatform();
         if (initTestData) {
@@ -39,7 +38,5 @@ public class ProjectPlatformFactory {
             System.out.println("Fail in initTestData");
             System.out.println(e.toString());
         }
-        
-       
     }
 }
