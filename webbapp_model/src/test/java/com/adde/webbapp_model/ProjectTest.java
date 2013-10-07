@@ -60,17 +60,30 @@ public class ProjectTest {
     @Test
     public void addRemoveTest() {
         //add and remove elements
+        User testUser2 = new User("Lisa");
         Date date = new Date();
         List<User> testUsers = new ArrayList<User>();
 
         //user
-        project2.addUser(testUser);
-        List<User> users = project2.getUsers();
-        assertTrue(users.size() == 1);
-
-        project2.deleteUser(testUser);
+        try {
+            project2.addCollaborator(testUser);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        List<User> users = project2.getCollaborators();
         assertFalse(users.size() == 1);
-        assertTrue(users.isEmpty());
+
+        try {
+            project2.addCollaborator(testUser2);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        List<User> users2 = project2.getCollaborators();
+        assertTrue(users2.size() == 1);
+
+        project2.deleteCollaborator(testUser2);
+        assertFalse(users2.size() == 1);
+        assertTrue(users2.isEmpty());
 
         //article
         project2.createArticle(testUser, "this is an article", "articleTitle");

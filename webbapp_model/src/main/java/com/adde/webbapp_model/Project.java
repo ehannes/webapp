@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,7 +23,7 @@ public class Project {
     private String name;
     private final long id;
     private User admin;
-    private List<User> users;
+    private List<User> collaborators;
     private List<DeadlinePost> deadlinePosts;
     private List<MilestonePost> milestonePosts;
     private List<Article> articles;
@@ -31,7 +33,7 @@ public class Project {
         id = new Long(new Random().nextInt(1000));
         this.name = name;
         this.admin = admin;
-        this.users = new ArrayList<User>();
+        this.collaborators = new ArrayList<User>();
         this.deadlinePosts = new ArrayList<DeadlinePost>();
         this.milestonePosts = new ArrayList<MilestonePost>();
         this.articles = new ArrayList<Article>();
@@ -42,7 +44,7 @@ public class Project {
         this.id = id;
         this.name = name;
         this.admin = admin;
-        this.users = new ArrayList<User>();
+        this.collaborators = new ArrayList<User>();
         this.deadlinePosts = new ArrayList<DeadlinePost>();
         this.milestonePosts = new ArrayList<MilestonePost>();
         this.articles = new ArrayList<Article>();
@@ -60,17 +62,23 @@ public class Project {
     public long getId() {
         return id;
     }
-    
-    public boolean setAdmin(User currentAdmin, User newAdmin){
-        if(currentAdmin.equals(admin)){
+
+    public boolean setAdmin(User currentAdmin, User newAdmin) {
+        if (currentAdmin.equals(admin)) {
             admin = newAdmin;
+            collaborators.add(admin);
+            collaborators.remove(newAdmin);
             return true;
         }
         return false;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public User getAdmin() {
+        return admin;
+    }
+
+    public List<User> getCollaborators() {
+        return collaborators;
     }
 
     public List<DeadlinePost> getDeadlinePosts() {
@@ -89,8 +97,12 @@ public class Project {
         return wallPosts;
     }
 
-    public void addUser(User user) {
-        users.add(user);
+    public void addCollaborator(User user) throws Exception {
+        if (user.equals(admin)) {
+            throw new Exception("The user is Admin");
+        } else {
+            collaborators.add(user);
+        }
     }
 
     public void createDeadlinePost(User author, User responsibleUser, String msg,
@@ -113,8 +125,8 @@ public class Project {
         wallPosts.add(new WallPost(author, msg));
     }
 
-    public void deleteUser(User u) {
-        users.remove(u);
+    public void deleteCollaborator(User u) {
+        collaborators.remove(u);
     }
 
     public void deleteArticle(Article a) {
