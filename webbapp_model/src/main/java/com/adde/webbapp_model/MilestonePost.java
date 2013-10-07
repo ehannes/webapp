@@ -8,8 +8,8 @@ public class MilestonePost extends DeadlinePost {
     private List<User> assignedTo;
 
     public MilestonePost(User author, User responsibleUser, String msg,
-            Date deadline, int priority, List<User> assignedTo){
-        super(author, responsibleUser, msg, deadline, priority);
+            Date deadline, Priority currentPriority, List<User> assignedTo){
+        super(author, responsibleUser, msg, deadline, currentPriority);
         this.assignedTo = assignedTo;
     }
 
@@ -35,7 +35,7 @@ public class MilestonePost extends DeadlinePost {
     public String toString(){
         return "DeadlinePost{author=" + getAuthor() + ", responsibleUser="
                 + getResponsibleUser() + ", msg=" + getMsg() + ", deadline="
-                + getDeadline() + ", priority=" + getPriority() + ", dateCreated="
+                + getDeadline() + ", currentPriority=" + getPriority() + ", dateCreated="
                 + getDateCreated() + ", dateModified=" + getDateModified()
                 + "assignedTo=" + assignedTo + '}';
     }

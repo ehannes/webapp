@@ -4,6 +4,7 @@
  */
 package com.adde.webbapp_model;
 
+import com.adde.webbapp_model.DeadlinePost.Priority;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,22 +21,32 @@ public class Project {
     private String name;
     private final long id;
     private User admin;
-    private List<User> users = new ArrayList<User>();
-    private List<DeadlinePost> deadlinePosts = new ArrayList<DeadlinePost>();
-    private List<MilestonePost> milestonePosts = new ArrayList<MilestonePost>();
-    private List<Article> articles = new ArrayList<Article>();
-    private List<WallPost> wallPosts = new ArrayList<WallPost>();
+    private List<User> users;
+    private List<DeadlinePost> deadlinePosts;
+    private List<MilestonePost> milestonePosts;
+    private List<Article> articles;
+    private List<WallPost> wallPosts;
 
     public Project(String name, User admin) {
         id = new Long(new Random().nextInt(1000));
         this.name = name;
         this.admin = admin;
+        this.users = new ArrayList<User>();
+        this.deadlinePosts = new ArrayList<DeadlinePost>();
+        this.milestonePosts = new ArrayList<MilestonePost>();
+        this.articles = new ArrayList<Article>();
+        this.wallPosts = new ArrayList<WallPost>();
     }
 
     public Project(long id, String name, User admin) {
         this.id = id;
         this.name = name;
         this.admin = admin;
+        this.users = new ArrayList<User>();
+        this.deadlinePosts = new ArrayList<DeadlinePost>();
+        this.milestonePosts = new ArrayList<MilestonePost>();
+        this.articles = new ArrayList<Article>();
+        this.wallPosts = new ArrayList<WallPost>();
     }
 
     public String getName() {
@@ -83,13 +94,13 @@ public class Project {
     }
 
     public void createDeadlinePost(User author, User responsibleUser, String msg,
-            Date deadline, int priority) {
+            Date deadline, Priority priority) {
         deadlinePosts.add(new DeadlinePost(author, responsibleUser, msg,
                 deadline, priority));
     }
 
     public void createMilestonePost(User author, User responsibleUser, String msg,
-            Date deadline, int priority, List<User> assignedTo) {
+            Date deadline, Priority priority, List<User> assignedTo) {
         milestonePosts.add(new MilestonePost(author, responsibleUser, msg,
                 deadline, priority, assignedTo));
     }
