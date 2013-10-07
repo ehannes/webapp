@@ -55,6 +55,29 @@ public class Article {
         return id;
     }
     
+    // Equals means same id. Sufficient?
+    @Override
+    public boolean equals(Object other) {
+        if(this == other) {
+            return true;
+        }
+        if(other instanceof Article) {
+            Article o = (Article) other;
+            // Extract the primitive type for comparison
+            if(o.getId().longValue() == this.id.longValue()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + (this.id != null ? this.id.hashCode() : 0);
+        return hash;
+    }
+    
     @Override
     public String toString() {
         return "Article{Id: " + id + " Author: " + author + " Content: " + content
