@@ -4,6 +4,7 @@
  */
 package com.adde.webbapp_model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -11,20 +12,26 @@ import java.util.Random;
 
 /**
  *
+ *
  * @author Joakim Danielsson
  */
 public class Project {
 
     private String name;
     private Long id;
-    private List<User> users;
-    private List<DeadlinePost> deadlinePosts;
-    private List<MilestonePost> milestonePosts;
-    private List<Article> articles;
-    private List<WallPost> wallPosts;
+    private List<User> users = new ArrayList<User>();
+    private List<DeadlinePost> deadlinePosts = new ArrayList<DeadlinePost>();
+    private List<MilestonePost> milestonePosts = new ArrayList<MilestonePost>();
+    private List<Article> articles = new ArrayList<Article>();
+    private List<WallPost> wallPosts = new ArrayList<WallPost>();
 
-    public Project(String name, long id) {
+    public Project(String name) {
         id = new Long(new Random().nextInt(1000));
+        this.name = name;
+    }
+
+    public Project(Long id, String name) {
+        this.id = id;
         this.name = name;
     }
 
@@ -40,10 +47,10 @@ public class Project {
         return id;
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return users;
     }
-    
+
     public List<DeadlinePost> getDeadlinePosts() {
         return deadlinePosts;
     }
@@ -60,10 +67,10 @@ public class Project {
         return wallPosts;
     }
 
-    public void addUser(User user){
+    public void addUser(User user) {
         users.add(user);
     }
-    
+
     public void addDeadlinePost(User author, User responsibleUser, String msg,
             Date deadline, int priority) {
         deadlinePosts.add(new DeadlinePost(author, responsibleUser, msg,
@@ -75,35 +82,63 @@ public class Project {
         milestonePosts.add(new MilestonePost(author, responsibleUser, msg,
                 deadline, priority, assignedTo));
     }
-    
-    public void addArticle(User author, String content){
+
+    public void addArticle(User author, String content) {
         articles.add(new Article(author, content));
     }
-    
-    public void addWallPost(User author, String msg){
-        wallPosts.add(new WallPost(author,msg));
+
+    public void addWallPost(User author, String msg) {
+        wallPosts.add(new WallPost(author, msg));
     }
-    
+
+//    public void deleteUser(Long id) {
+//        for (int i = users.size() - 1; i > -1; i--) {
+//            if (users.get(i).getId().equals(id)) {
+//                users.remove(i);
+//            }
+//        }
+//    }
+    public void deleteUser(User u) {
+        users.remove(u);
+    }
+
+    public void deleteArticle(Article a) {
+        articles.remove(a);
+    }
+
+    public void deleteDeadlinePost(DeadlinePost d) {
+        deadlinePosts.remove(d);
+    }
+
+    public void deleteMilestonePost(MilestonePost p) {
+        milestonePosts.remove(p);
+
+    }
+
+    public void deleteWallPost(WallPost w) {
+        wallPosts.remove(w);
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return "Project{Name: " + name + " Id: " + id;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 71 * hash + Objects.hashCode(this.id);
         return hash;
     }
-    
+
     @Override
-    public boolean equals(Object o){
-        if(o == null) {
+    public boolean equals(Object o) {
+        if (o == null) {
             return false;
         }
-        if(o instanceof Project) {
+        if (o instanceof Project) {
             Project p = (Project) o;
-            if(p.id == this.id) { //equal if same id
+            if (p.getId() == this.id) { //equal if same id
                 return true;
             }
         }

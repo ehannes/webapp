@@ -8,12 +8,12 @@ import java.util.Random;
 public class Article {
 
     private User author;
-    //List<User> editors;
+    // Possibly use another data structure or a new class for this.
     private HashMap<Date, User> editors;
     private String content;
     private Date dateCreated;
     private Date dateModified;
-    private Long id;
+    private final long id;
 
     public Article(User author, String content) {
         this.author = author;
@@ -51,9 +51,32 @@ public class Article {
         return dateModified;
     }
     
-    public Long getId() {
+    public long getId() {
         return id;
     }
+    
+    @Override
+    public boolean equals(Object other) {
+        if(this == other) {
+            return true;
+        }
+        if(other instanceof Article) {
+            Article o = (Article) other;
+            if(o.getId() == this.id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
+    }
+
+
     
     @Override
     public String toString() {
