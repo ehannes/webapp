@@ -23,18 +23,20 @@ public class ProjectPlatform {
     
     public void addUser(User user) throws Exception {
         if (user == null) {
-            throw new IllegalArgumentException("Nulls not allowed");
+            throw new NullPointerException("Nulls not allowed");
         }
         if(users.contains(user)) {
-            // TODO: more specific exception?
             throw new Exception("Duplicate users not allowed");
         }
         users.add(user);
     }
     
-    public void addProject(Project project) {
+    public void addProject(Project project) throws Exception {
         if (project == null) {
             throw new IllegalArgumentException("Nulls not allowed");
+        }
+        if(projects.contains(project)) {
+            throw new Exception("Duplicate projects not allowed");
         }
         projects.add(project);
     }
@@ -50,7 +52,7 @@ public class ProjectPlatform {
     public List<Project> getProjectsByUser(User user) {
         List<Project> userProjects = new ArrayList<Project>();
         for(Project p : projects) {
-            if(p.getUsers().contains(user)) {
+            if(p.getCollaborators().contains(user) || user.equals(p.getAdmin())) {
                 userProjects.add(p);
             }
         }

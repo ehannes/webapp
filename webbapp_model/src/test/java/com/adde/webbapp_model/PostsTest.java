@@ -19,6 +19,8 @@ public class PostsTest {
     
     private static final String STR1 = "PostContent";
     private static final String STR2 = "EditedPostContent";
+    private static final int PRIORITY1 = 1;
+    private static final int PRIORITY30 = 30;
     
     @Before
     public void setup(){
@@ -35,6 +37,14 @@ public class PostsTest {
         assertTrue(post2.getMsg().equals(STR1));
         assertTrue(post2.getAuthor().equals(user1));
         assertTrue(post2.getDateCreated().equals(post2.getDateModified()));
+                  
+        // Test pointer equality
+        Post post3 = post2;
+        assertTrue(post2.equals(post3));
+        
+        // Test null
+        Post post4 = null;
+        assertFalse(post2.equals(post4));
         
         String toStringBefore = post2.toString();
         int hashCodeBefore = post2.hashCode();
@@ -89,7 +99,7 @@ public class PostsTest {
         assertTrue(deadlinePost.getMsg().equals(STR1));
         assertTrue(deadlinePost.getDeadline().equals(date1));
         assertTrue(deadlinePost.getResponsibleUser().equals(user2));
-        assertTrue(deadlinePost.getPriority() == Priority.MEDIUM);
+        assertTrue(deadlinePost.getPriority() == Priority.LOW);
         
         deadlinePost.setDeadline(date2);
         assertTrue(deadlinePost.getDeadline().equals(date2));
@@ -108,7 +118,7 @@ public class PostsTest {
         assignedTo2.add(user2);
         
         milestonePost = new MilestonePost(user1, user2, STR1, date1,
-                Priority.MEDIUM, assignedTo1);
+                Priority.HIGH, assignedTo1);
         assertTrue(milestonePost.getAssignedTo().isEmpty());
         
         milestonePost.setAssignedTo(assignedTo2);
