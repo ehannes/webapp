@@ -57,7 +57,7 @@ public class ProjectTest {
         List<User> users = project2.getUsers();
         assertTrue(users.size()==1);
         
-        project2.deleteUser(testUser.getId());
+        project2.deleteUser(testUser);
         assertFalse(users.size()==1);
         assertTrue(users.isEmpty());
         
@@ -66,7 +66,7 @@ public class ProjectTest {
         List<Article> articles = project2.getArticles();
         assertTrue(articles.size() == 1);
         
-        project2.deleteArticle(articles.get(0).getId());
+        project2.deleteArticle(articles.get(0));
         assertFalse(articles.size()==1);
         assertTrue(articles.isEmpty());
         
@@ -75,7 +75,7 @@ public class ProjectTest {
         List<DeadlinePost> deadlinePost = project2.getDeadlinePosts();
         assertTrue(deadlinePost.size() == 1);
         
-        project2.deleteDeadlinePost(deadlinePost.get(0).getId());
+        project2.deleteDeadlinePost(deadlinePost.get(0));
         assertFalse(deadlinePost.size()==1);
         assertTrue(deadlinePost.isEmpty());
         
@@ -84,7 +84,7 @@ public class ProjectTest {
         List<MilestonePost> milestonePosts = project2.getMilestonePosts();
         assertTrue(milestonePosts.size() == 1);     
         
-        project2.deleteMilestonePost(milestonePosts.get(0).getId());
+        project2.deleteMilestonePost(milestonePosts.get(0));
         assertFalse(milestonePosts.size()==1);
         assertTrue(milestonePosts.isEmpty());
     
@@ -93,7 +93,7 @@ public class ProjectTest {
         List<WallPost> wallPosts = project2.getWallPosts();
         assertTrue(wallPosts.size() == 1);   
         
-        project2.deleteWallPost(wallPosts.get(0).getId());
+        project2.deleteWallPost(wallPosts.get(0));
         assertFalse(wallPosts.size()==1);
         assertTrue(wallPosts.isEmpty());
     }

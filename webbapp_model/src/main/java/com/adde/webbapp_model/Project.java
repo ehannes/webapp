@@ -11,7 +11,7 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
- *update delete!
+ *
  *
  * @author Joakim Danielsson
  */
@@ -91,46 +91,34 @@ public class Project {
         wallPosts.add(new WallPost(author, msg));
     }
 
-    public void deleteUser(Long id) {
-        for (int i = users.size() - 1; i > -1; i--) {
-            if (users.get(i).getId().equals(id)) {
-                users.remove(i);
-            }
-        }
+//    public void deleteUser(Long id) {
+//        for (int i = users.size() - 1; i > -1; i--) {
+//            if (users.get(i).getId().equals(id)) {
+//                users.remove(i);
+//            }
+//        }
+//    }
+    public void deleteUser(User u) {
+        users.remove(u);
     }
 
-    public void deleteArticle(Long id) {
-        for (int i = articles.size() - 1; i > -1; i--) {
-            if (articles.get(i).getId().equals(id)) {
-                articles.remove(i);
-            }
-        }
+    public void deleteArticle(Article a) {
+        articles.remove(a);
     }
 
-    public void deleteDeadlinePost(Long id) {
-        for (int i = deadlinePosts.size() - 1; i > -1; i--) {
-            if (deadlinePosts.get(i).getId().equals(id)) {
-                deadlinePosts.remove(i);
-            }
-        }
+    public void deleteDeadlinePost(DeadlinePost d) {
+        deadlinePosts.remove(d);
     }
 
-    public void deleteMilestonePost(Long id) {
-        for (int i = milestonePosts.size() - 1; i > -1; i--) {
-            if (milestonePosts.get(i).getId().equals(id)) {
-                milestonePosts.remove(i);
-            }
-        }
+    public void deleteMilestonePost(MilestonePost p) {
+        milestonePosts.remove(p);
+
     }
 
-    public void deleteWallPost(Long id) {
-        for (int i = wallPosts.size() - 1; i > -1; i--) {
-            if (wallPosts.get(i).getId().equals(id)) {
-                wallPosts.remove(i);
-            }
-        }
+    public void deleteWallPost(WallPost w) {
+        wallPosts.remove(w);
     }
-    
+
     @Override
     public String toString() {
         return "Project{Name: " + name + " Id: " + id;
