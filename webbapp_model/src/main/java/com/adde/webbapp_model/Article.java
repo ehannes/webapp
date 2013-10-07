@@ -13,7 +13,7 @@ public class Article {
     private String content;
     private Date dateCreated;
     private Date dateModified;
-    private Long id;
+    private final long id;
 
     public Article(User author, String content) {
         this.author = author;
@@ -64,7 +64,7 @@ public class Article {
         if(other instanceof Article) {
             Article o = (Article) other;
             // Extract the primitive type for comparison
-            if(o.getId().longValue() == this.id.longValue()) {
+            if(o.getId() == this.id) {
                 return true;
             }
         }
@@ -73,10 +73,12 @@ public class Article {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + (this.id != null ? this.id.hashCode() : 0);
+        int hash = 3;
+        hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
+
+
     
     @Override
     public String toString() {
