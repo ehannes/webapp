@@ -51,4 +51,13 @@ public class DeadlinePost extends Post {
     public int getPriority() {
         return priority;
     }
+    
+    @Override
+    public String toString(){
+        return "DeadlinePost{author=" + getAuthor() + ", responsibleUser="
+                + responsibleUser + ", msg=" + getMsg() + ", deadline="
+                + deadline + ", priority=" + priority + ", dateCreated="
+                + getDateCreated() + ", dateModified=" + getDateModified()
+                + '}';
+    }
 }

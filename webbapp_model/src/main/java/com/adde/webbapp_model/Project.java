@@ -18,7 +18,7 @@ import java.util.Random;
 public class Project {
 
     private String name;
-    private Long id;
+    private final long id;
     private List<User> users = new ArrayList<User>();
     private List<DeadlinePost> deadlinePosts = new ArrayList<DeadlinePost>();
     private List<MilestonePost> milestonePosts = new ArrayList<MilestonePost>();
@@ -30,7 +30,7 @@ public class Project {
         this.name = name;
     }
 
-    public Project(Long id, String name) {
+    public Project(long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -91,13 +91,6 @@ public class Project {
         wallPosts.add(new WallPost(author, msg));
     }
 
-//    public void deleteUser(Long id) {
-//        for (int i = users.size() - 1; i > -1; i--) {
-//            if (users.get(i).getId().equals(id)) {
-//                users.remove(i);
-//            }
-//        }
-//    }
     public void deleteUser(User u) {
         users.remove(u);
     }

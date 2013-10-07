@@ -9,11 +9,11 @@ import java.util.Random;
  * Ideer till framtiden:
  * Fler attribut: förnamn, efternamn emailadress, kost beskrivning,
  * företag, klass, ålder, nickname osv...
- * 
+ *  
  * @author ehannes
  */
 public class User {
-    private Long id; //Not primitive type yet because random function below
+    private final long id;
     private String name;
     
     public User(String name) {
@@ -21,12 +21,12 @@ public class User {
         this.name = name;
     }
     
-    public User(Long id, String name) {
+    public User(long id, String name) {
         this.id = id;
         this.name = name;
     }
     
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -57,7 +57,7 @@ public class User {
         }
         if(o instanceof User) {
             User u = (User) o;
-            if(u.id == this.id) { //equal if same id
+            if(u.getId() == this.id) { //equal if same id
                 return true;
             }
         }

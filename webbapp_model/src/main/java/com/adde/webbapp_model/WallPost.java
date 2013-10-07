@@ -43,22 +43,4 @@ public class WallPost extends Post {
                 + ", dateCreated=" + getDateCreated() + ", dateModified="
                 + getDateModified() + ", comments=" + comments.toString();
     }
-    
-    @Override
-    public boolean equals(Object o){
-        boolean result = false;
-        if(o instanceof WallPost){
-            WallPost o2 = (WallPost) o;
-            result = super.equals(o) && o2.getComments() != null &&
-                    o2.getComments().equals(comments);
-        }
-        return result;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = super.hashCode() + 47 * hash + (this.comments != null ? this.comments.hashCode() : 0);
-        return hash;
-    }
 }
