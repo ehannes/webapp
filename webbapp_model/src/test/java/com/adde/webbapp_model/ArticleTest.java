@@ -45,6 +45,9 @@ public class ArticleTest {
         // Check if the user has been added to the editors
         assertTrue(article1.getEditors().contains(user1));
         assertFalse(article1.getEditors().contains(user2));
+        
+        // Check if the last editor is first in the list of editors.
+        assertTrue(article1.getEditors().get(0).equals(user1));
     }
     
     @Test
