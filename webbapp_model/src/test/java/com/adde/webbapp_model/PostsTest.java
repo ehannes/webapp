@@ -1,6 +1,6 @@
 package com.adde.webbapp_model;
 
-import com.adde.webbapp_model.DeadlinePost.Priority;
+import com.adde.webbapp_model.TodoPost.Priority;
 import java.util.Date;
 import java.util.LinkedList;
 import org.junit.Test;
@@ -12,15 +12,12 @@ public class PostsTest {
     private User user2;
     private Post post1;
     private WallPost wallPost;
-    private DeadlinePost deadlinePost;
-    private MilestonePost milestonePost;
+    private TodoPost todoPost;
     private Date date1;
     private Date date2;
     
     private static final String STR1 = "PostContent";
     private static final String STR2 = "EditedPostContent";
-    private static final int PRIORITY1 = 1;
-    private static final int PRIORITY30 = 30;
     
     @Before
     public void setup(){
@@ -93,38 +90,28 @@ public class PostsTest {
     }
     
     @Test
-    public void DeadlinePostTest(){
-        deadlinePost = new DeadlinePost(user1, user2, STR1, date1,
-                Priority.LOW);
-        assertTrue(deadlinePost.getMsg().equals(STR1));
-        assertTrue(deadlinePost.getDeadline().equals(date1));
-        assertTrue(deadlinePost.getResponsibleUser().equals(user2));
-        assertTrue(deadlinePost.getPriority() == Priority.LOW);
+    public void TodoPostTest(){
+        System.out.println("(new Date()).getTime() is:");
+        Date d = new Date();
+        System.out.println(d.getTime());
         
-        deadlinePost.setDeadline(date2);
-        assertTrue(deadlinePost.getDeadline().equals(date2));
-        
-        deadlinePost.setResponsibleUser(user1);
-        assertTrue(deadlinePost.getResponsibleUser().equals(user1));
-    }
-    
-    @Test
-    public void MilestonePostTest(){
-        LinkedList<User> assignedTo1 = new LinkedList<User>();
-        LinkedList<User> assignedTo2 = new LinkedList<User>();
-        assignedTo2.add(user1);
-        assignedTo2.add(user1);
-        assignedTo2.add(user1);
-        assignedTo2.add(user2);
-        
-        milestonePost = new MilestonePost(user1, user2, STR1, date1,
-                Priority.HIGH, assignedTo1);
-        assertTrue(milestonePost.getAssignedTo().isEmpty());
-        
-        milestonePost.setAssignedTo(assignedTo2);
-        
-        //does not allow duplicates!
-        System.out.println("milestonePost.getAssignedTo().size() == " + milestonePost.getAssignedTo().size());
-        assertTrue(milestonePost.getAssignedTo().size() == 2);
+        todoPost = new TodoPost(user1, STR1);
+        assertTrue(todoPost.getAssignedTo().isEmpty());
+        todoPost.assignTo(user1);
+        LinkedList<User> l = new LinkedList<User>();
+        l.add(user1);
+        l.add(user2);
+        todoPost.assignTo(l);
+        assertTrue(todoPost.getAssignedTo().size() == 2);
+        todoPost.unassign(user2);
+        assertTrue(todoPost.getAssignedTo().size() == 1);
+        todoPost.clearAssignedTo();
+        assertTrue(todoPost.getAssignedTo().isEmpty());
+        assertTrue(todoPost.getPriority() == null);
+        todoPost.setDeadline(date1);
+        assertTrue(todoPost.getDeadline().equals(date1));
+        todoPost.setPriority(Priority.LOW);
+        assertTrue(todoPost.getPriority().equals(Priority.LOW));
+        assertFalse(todoPost.getPriority().equals(Priority.MEDIUM));
     }
 }
