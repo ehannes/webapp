@@ -8,7 +8,7 @@ public class Post {
     private Date dateCreated;
     private Date dateModified;
     private String msg;
-    private long id;
+    private final long id;
     
     public Post(User author, String msg){
         this.author = author;
@@ -55,13 +55,7 @@ public class Post {
         boolean result = false;
         if(o instanceof Post){
             Post o2 = (Post) o;
-            result = o2.getAuthor() != null && o2.getAuthor().equals(author)
-                    && o2.getMsg() != null && o2.getMsg().equals(msg)
-                    && o2.getDateCreated() != null
-                    && o2.getDateCreated().equals(dateCreated)
-                    && o2.getDateModified() != null
-                    && o2.getDateModified().equals(dateModified)
-                    && o2.getId() == id;
+            result = o2.getId() == id;
         }
         return result;
     }
@@ -69,10 +63,7 @@ public class Post {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 29 * hash + (this.author != null ? this.author.hashCode() : 0);
-        hash = 29 * hash + (this.dateCreated != null ? this.dateCreated.hashCode() : 0);
-        hash = 29 * hash + (this.dateModified != null ? this.dateModified.hashCode() : 0);
-        hash = 29 * hash + (this.msg != null ? this.msg.hashCode() : 0);
+        hash = 37 * hash + (int) (this.id ^ (this.id >>> 32));
         return hash;
     }
 }
