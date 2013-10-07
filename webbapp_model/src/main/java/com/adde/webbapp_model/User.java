@@ -9,7 +9,7 @@ import java.util.Random;
  * Ideer till framtiden:
  * Fler attribut: förnamn, efternamn emailadress, kost beskrivning,
  * företag, klass, ålder, nickname osv...
- * 
+ *  
  * @author ehannes
  */
 public class User {
