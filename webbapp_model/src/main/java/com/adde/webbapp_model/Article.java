@@ -5,30 +5,53 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/*
+ * Editors?
+ * Hur göra med Title? Ska allt uppdateras i update() eller två separata metoder
+ * för title och content?
+ */
 public class Article {
 
     private User author;
     // Possibly use another data structure or a new class for this.
     private HashMap<Date, User> editors;
+    private String title;
     private String content;
     private Date dateCreated;
     private Date dateModified;
     private final long id;
 
-    public Article(User author, String content) {
+    public Article(User author, String content, String title) {
         this.author = author;
         this.content = content;
         //editors = new LinkedList<User>();
         editors = new HashMap<Date, User>();
         dateCreated = new Date();
         dateModified = dateCreated;
+        this.title = title;
         id = new Long(new Random().nextInt(1000));
     }
+    
+    public Article(User author, String content, String title, long id) {
+        this.author = author;
+        this.content = content;
+        //editors = new LinkedList<User>();
+        editors = new HashMap<Date, User>();
+        dateCreated = new Date();
+        dateModified = dateCreated;
+        this.title = title;
+        this.id = id;
+    }
 
-    public void update(User editor, String newContent) {
+    public void update(User editor, String newContent, String title) {
         editors.put(new Date(), editor);
         content = newContent;
         dateModified = new Date();
+        this.title = title;
+    }
+    
+    public String getTitle() {
+        return title;
     }
 
     public User getAuthor() {
