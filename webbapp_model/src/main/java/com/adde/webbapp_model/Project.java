@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.adde.webbapp_model;
 
 import com.adde.webbapp_model.DeadlinePost.Priority;
@@ -10,8 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -63,14 +58,13 @@ public class Project {
         return id;
     }
 
-    public boolean setAdmin(User currentAdmin, User newAdmin) {
+    public void setAdmin(User currentAdmin, User newAdmin) throws Exception{
         if (currentAdmin.equals(admin)) {
             admin = newAdmin;
             collaborators.add(admin);
             collaborators.remove(newAdmin);
-            return true;
         }
-        return false;
+        throw new Exception("Current admin in setAdmin was incorrect");
     }
 
     public User getAdmin() {

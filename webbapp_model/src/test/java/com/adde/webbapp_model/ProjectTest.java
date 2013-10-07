@@ -53,8 +53,18 @@ public class ProjectTest {
         
         //Change admin
         User newTestUser = new User("Lisa");
-        assertFalse(project1.setAdmin(newTestUser, newTestUser));
-        assertTrue(project1.setAdmin(testUser, newTestUser));
+        try {
+            project1.setAdmin(newTestUser, newTestUser);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        assertFalse(project1.getAdmin()== newTestUser);
+        try {
+            project1.setAdmin(testUser, newTestUser);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        assertTrue(project1.getAdmin() == newTestUser);
     }
 
     @Test
