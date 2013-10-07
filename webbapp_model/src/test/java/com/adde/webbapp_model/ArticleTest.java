@@ -43,8 +43,8 @@ public class ArticleTest {
         assertTrue(article1.getTitle().equals("updateTitle1"));
         
         // Check if the user has been added to the editors
-        assertTrue(article1.getEditEntries().containsValue(user1));
-        assertFalse(article1.getEditEntries().containsValue(user2));
+        assertTrue(article1.getEditors().contains(user1));
+        assertFalse(article1.getEditors().contains(user2));
     }
     
     @Test
@@ -73,7 +73,7 @@ public class ArticleTest {
         assertFalse(a2.equals(a3));
         
         //Same id test
-        Article a5 = new Article(article1.getAuthor(), article1.getContent(), article1.getTitle(), article1.getId());
+        Article a5 = new Article(article1.getId(), article1.getAuthor(), article1.getContent(), article1.getTitle());
         assertTrue(a5.equals(article1));
         
         //Same id but different authors, should still be equal since equal-method just checks id

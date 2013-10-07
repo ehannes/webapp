@@ -1,9 +1,6 @@
 package com.adde.webbapp_model;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /*
  * Editors?
@@ -17,40 +14,37 @@ import java.util.Random;
 public class Article {
 
     private User author;
-    // Possibly use another data structure or a new class for this.
-    private HashMap<Date, User> editors;
+    private LinkedList<AbstractMap.SimpleEntry<User, Date>> editors;
     private String title;
     private String content;
     private Date dateCreated;
     private Date dateModified;
     private final long id;
 
+    public Article(long id, User author, String content, String title) {
+        this.author = author;
+        this.content = content;
+        editors = new LinkedList<AbstractMap.SimpleEntry<User, Date>>();
+        dateCreated = new Date();
+        dateModified = dateCreated;
+        this.title = title;
+        this.id = id;
+    }
+    
     public Article(User author, String content, String title) {
         this.author = author;
         this.content = content;
-        //editors = new LinkedList<User>();
-        editors = new HashMap<Date, User>();
+        editors = new LinkedList<AbstractMap.SimpleEntry<User, Date>>();
         dateCreated = new Date();
         dateModified = dateCreated;
         this.title = title;
         id = new Long(new Random().nextInt(1000));
     }
     
-    public Article(User author, String content, String title, long id) {
-        this.author = author;
-        this.content = content;
-        //editors = new LinkedList<User>();
-        editors = new HashMap<Date, User>();
-        dateCreated = new Date();
-        dateModified = dateCreated;
-        this.title = title;
-        this.id = id;
-    }
-
     public void update(User editor, String newContent, String title) {
-        editors.put(new Date(), editor);
         content = newContent;
         dateModified = new Date();
+        editors.addFirst(new AbstractMap.SimpleEntry(editor, dateModified));
         this.title = title;
     }
     
@@ -61,11 +55,31 @@ public class Article {
     public User getAuthor() {
         return author;
     }
-
-    public Map<Date, User> getEditEntries() {
-        return editors;
+    
+    public LinkedList<AbstractMap.SimpleEntry<User, Date>> getEditEntries() {
+        return getEditEntries(editors.size());
     }
 
+    public LinkedList<AbstractMap.SimpleEntry<User, Date>> getEditEntries(int n) {
+        LinkedList<AbstractMap.SimpleEntry<User, Date>> result = new LinkedList<AbstractMap.SimpleEntry<User, Date>>();
+        for(int i = 0; i < n; i++) {
+            result.add(editors.get(i));
+        }
+        return result;
+    }
+
+    public List<User> getEditors() {
+        return getEditors(editors.size());
+    }
+    
+    public List<User> getEditors(int n) {
+        List<User> result = new ArrayList<User>();
+        for(int i = 0; i < n; i++) {
+            result.add(editors.get(i).getKey());
+        }
+        return result;
+    }
+    
     public String getContent() {
         return content;
     }
