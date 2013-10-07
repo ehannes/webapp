@@ -51,6 +51,11 @@ public class ArticleTest {
     }
     
     @Test
+    public void testEquals() {
+        // testa pekarlikhet, hashmap osv
+    }
+    
+    @Test
     public void testCreatedModified() {
     }
 }
