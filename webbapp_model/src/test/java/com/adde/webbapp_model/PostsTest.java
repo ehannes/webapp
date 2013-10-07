@@ -37,6 +37,12 @@ public class PostsTest {
         assertTrue(post2.getAuthor().equals(user1));
         assertTrue(post2.getDateCreated().equals(post2.getDateModified()));
         
+        String toStringBefore = post2.toString();
+        int hashCodeBefore = post2.hashCode();
+        post2.setMsg(STR2);
+        assertFalse(post2.toString().equals(toStringBefore));
+        assertTrue(post2.hashCode() == hashCodeBefore);
+        
         try {
                 Thread.sleep(1);
         } catch (InterruptedException ex) {
@@ -45,7 +51,8 @@ public class PostsTest {
                 System.exit(1);
         }
         post2.setMsg(STR1); //now dateModified should differ form dateCreated!
-                            //program is too fast otherwise!
+                            //program is too fast otherwise so it would be
+                            //the same millisecond!
         
         assertFalse(post2.getDateCreated().equals(post2.getDateModified()));
         assertTrue(post2.equals(post2));

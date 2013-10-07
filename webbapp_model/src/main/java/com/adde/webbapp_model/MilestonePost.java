@@ -30,4 +30,13 @@ public class MilestonePost extends DeadlinePost {
         }
         return true;
     }
+    
+    @Override
+    public String toString(){
+        return "DeadlinePost{author=" + getAuthor() + ", responsibleUser="
+                + getResponsibleUser() + ", msg=" + getMsg() + ", deadline="
+                + getDeadline() + ", priority=" + getPriority() + ", dateCreated="
+                + getDateCreated() + ", dateModified=" + getDateModified()
+                + "assignedTo=" + assignedTo + '}';
+    }
 }
