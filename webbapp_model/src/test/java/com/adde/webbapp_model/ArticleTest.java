@@ -1,6 +1,8 @@
 package com.adde.webbapp_model;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,15 +49,27 @@ public class ArticleTest {
         
         // Check if the user has been added to the editors
         assertTrue(article1.getEditEntries().containsValue(user1));
+    }
+    
+    @Test
+    public void testEquality() {
+        Article a1 = new Article(new User("Author 1"), "test equals");
         
-    }
-    
-    @Test
-    public void testEquals() {
-        // testa pekarlikhet, hashmap osv
-    }
-    
-    @Test
-    public void testCreatedModified() {
+        // Pointer equality
+        Article a2 = a1;
+        assertTrue(a2.equals(a1));
+        
+        // Object equality
+        Object a3 = (Object) a1;
+        assertTrue(a1.equals(a3));
+        
+        // Same content, shouldn't be equal
+        Article a4 = new Article(new User("Author 4"), "test equals");
+        assertFalse(a1.equals(a4));
+        
+        // Test Collection compability (depends on hashcode)
+        HashSet<Article> coll = new HashSet<Article>();
+        coll.add(a1);
+        assertTrue(coll.contains(a1));
     }
 }
