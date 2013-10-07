@@ -72,7 +72,7 @@ public class ProjectTest {
         assertTrue(users.isEmpty());
 
         //article
-        project2.createArticle(testUser, "this is an article");
+        project2.createArticle(testUser, "this is an article", "articleTitle");
         List<Article> articles = project2.getArticles();
         assertTrue(articles.size() == 1);
 

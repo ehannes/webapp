@@ -94,8 +94,8 @@ public class Project {
                 deadline, priority, assignedTo));
     }
 
-    public void createArticle(User author, String content) {
-        articles.add(new Article(author, content));
+    public void createArticle(User author, String content, String title) {
+        articles.add(new Article(author, content, title));
     }
 
     public void createWallPost(User author, String msg) {
