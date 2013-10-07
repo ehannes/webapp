@@ -5,11 +5,11 @@ import java.util.Date;
 public class DeadlinePost extends Post {
     private Date deadline;
     private User responsibleUser;
-    public static enum priority{LOW, MEDIUM, HIGH};
-    private priority currentPrio;
+    public static enum Priority{LOW, MEDIUM, HIGH};
+    private Priority currentPrio;
     
     public DeadlinePost(User author, User responsibleUser, String msg,
-            Date deadline, priority p){
+            Date deadline, Priority p){
         super(author, msg);
         this.responsibleUser = responsibleUser;
         this.deadline = deadline;
@@ -24,12 +24,12 @@ public class DeadlinePost extends Post {
         this.responsibleUser = responsibleUser;
     }
 
-    public void setPriority(priority p){
+    public void setPriority(Priority p){
         privSetPriority(p);
     }
     
     //to reduce code duplication
-    private void privSetPriority(priority p) {
+    private void privSetPriority(Priority p) {
         currentPrio = p;
     }
 
@@ -41,7 +41,7 @@ public class DeadlinePost extends Post {
         return responsibleUser;
     }
 
-    public priority getPriority() {
+    public Priority getPriority() {
         return currentPrio;
     }
     

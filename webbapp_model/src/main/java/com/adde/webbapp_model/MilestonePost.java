@@ -8,7 +8,7 @@ public class MilestonePost extends DeadlinePost {
     private List<User> assignedTo;
 
     public MilestonePost(User author, User responsibleUser, String msg,
-            Date deadline, priority currentPriority, List<User> assignedTo){
+            Date deadline, Priority currentPriority, List<User> assignedTo){
         super(author, responsibleUser, msg, deadline, currentPriority);
         this.assignedTo = assignedTo;
     }

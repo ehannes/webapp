@@ -4,6 +4,7 @@
  */
 package com.adde.webbapp_model;
 
+import com.adde.webbapp_model.DeadlinePost.Priority;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -81,7 +82,7 @@ public class ProjectTest {
         assertTrue(articles.isEmpty());
 
         //deadlinepost
-        project2.createDeadlinePost(testUser, testUser, "this is a DeadlinePost", date, 1);
+        project2.createDeadlinePost(testUser, testUser, "this is a DeadlinePost", date, Priority.LOW);
         List<DeadlinePost> deadlinePost = project2.getDeadlinePosts();
         assertTrue(deadlinePost.size() == 1);
 
@@ -90,7 +91,7 @@ public class ProjectTest {
         assertTrue(deadlinePost.isEmpty());
 
         //milestonepost
-        project2.createMilestonePost(testUser, testUser, "this is a MilestonePost", date, 1, testUsers);
+        project2.createMilestonePost(testUser, testUser, "this is a MilestonePost", date, Priority.MEDIUM, testUsers);
         List<MilestonePost> milestonePosts = project2.getMilestonePosts();
         assertTrue(milestonePosts.size() == 1);
 

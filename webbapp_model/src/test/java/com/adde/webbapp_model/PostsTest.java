@@ -1,6 +1,6 @@
 package com.adde.webbapp_model;
 
-import com.adde.webbapp_model.DeadlinePost.priority;
+import com.adde.webbapp_model.DeadlinePost.Priority;
 import java.util.Date;
 import java.util.LinkedList;
 import org.junit.Test;
@@ -85,11 +85,11 @@ public class PostsTest {
     @Test
     public void DeadlinePostTest(){
         deadlinePost = new DeadlinePost(user1, user2, STR1, date1,
-                priority.LOW);
+                Priority.LOW);
         assertTrue(deadlinePost.getMsg().equals(STR1));
         assertTrue(deadlinePost.getDeadline().equals(date1));
         assertTrue(deadlinePost.getResponsibleUser().equals(user2));
-        assertTrue(deadlinePost.getPriority() == priority.MEDIUM);
+        assertTrue(deadlinePost.getPriority() == Priority.MEDIUM);
         
         deadlinePost.setDeadline(date2);
         assertTrue(deadlinePost.getDeadline().equals(date2));
@@ -108,7 +108,7 @@ public class PostsTest {
         assignedTo2.add(user2);
         
         milestonePost = new MilestonePost(user1, user2, STR1, date1,
-                priority.MEDIUM, assignedTo1);
+                Priority.MEDIUM, assignedTo1);
         assertTrue(milestonePost.getAssignedTo().isEmpty());
         
         milestonePost.setAssignedTo(assignedTo2);

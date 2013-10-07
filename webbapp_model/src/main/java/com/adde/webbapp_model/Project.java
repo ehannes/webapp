@@ -4,6 +4,7 @@
  */
 package com.adde.webbapp_model;
 
+import com.adde.webbapp_model.DeadlinePost.Priority;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -83,13 +84,13 @@ public class Project {
     }
 
     public void createDeadlinePost(User author, User responsibleUser, String msg,
-            Date deadline, int priority) {
+            Date deadline, Priority priority) {
         deadlinePosts.add(new DeadlinePost(author, responsibleUser, msg,
                 deadline, priority));
     }
 
     public void createMilestonePost(User author, User responsibleUser, String msg,
-            Date deadline, int priority, List<User> assignedTo) {
+            Date deadline, Priority priority, List<User> assignedTo) {
         milestonePosts.add(new MilestonePost(author, responsibleUser, msg,
                 deadline, priority, assignedTo));
     }
