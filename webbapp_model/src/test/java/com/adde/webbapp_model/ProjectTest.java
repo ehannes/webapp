@@ -4,9 +4,6 @@
  */
 package com.adde.webbapp_model;
 
-import com.adde.webbapp_model.TodoPost.Priority;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,8 +68,6 @@ public class ProjectTest {
     public void addRemoveTest() {
         //add and remove elements
         User testUser2 = new User("Lisa");
-        Date date = new Date();
-        List<User> testUsers = new ArrayList<User>();
 
         //user
         try {
@@ -104,23 +99,23 @@ public class ProjectTest {
         assertFalse(articles.size() == 1);
         assertTrue(articles.isEmpty());
 
+        //milestonePosts
+        project2.createMilestonePost(testUser, "this is a MilestonePost");
+        List<TodoPost> milestonePosts = project2.getMilestonePosts();
+        assertTrue(milestonePosts.size() == 1);
+
+        project2.deleteMilestonePost(milestonePosts.get(0));
+        assertFalse(milestonePosts.size() == 1);
+        assertTrue(milestonePosts.isEmpty());
+        
         //todoPosts
-        project2.createTodoPost(testUser, "this is a DeadlinePost");
+        project2.createTodoPost(testUser, "this is a todoPost");
         List<TodoPost> todoPosts = project2.getTodoPosts();
         assertTrue(todoPosts.size() == 1);
 
         project2.deleteTodoPost(todoPosts.get(0));
         assertFalse(todoPosts.size() == 1);
         assertTrue(todoPosts.isEmpty());
-
-        //deadlinePost
-        project2.createDeadlinePost(testUser, testUser, "this is a MilestonePost", date, DeadlinePost.Priority.MEDIUM);
-        List<DeadlinePost> deadlinePosts = project2.getDeadlinePosts();
-        assertTrue(deadlinePosts.size() == 1);
-
-        project2.deleteDeadlinePost(deadlinePosts.get(0));
-        assertFalse(deadlinePosts.size() == 1);
-        assertTrue(deadlinePosts.isEmpty());
 
         //wallpost
         project2.createWallPost(testUser, "this is a wallpost");
