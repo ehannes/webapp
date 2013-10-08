@@ -4,8 +4,6 @@
  */
 package com.adde.webbapp_model;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -16,6 +14,9 @@ import static org.junit.Assert.*;
  */
 public class ProjectPlatformTest {
     private ProjectPlatform projectPlatform;
+    User benny;
+    Project project;
+            
     // Total number of owners
     private final static int OWNERS = 5;
     // Collaborators per project
@@ -24,12 +25,12 @@ public class ProjectPlatformTest {
     @Before 
     public void setup() {
         projectPlatform = ProjectPlatformFactory.getProjectPlatform(true);
+        benny = new User("Benny");
+        project = new Project("Bennys Wiki", benny);
     }
 
-    // TODO: Implement usage testcases
     @Test
     public void getAllUsers() {
-        System.out.println(projectPlatform.getUsers().size());
         assertTrue(projectPlatform.getUsers().size() == (OWNERS + (OWNERS * COLLABORATORS_PER_PROJECT)));
     }
     
@@ -40,14 +41,12 @@ public class ProjectPlatformTest {
     
     @Test
     public void oneUserOneProject() {
-        User benny = new User("Benny");
         try {
         // Create user and check if he's been added to the platform.
         projectPlatform.addUser(benny);
         assertTrue(projectPlatform.getUsers().contains(benny));
         
         // Create project and check if it's been added to the platform.
-        Project project = new Project("Bennys Wiki", benny);
         projectPlatform.addProject(project);
         assertTrue(projectPlatform.getProjects().contains(project));
         
@@ -57,6 +56,42 @@ public class ProjectPlatformTest {
         // Get a user by his name
         assertTrue(projectPlatform.getUserByName(benny.getName()).equals(benny));
         
+        } catch (NullPointerException e) {
+            System.out.println(e.toString());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+    
+    @Test
+    public void removeUser() {        
+        try {
+            projectPlatform.addUser(benny);
+            assertTrue(projectPlatform.getUsers().contains(benny));
+            
+            assertTrue(projectPlatform.removeUser(benny));            
+            assertFalse(projectPlatform.getUsers().contains(benny));
+            
+            // Shouldn't be able to remove a user who's not added to the platform
+            assertFalse(projectPlatform.removeUser(new User("Bo")));
+        } catch (NullPointerException e) {
+            System.out.println(e.toString());
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+    
+    @Test
+    public void removeProject() {        
+        try {
+            projectPlatform.addProject(project);
+            assertTrue(projectPlatform.getProjects().contains(project));
+            
+            assertTrue(projectPlatform.removeProject(project));            
+            assertFalse(projectPlatform.getProjects().contains(project));
+            
+            // Shouldn't be able to remove a project that's not added to the platform
+            assertFalse(projectPlatform.removeProject(new Project("Bennys project", benny)));
         } catch (NullPointerException e) {
             System.out.println(e.toString());
         } catch (Exception e) {

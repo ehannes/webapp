@@ -25,12 +25,10 @@ public class ProjectPlatformFactory {
         try {
             for(int i = 0; i < OWNERS; i++) {
                 User owner = new User("Owner " + i);
-                System.out.println(owner.toString());
                 p.addUser(owner);
                 Project project = new Project("Test project " + i, owner);
                 for (int k = 0; k < COLLABORATORS_PER_PROJECT; k++) {
-                    User collaborator = new User("Collaborator " + i);
-                    System.out.println(collaborator.toString());
+                    User collaborator = new User("Collaborator " + k);
                     p.addUser(collaborator);
                     project.addCollaborator(collaborator);
                 }

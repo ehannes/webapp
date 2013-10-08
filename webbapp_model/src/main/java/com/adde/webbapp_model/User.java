@@ -17,7 +17,7 @@ public class User {
     private String name;
     
     public User(String name) {
-        id = new Long(new Random().nextInt(1000));
+        id = new Long(new Random().nextInt(1000000));
         this.name = name;
     }
     

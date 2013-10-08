@@ -26,7 +26,7 @@ public class ProjectPlatform {
             throw new NullPointerException("Nulls not allowed");
         }
         if(users.contains(user)) {
-            throw new Exception("Duplicate users not allowed");
+            throw new Exception("Duplicate users not allowed, user id: " + user.getId());
         }
         users.add(user);
     }
@@ -36,9 +36,18 @@ public class ProjectPlatform {
             throw new IllegalArgumentException("Nulls not allowed");
         }
         if(projects.contains(project)) {
-            throw new Exception("Duplicate projects not allowed");
+            throw new Exception("Duplicate projects not allowed, project id: " + project.getId());
         }
         projects.add(project);
+    }
+    
+    // Possibly throw exception instead of returning boolean
+    public boolean removeUser(User user) {
+        return users.remove(user);
+    }
+    
+    public boolean removeProject(Project project) {
+        return projects.remove(project);
     }
     
     public List<User> getUsers() {
