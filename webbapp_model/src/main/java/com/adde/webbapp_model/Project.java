@@ -20,7 +20,6 @@ public class Project {
     private User admin;
     private List<User> collaborators;
     private List<TodoPost> todoPosts;
-    private List<DeadlinePost> deadlinePosts;
     private List<Article> articles;
     private List<WallPost> wallPosts;
 
@@ -31,7 +30,6 @@ public class Project {
         this.admin = admin;
         this.collaborators = new ArrayList<User>();
         this.todoPosts = new ArrayList<TodoPost>();
-        this.deadlinePosts = new ArrayList<DeadlinePost>();
         this.articles = new ArrayList<Article>();
         this.wallPosts = new ArrayList<WallPost>();
     }
@@ -43,7 +41,6 @@ public class Project {
         this.admin = admin;
         this.collaborators = new ArrayList<User>();
         this.todoPosts = new ArrayList<TodoPost>();
-        this.deadlinePosts = new ArrayList<DeadlinePost>();
         this.articles = new ArrayList<Article>();
         this.wallPosts = new ArrayList<WallPost>();
     }
@@ -85,10 +82,6 @@ public class Project {
         return todoPosts;
     }
 
-    public List<DeadlinePost> getDeadlinePosts() {
-        return deadlinePosts;
-    }
-
     public List<Article> getArticles() {
         return articles;
     }
@@ -109,12 +102,6 @@ public class Project {
         todoPosts.add(new TodoPost(author, msg));
     }
 
-    public void createDeadlinePost(User author, User responsibleUser, String msg,
-            Date deadline, DeadlinePost.Priority p) {
-        deadlinePosts.add(new DeadlinePost(author, responsibleUser, msg,
-                deadline, p));
-    }
-
     public void createArticle(User author, String content, String title) {
         articles.add(new Article(author, content, title));
     }
@@ -133,11 +120,6 @@ public class Project {
 
     public void deleteTodoPost(TodoPost d) {
         todoPosts.remove(d);
-    }
-
-    public void deleteDeadlinePost(DeadlinePost d) {
-        deadlinePosts.remove(d);
-
     }
 
     public void deleteWallPost(WallPost w) {

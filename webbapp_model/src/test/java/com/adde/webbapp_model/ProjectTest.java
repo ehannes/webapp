@@ -71,8 +71,6 @@ public class ProjectTest {
     public void addRemoveTest() {
         //add and remove elements
         User testUser2 = new User("Lisa");
-        Date date = new Date();
-        List<User> testUsers = new ArrayList<User>();
 
         //user
         try {
@@ -112,15 +110,6 @@ public class ProjectTest {
         project2.deleteTodoPost(todoPosts.get(0));
         assertFalse(todoPosts.size() == 1);
         assertTrue(todoPosts.isEmpty());
-
-        //deadlinePost
-        project2.createDeadlinePost(testUser, testUser, "this is a MilestonePost", date, DeadlinePost.Priority.MEDIUM);
-        List<DeadlinePost> deadlinePosts = project2.getDeadlinePosts();
-        assertTrue(deadlinePosts.size() == 1);
-
-        project2.deleteDeadlinePost(deadlinePosts.get(0));
-        assertFalse(deadlinePosts.size() == 1);
-        assertTrue(deadlinePosts.isEmpty());
 
         //wallpost
         project2.createWallPost(testUser, "this is a wallpost");
