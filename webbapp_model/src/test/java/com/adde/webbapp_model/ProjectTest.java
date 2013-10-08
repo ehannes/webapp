@@ -99,7 +99,7 @@ public class ProjectTest {
         assertFalse(articles.size() == 1);
         assertTrue(articles.isEmpty());
 
-        //todoPosts
+        //milestonePosts
         project2.createMilestonePost(testUser, "this is a MilestonePost");
         List<TodoPost> milestonePosts = project2.getMilestonePosts();
         assertTrue(milestonePosts.size() == 1);
