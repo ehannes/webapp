@@ -4,9 +4,6 @@
  */
 package com.adde.webbapp_model;
 
-import com.adde.webbapp_model.TodoPost.Priority;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,7 +100,16 @@ public class ProjectTest {
         assertTrue(articles.isEmpty());
 
         //todoPosts
-        project2.createTodoPost(testUser, "this is a DeadlinePost");
+        project2.createMilestonePost(testUser, "this is a MilestonePost");
+        List<TodoPost> milestonePosts = project2.getMilestonePosts();
+        assertTrue(milestonePosts.size() == 1);
+
+        project2.deleteMilestonePost(milestonePosts.get(0));
+        assertFalse(milestonePosts.size() == 1);
+        assertTrue(milestonePosts.isEmpty());
+        
+        //todoPosts
+        project2.createTodoPost(testUser, "this is a todoPost");
         List<TodoPost> todoPosts = project2.getTodoPosts();
         assertTrue(todoPosts.size() == 1);
 

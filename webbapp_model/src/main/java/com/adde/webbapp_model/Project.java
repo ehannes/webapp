@@ -1,4 +1,3 @@
-
 package com.adde.webbapp_model;
 
 import java.util.ArrayList;
@@ -20,6 +19,7 @@ public class Project {
     private User admin;
     private List<User> collaborators;
     private List<TodoPost> todoPosts;
+    private List<TodoPost> milestonePosts;
     private List<Article> articles;
     private List<WallPost> wallPosts;
 
@@ -28,6 +28,7 @@ public class Project {
         this.name = name;
         this.dateCreated = new Date();
         this.admin = admin;
+        this.milestonePosts = new ArrayList<TodoPost>();
         this.collaborators = new ArrayList<User>();
         this.todoPosts = new ArrayList<TodoPost>();
         this.articles = new ArrayList<Article>();
@@ -39,6 +40,7 @@ public class Project {
         this.name = name;
         this.dateCreated = new Date();
         this.admin = admin;
+        this.milestonePosts = new ArrayList<TodoPost>();
         this.collaborators = new ArrayList<User>();
         this.todoPosts = new ArrayList<TodoPost>();
         this.articles = new ArrayList<Article>();
@@ -57,7 +59,7 @@ public class Project {
         return id;
     }
 
-    public void setAdmin(User currentAdmin, User newAdmin) throws Exception{
+    public void setAdmin(User currentAdmin, User newAdmin) throws Exception {
         if (currentAdmin.equals(admin)) {
             admin = newAdmin;
             collaborators.add(admin);
@@ -69,13 +71,17 @@ public class Project {
     public User getAdmin() {
         return admin;
     }
-    
-    public Date getDateCreated(){
+
+    public Date getDateCreated() {
         return dateCreated;
     }
 
     public List<User> getCollaborators() {
         return collaborators;
+    }
+
+    public List<TodoPost> getMilestonePosts() {
+        return milestonePosts;
     }
 
     public List<TodoPost> getTodoPosts() {
@@ -98,7 +104,11 @@ public class Project {
         }
     }
 
-    public void createTodoPost(User author,String msg) {
+    public void createMilestonePost(User author, String msg) {
+        milestonePosts.add(new TodoPost(author, msg));
+    }
+
+    public void createTodoPost(User author, String msg) {
         todoPosts.add(new TodoPost(author, msg));
     }
 
@@ -116,6 +126,10 @@ public class Project {
 
     public void deleteArticle(Article a) {
         articles.remove(a);
+    }
+
+    public void deleteMilestonePost(TodoPost m) {
+        milestonePosts.remove(m);
     }
 
     public void deleteTodoPost(TodoPost d) {
