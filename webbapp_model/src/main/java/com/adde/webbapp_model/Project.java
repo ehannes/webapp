@@ -24,7 +24,7 @@ public class Project {
     private List<WallPost> wallPosts;
 
     public Project(String name, User admin) {
-        id = new Long(new Random().nextInt(1000));
+        id = new Long(new Random().nextInt(1000000));
         this.name = name;
         this.dateCreated = new Date();
         this.admin = admin;
