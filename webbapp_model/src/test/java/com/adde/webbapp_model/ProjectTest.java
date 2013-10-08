@@ -104,23 +104,23 @@ public class ProjectTest {
         assertFalse(articles.size() == 1);
         assertTrue(articles.isEmpty());
 
-        //deadlinepost
-        project2.createDeadlinePost(testUser, testUser, "this is a DeadlinePost", date, Priority.LOW);
-        List<TodoPost> deadlinePost = project2.getDeadlinePosts();
-        assertTrue(deadlinePost.size() == 1);
+        //todoPosts
+        project2.createTodoPost(testUser, "this is a DeadlinePost");
+        List<TodoPost> todoPosts = project2.getTodoPosts();
+        assertTrue(todoPosts.size() == 1);
 
-        project2.deleteDeadlinePost(deadlinePost.get(0));
-        assertFalse(deadlinePost.size() == 1);
-        assertTrue(deadlinePost.isEmpty());
+        project2.deleteTodoPost(todoPosts.get(0));
+        assertFalse(todoPosts.size() == 1);
+        assertTrue(todoPosts.isEmpty());
 
-        //milestonepost
-        project2.createMilestonePost(testUser, testUser, "this is a MilestonePost", date, Priority.MEDIUM, testUsers);
-        List<MilestonePost> milestonePosts = project2.getMilestonePosts();
-        assertTrue(milestonePosts.size() == 1);
+        //deadlinePost
+        project2.createDeadlinePost(testUser, testUser, "this is a MilestonePost", date, DeadlinePost.Priority.MEDIUM);
+        List<DeadlinePost> deadlinePosts = project2.getDeadlinePosts();
+        assertTrue(deadlinePosts.size() == 1);
 
-        project2.deleteMilestonePost(milestonePosts.get(0));
-        assertFalse(milestonePosts.size() == 1);
-        assertTrue(milestonePosts.isEmpty());
+        project2.deleteDeadlinePost(deadlinePosts.get(0));
+        assertFalse(deadlinePosts.size() == 1);
+        assertTrue(deadlinePosts.isEmpty());
 
         //wallpost
         project2.createWallPost(testUser, "this is a wallpost");

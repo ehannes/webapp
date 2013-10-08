@@ -1,7 +1,6 @@
 
 package com.adde.webbapp_model;
 
-import com.adde.webbapp_model.TodoPost.Priority;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,19 +16,22 @@ public class Project {
 
     private String name;
     private final long id;
+    private final Date dateCreated;
     private User admin;
     private List<User> collaborators;
-    private List<TodoPost> deadlinePosts;
+    private List<TodoPost> todoPosts;
+    private List<DeadlinePost> deadlinePosts;
     private List<Article> articles;
     private List<WallPost> wallPosts;
 
     public Project(String name, User admin) {
         id = new Long(new Random().nextInt(1000));
         this.name = name;
+        this.dateCreated = new Date();
         this.admin = admin;
         this.collaborators = new ArrayList<User>();
-        this.deadlinePosts = new ArrayList<TodoPost>();
-        this.milestonePosts = new ArrayList<MilestonePost>();
+        this.todoPosts = new ArrayList<TodoPost>();
+        this.deadlinePosts = new ArrayList<DeadlinePost>();
         this.articles = new ArrayList<Article>();
         this.wallPosts = new ArrayList<WallPost>();
     }
@@ -37,10 +39,11 @@ public class Project {
     public Project(long id, String name, User admin) {
         this.id = id;
         this.name = name;
+        this.dateCreated = new Date();
         this.admin = admin;
         this.collaborators = new ArrayList<User>();
-        this.deadlinePosts = new ArrayList<TodoPost>();
-        this.milestonePosts = new ArrayList<MilestonePost>();
+        this.todoPosts = new ArrayList<TodoPost>();
+        this.deadlinePosts = new ArrayList<DeadlinePost>();
         this.articles = new ArrayList<Article>();
         this.wallPosts = new ArrayList<WallPost>();
     }
@@ -69,17 +72,21 @@ public class Project {
     public User getAdmin() {
         return admin;
     }
+    
+    public Date getDateCreated(){
+        return dateCreated;
+    }
 
     public List<User> getCollaborators() {
         return collaborators;
     }
 
-    public List<TodoPost> getDeadlinePosts() {
-        return deadlinePosts;
+    public List<TodoPost> getTodoPosts() {
+        return todoPosts;
     }
 
-    public List<MilestonePost> getMilestonePosts() {
-        return milestonePosts;
+    public List<DeadlinePost> getDeadlinePosts() {
+        return deadlinePosts;
     }
 
     public List<Article> getArticles() {
@@ -98,16 +105,14 @@ public class Project {
         }
     }
 
-    public void createDeadlinePost(User author, User responsibleUser, String msg,
-            Date deadline, Priority priority) {
-        deadlinePosts.add(new TodoPost(author, responsibleUser, msg,
-                deadline, priority));
+    public void createTodoPost(User author,String msg) {
+        todoPosts.add(new TodoPost(author, msg));
     }
 
-    public void createMilestonePost(User author, User responsibleUser, String msg,
-            Date deadline, Priority priority, List<User> assignedTo) {
-        milestonePosts.add(new MilestonePost(author, responsibleUser, msg,
-                deadline, priority, assignedTo));
+    public void createDeadlinePost(User author, User responsibleUser, String msg,
+            Date deadline, DeadlinePost.Priority p) {
+        deadlinePosts.add(new DeadlinePost(author, responsibleUser, msg,
+                deadline, p));
     }
 
     public void createArticle(User author, String content, String title) {
@@ -126,12 +131,12 @@ public class Project {
         articles.remove(a);
     }
 
-    public void deleteDeadlinePost(TodoPost d) {
-        deadlinePosts.remove(d);
+    public void deleteTodoPost(TodoPost d) {
+        todoPosts.remove(d);
     }
 
-    public void deleteMilestonePost(MilestonePost p) {
-        milestonePosts.remove(p);
+    public void deleteDeadlinePost(DeadlinePost d) {
+        deadlinePosts.remove(d);
 
     }
 
@@ -141,7 +146,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{Name: " + name + " Id: " + id;
+        return "Project{Name: " + name + "Admin: " + admin + "Id: " + id + "}";
     }
 
     @Override
