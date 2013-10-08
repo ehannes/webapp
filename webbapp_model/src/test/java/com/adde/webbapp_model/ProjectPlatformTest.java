@@ -17,9 +17,9 @@ import static org.junit.Assert.*;
 public class ProjectPlatformTest {
     private ProjectPlatform projectPlatform;
     // Total number of owners
-    private final static int NO_OF_OWNERS = 5;
+    private final static int OWNERS = 5;
     // Collaborators per project
-    private final static int NO_OF_COLLABORATORS = 3;
+    private final static int COLLABORATORS_PER_PROJECT = 3;
     
     @Before 
     public void setup() {
@@ -29,12 +29,13 @@ public class ProjectPlatformTest {
     // TODO: Implement usage testcases
     @Test
     public void getAllUsers() {
-        assertTrue(projectPlatform.getUsers().size() == NO_OF_OWNERS * NO_OF_COLLABORATORS);
+        System.out.println(projectPlatform.getUsers().size());
+        assertTrue(projectPlatform.getUsers().size() == (OWNERS + (OWNERS * COLLABORATORS_PER_PROJECT)));
     }
     
     @Test
     public void getAllProjects() {
-        assertTrue(projectPlatform.getProjects().size() == NO_OF_OWNERS);
+        assertTrue(projectPlatform.getProjects().size() == OWNERS);
     }
     
     @Test

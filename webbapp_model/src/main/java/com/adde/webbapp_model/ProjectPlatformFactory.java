@@ -6,9 +6,9 @@ package com.adde.webbapp_model;
  */
 public class ProjectPlatformFactory {
     // Total number of owners
-    private final static int NO_OF_OWNERS = 5;
+    private final static int OWNERS = 5;
     // Collaborators per project
-    private final static int NO_OF_COLLABORATORS = 3;
+    private final static int COLLABORATORS_PER_PROJECT = 3;
     
     private ProjectPlatformFactory() {
     }
@@ -23,12 +23,14 @@ public class ProjectPlatformFactory {
     
     private static void initTestData(ProjectPlatform p) {
         try {
-            for(int i = 0; i < NO_OF_OWNERS; i++) {
+            for(int i = 0; i < OWNERS; i++) {
                 User owner = new User("Owner " + i);
+                System.out.println(owner.toString());
                 p.addUser(owner);
                 Project project = new Project("Test project " + i, owner);
-                for (int k = 0; k < NO_OF_COLLABORATORS; k++) {
+                for (int k = 0; k < COLLABORATORS_PER_PROJECT; k++) {
                     User collaborator = new User("Collaborator " + i);
+                    System.out.println(collaborator.toString());
                     p.addUser(collaborator);
                     project.addCollaborator(collaborator);
                 }
