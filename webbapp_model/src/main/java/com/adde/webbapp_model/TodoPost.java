@@ -1,25 +1,27 @@
 package com.adde.webbapp_model;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
 public class TodoPost extends Post {
-    private Date deadline;
+    //may be null
+    private GregorianCalendar deadline;
     public static enum Priority{LOW, MEDIUM, HIGH};
     private Priority currentPrio;
     private List<User> assignedTo;
 
     public TodoPost(User author, String msg){
+        this(author, msg, null);
+    }
+    
+    public TodoPost(User author, String msg, GregorianCalendar deadline){
         super(author, msg);
         assignedTo = new LinkedList<User>();
-        deadline = new Date();
+        this.deadline = deadline;
     }
 
-    public void setDeadline(Date deadline) {
-        if(deadline == null){
-            throw new NullPointerException("Todo: Null deadline inserted!");
-        }
+    public void setDeadline(GregorianCalendar deadline) {
         this.deadline = deadline;
     }
 
@@ -54,7 +56,7 @@ public class TodoPost extends Post {
         assignedTo.remove(u);
     }
 
-    public Date getDeadline() {
+    public GregorianCalendar getDeadline() {
         return deadline;
     }
 

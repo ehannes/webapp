@@ -1,19 +1,19 @@
 package com.adde.webbapp_model;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Random;
 
 public class Post {
     private User author;
-    private Date dateCreated;
-    private Date dateModified;
+    private GregorianCalendar dateCreated;
+    private GregorianCalendar dateModified;
     private String msg;
     private final long id;
     
     public Post(User author, String msg){
         this.author = author;
         this.msg = msg;
-        dateCreated = new Date(System.currentTimeMillis());
+        dateCreated = new GregorianCalendar();
         dateModified = dateCreated;
         id = new Long(new Random().nextInt(777));
     }
@@ -23,11 +23,11 @@ public class Post {
         return id;
     }
     
-    public Date getDateCreated(){
+    public GregorianCalendar getDateCreated(){
         return dateCreated;
     }
     
-    public Date getDateModified(){
+    public GregorianCalendar getDateModified(){
         return dateModified;
     }
     
@@ -41,7 +41,7 @@ public class Post {
     
     public void setMsg(String msg){
         this.msg = msg;
-        dateModified = new Date(System.currentTimeMillis());
+        dateModified = new GregorianCalendar();
     }
     
     @Override
