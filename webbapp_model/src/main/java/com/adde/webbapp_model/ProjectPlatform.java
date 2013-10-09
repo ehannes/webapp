@@ -14,11 +14,19 @@ public class ProjectPlatform {
     
     private List<User> users;
     private List<Project> projects;
+    private static ProjectPlatform instance;
     
-    public ProjectPlatform() {
+    private ProjectPlatform() {
         users = new ArrayList<User>();
         projects = new ArrayList<Project>();
         Logger.getAnonymousLogger().log(Level.INFO, "ProjectPlatform alive {0}", this.hashCode());
+    }
+    
+    public static ProjectPlatform getInstance(){
+        if(instance == null){
+            instance = new ProjectPlatform();
+        }
+        return instance;
     }
     
     public void addUser(User user) throws Exception {

@@ -14,7 +14,7 @@ public class ProjectPlatformFactory {
     }
 
     public static ProjectPlatform getProjectPlatform(boolean initTestData) {
-        ProjectPlatform p = new ProjectPlatform();
+        ProjectPlatform p = ProjectPlatform.getInstance();
         if (initTestData) {
             initTestData(p);
         }
