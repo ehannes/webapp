@@ -1,7 +1,7 @@
 package com.adde.webbapp_model;
 
 import com.adde.webbapp_model.TodoPost.Priority;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -13,8 +13,7 @@ public class PostsTest {
     private Post post1;
     private WallPost wallPost;
     private TodoPost todoPost;
-    private Date date1;
-    private Date date2;
+    private GregorianCalendar time1;
     
     private static final String STR1 = "PostContent";
     private static final String STR2 = "EditedPostContent";
@@ -23,8 +22,7 @@ public class PostsTest {
     public void setup(){
         user1 = new User("user1", "email1");
         user2 = new User("user2", "email1");
-        date1 = new Date(System.currentTimeMillis());
-        date2 = new Date(System.currentTimeMillis() + 86400); //+ 24 hours
+        time1 = new GregorianCalendar();
         post1 = new Post(user1, STR1);
     }
     
@@ -91,10 +89,6 @@ public class PostsTest {
     
     @Test
     public void TodoPostTest(){
-        System.out.println("(new Date()).getTime() is:");
-        Date d = new Date();
-        System.out.println(d.getTime());
-        
         todoPost = new TodoPost(user1, STR1);
         assertTrue(todoPost.getAssignedTo().isEmpty());
         todoPost.assignTo(user1);
@@ -108,8 +102,9 @@ public class PostsTest {
         todoPost.clearAssignedTo();
         assertTrue(todoPost.getAssignedTo().isEmpty());
         assertTrue(todoPost.getPriority() == null);
-        todoPost.setDeadline(date1);
-        assertTrue(todoPost.getDeadline().equals(date1));
+        assertTrue(todoPost.getDeadline() == null);
+        todoPost.setDeadline(time1);
+        assertTrue(todoPost.getDeadline().equals(time1));
         todoPost.setPriority(Priority.LOW);
         assertTrue(todoPost.getPriority().equals(Priority.LOW));
         assertFalse(todoPost.getPriority().equals(Priority.MEDIUM));
