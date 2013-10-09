@@ -72,10 +72,9 @@ public class ProjectPlatformTest {
         assertTrue(projectPlatform.getUserByEmail(benny.getEmail()).equals(benny));
     }
     
-    // NOT FINISHED
-    @Ignore
+    // Test for testing the platform from the root class to the bottom classes
     @Test
-    public void userArticleTodopostWallPost() {
+    public void userArticleWallPostTodoPost() {
         try {
             projectPlatform.addUser(benny);
             projectPlatform.addProject(project);
@@ -85,12 +84,31 @@ public class ProjectPlatformTest {
             System.out.println(e.toString());
         }
         
-        // Create article and see that
-        Article bennysArticle = new Article(benny, "content...", "Bennys Article");
-        //project.createArticle(bennysArticle);
+        // Create article and see that we can retrieve the content and title from the project platform
+        String title = "Bennys Article";
+        String content = "content...";
+        project.createArticle(benny, content, title);
+         
+        Article addedArticle = projectPlatform.getProjectsByUser(benny).get(0).getArticles().get(0);
         
-        assertTrue(projectPlatform.getProjectsByUser(benny).get(0).getArticles().get(0).equals(bennysArticle));
-        project.createMilestonePost(benny, "finish web app!");
+        assertTrue(addedArticle.getTitle().equals(title));
+        assertTrue(addedArticle.getContent().equals(content));
+        
+        String updatedContent = "new changed content...";
+        String updatedTitle = "new changed title";
+        addedArticle.update(benny, updatedContent, updatedTitle);
+        
+        assertTrue(addedArticle.getContent().equals(updatedContent));
+        assertTrue(addedArticle.getTitle().equals(updatedTitle));
+        
+        // Create WallPost and see that we can retrieve the content from the project platform
+        project.createWallPost(benny, content);
+        String receivedContent = projectPlatform.getProjectsByUser(benny).get(0).getWallPosts().get(0).getMsg();
+        assertTrue(receivedContent.equals(content));
+        
+        // Create TodoPost and see that we can retrieve the content from the project platform
+        project.createTodoPost(benny, content);
+        assertTrue(projectPlatform.getProjectsByUser(benny).get(0).getTodoPosts().get(0).getMsg().equals(content));
     }
 
     @Test
@@ -107,7 +125,7 @@ public class ProjectPlatformTest {
         // Check if the added user has been added to the platform
         assertTrue(projectPlatform.getUsers().contains(benny));
 
-        // Check if the project has been added to the platform.
+        // Check if the project has been added to the platform
         assertTrue(projectPlatform.getProjects().contains(project));
 
         // Get the users added project 
@@ -187,7 +205,7 @@ public class ProjectPlatformTest {
         assertFalse(projectPlatform.removeProject(new Project("Bennys project", benny)));
     }
 
-    // Check that the static data has been initialized correctly.
+    // Just for printing the test data
     @Ignore
     @Test
     public void printInitData() {
