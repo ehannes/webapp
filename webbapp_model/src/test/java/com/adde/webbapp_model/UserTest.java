@@ -29,14 +29,14 @@ public class UserTest {
         assertTrue(nullTest.getEmail() != null);
         assertTrue(nullTest.getFirstName() != null);
         assertTrue(nullTest.getLastName() != null);
-        assertTrue(nullTest.getNickName() != null);
+        assertTrue(nullTest.getUserName() != null);
     }
     
     @Test
     public void getSetTest() {
         assertTrue(userWithSetId.getId() == 15);
         
-        assertTrue(user1.getNickName().equals("User1"));
+        assertTrue(user1.getUserName().equals("User1"));
         
         user1.setFirstName("newName");
         assertTrue(user1.getFirstName().equals("newName"));
@@ -63,7 +63,7 @@ public class UserTest {
         
         //Same nickname doesn't mean equal
         User user4 = new User("User1", "email1");
-        assertTrue(user4.getNickName().equals(user1.getNickName()));
+        assertTrue(user4.getUserName().equals(user1.getUserName()));
         assertFalse(user4.equals(user1));
     }
     

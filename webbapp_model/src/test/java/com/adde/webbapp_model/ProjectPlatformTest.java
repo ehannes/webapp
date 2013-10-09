@@ -54,7 +54,7 @@ public class ProjectPlatformTest {
         assertTrue(projectPlatform.getProjectsByUser(benny).get(0).equals(project));
         
         // Get a user by his name
-        assertTrue(projectPlatform.getUserByNickName(benny.getNickName()).equals(benny));
+        assertTrue(projectPlatform.getUserByUserName(benny.getUserName()).equals(benny));
         
         } catch (NullPointerException e) {
             System.out.println(e.toString());

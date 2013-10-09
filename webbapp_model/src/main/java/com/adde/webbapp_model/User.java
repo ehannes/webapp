@@ -8,15 +8,15 @@ import java.util.Random;
  * Simple user.
  * 
  * Ideer till framtiden:
- * Fler attribut: kort beskrivning, företag, klass, ålder, nickname osv...
+ * Fler attribut: kort beskrivning, företag, klass, ålder, username osv...
  * Nickname unique, should not be able to change name.
- * Assuming here that nickname is unique, checked in GUI and not here.
+ * Assuming here that username is unique, checked in GUI and not here.
  * 
  * @author ehannes
  */
 public class User {
     private final long id;
-    private final String nickname;
+    private final String username;
     private String firstname;
     private String lastname;
     private String email;
@@ -24,13 +24,13 @@ public class User {
     
     public User(String nickname, String email) {
         id = new Long(new Random().nextInt(1000000));
-        this.nickname = nickname;
+        this.username = nickname;
         initUser(email);
     }
     
     public User(long id, String nickname, String email) {
         this.id = id;
-        this.nickname = nickname;
+        this.username = nickname;
         initUser(email);
     }
     
@@ -45,8 +45,8 @@ public class User {
         return id;
     }
 
-    public String getNickName() {
-        return nickname;
+    public String getUserName() {
+        return username;
     }
     
     public String getFirstName(){
@@ -81,7 +81,7 @@ public class User {
     
     @Override
     public String toString(){
-        return "User{Id: " + id + ", Nickname: " + nickname + ", First name: " +
+        return "User{Id: " + id + ", Nickname: " + username + ", First name: " +
                 firstname + ", Last name: " + lastname + ", Email: " + email +
                 ", " + getDateCreated() + "}";
     }
