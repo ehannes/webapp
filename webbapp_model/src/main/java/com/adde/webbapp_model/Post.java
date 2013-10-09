@@ -18,17 +18,28 @@ public class Post {
         id = new Long(new Random().nextInt(777));
     }
     
-    public Long getId(){
-        System.out.println(this.getClass().getName() + ": Post.getId() returned " + id);
+    public long getId(){
         return id;
     }
     
     public GregorianCalendar getDateCreated(){
         return dateCreated;
     }
+
+    public String getStringDateCreated() {
+        return "Post created " + dateCreated.get(GregorianCalendar.DAY_OF_MONTH)
+                + "/" + (dateCreated.get(GregorianCalendar.MONTH)+1)
+                + " " + dateCreated.get(GregorianCalendar.YEAR);
+    }
     
     public GregorianCalendar getDateModified(){
         return dateModified;
+    }
+    
+    public String getStringDateModified() {
+        return "Post modified " + dateModified.get(GregorianCalendar.DAY_OF_MONTH)
+                + "/" + (dateModified.get(GregorianCalendar.MONTH)+1)
+                + " " + dateModified.get(GregorianCalendar.YEAR);
     }
     
     public User getAuthor(){
@@ -46,8 +57,8 @@ public class Post {
     
     @Override
     public String toString(){
-        return "Post{author=" + author + ", msg=" + msg + ", dateCreated="
-            + dateCreated + ", dateModified=" + dateModified + '}';
+        return "Post{id=" + id + ", author=" + author + ", msg=" + msg + ", dateCreated="
+            + getStringDateCreated() + ", dateModified=" + getStringDateModified() + '}';
     }
     
     @Override

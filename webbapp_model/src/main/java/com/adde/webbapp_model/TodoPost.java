@@ -5,8 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TodoPost extends Post {
-    //may be null
-    private GregorianCalendar deadline;
+    private GregorianCalendar deadline; //may be null
     public static enum Priority{LOW, MEDIUM, HIGH};
     private Priority currentPrio;
     private List<User> assignedTo;
@@ -59,7 +58,13 @@ public class TodoPost extends Post {
     public GregorianCalendar getDeadline() {
         return deadline;
     }
-
+    
+    public String getStringDeadline() {
+        return "Deadline: " + deadline.get(GregorianCalendar.DAY_OF_MONTH)
+                + "/" + (deadline.get(GregorianCalendar.MONTH)+1)
+                + " " + deadline.get(GregorianCalendar.YEAR);
+    }
+    
     public List<User> getAssignedTo(){
         return assignedTo;
     }
@@ -70,9 +75,9 @@ public class TodoPost extends Post {
     
     @Override
     public String toString(){
-        return "DeadlinePost{author=" + getAuthor() + ", msg=" + getMsg()
-                + ", deadline=" + deadline + ", currentPrio=" + currentPrio
-                + ", dateCreated=" + getDateCreated() + ", dateModified="
-                + getDateModified() + ", assignedTo=" + assignedTo + '}';
+        return "DeadlinePost{id=" + getId() + ", author=" + getAuthor() + ", msg=" + getMsg()
+                + ", deadline=" + getStringDeadline() + ", currentPrio=" + currentPrio
+                + ", dateCreated=" + getStringDateCreated() + ", dateModified="
+                + getStringDateModified() + ", assignedTo=" + assignedTo + '}';
     }
 }

@@ -11,7 +11,7 @@ import org.junit.Test;
  * @author hannes
  */
 public class UserTest {
-    User user1, user2, userWithSetId, nullTest;
+    private User user1, user2, userWithSetId, nullTest;
     
     @Before
     public void before() {

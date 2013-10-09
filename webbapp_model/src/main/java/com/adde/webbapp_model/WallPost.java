@@ -37,8 +37,8 @@ public class WallPost extends Post {
     
     @Override
     public String toString(){
-        return "WallPost{author=" + getAuthor() + ", msg=" + getMsg()
-                + ", dateCreated=" + getDateCreated() + ", dateModified="
-                + getDateModified() + ", comments=" + comments.toString();
+        return "WallPost{id=" + getId() + ", author=" + getAuthor() + ", msg=" + getMsg()
+                + ", dateCreated=" + getStringDateCreated() + ", dateModified="
+                + getStringDateModified() + ", comments=" + comments.toString();
     }
 }
