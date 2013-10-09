@@ -1,7 +1,7 @@
 package com.adde.webbapp_model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -15,30 +15,29 @@ public class Project {
 
     private String name;
     private final long id;
-    private final Date dateCreated;
     private User admin;
     private List<User> collaborators;
     private List<TodoPost> todoPosts;
     private List<TodoPost> milestonePosts;
     private List<Article> articles;
     private List<WallPost> wallPosts;
+    private GregorianCalendar calendar;
 
     public Project(String name, User admin) {
         id = new Long(new Random().nextInt(1000000));
         this.name = name;
-        this.dateCreated = new Date();
         this.admin = admin;
         this.milestonePosts = new ArrayList<TodoPost>();
         this.collaborators = new ArrayList<User>();
         this.todoPosts = new ArrayList<TodoPost>();
         this.articles = new ArrayList<Article>();
         this.wallPosts = new ArrayList<WallPost>();
+        this.calendar = new GregorianCalendar();
     }
 
     public Project(long id, String name, User admin) {
         this.id = id;
         this.name = name;
-        this.dateCreated = new Date();
         this.admin = admin;
         this.milestonePosts = new ArrayList<TodoPost>();
         this.collaborators = new ArrayList<User>();
@@ -72,8 +71,10 @@ public class Project {
         return admin;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
+    public String getDateCreated() {
+        return "User created " + calendar.get(GregorianCalendar.DAY_OF_MONTH)
+                + "/" + (calendar.get(GregorianCalendar.MONTH)+1)
+                + " " + calendar.get(GregorianCalendar.YEAR);
     }
 
     public List<User> getCollaborators() {
@@ -142,7 +143,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{Name: " + name + "Admin: " + admin + "Id: " + id + "}";
+        return "Project{Name: " + name + "Admin: " + admin + " Id: " + id + " date created " + getDateCreated() +"}";
     }
 
     @Override
