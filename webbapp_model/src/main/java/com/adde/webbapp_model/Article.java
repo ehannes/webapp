@@ -13,37 +13,36 @@ import java.util.*;
  */
 public class Article {
 
-    private User author;
-    private LinkedList<AbstractMap.SimpleEntry<User, Date>> editors;
+    private LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>> editors;
     private String title;
     private String content;
-    private Date dateCreated;
-    private Date dateModified;
+    private GregorianCalendar dateCreated;
+    private GregorianCalendar dateModified;
     private final long id;
 
-    public Article(long id, User author, String content, String title) {
-        this.author = author;
+    public Article(long id, User editor, String content, String title) {
         this.content = content;
-        editors = new LinkedList<AbstractMap.SimpleEntry<User, Date>>();
-        dateCreated = new Date();
+        editors = new LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>>();
+        dateCreated = new GregorianCalendar();
         dateModified = dateCreated;
         this.title = title;
         this.id = id;
+        editors.addFirst(new AbstractMap.SimpleEntry(editor, dateModified));
     }
     
-    public Article(User author, String content, String title) {
-        this.author = author;
+    public Article(User editor, String content, String title) {
         this.content = content;
-        editors = new LinkedList<AbstractMap.SimpleEntry<User, Date>>();
-        dateCreated = new Date();
+        editors = new LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>>();
+        dateCreated = new GregorianCalendar();
         dateModified = dateCreated;
         this.title = title;
         id = new Long(new Random().nextInt(1000));
+        editors.addFirst(new AbstractMap.SimpleEntry(editor, dateModified));
     }
     
     public void update(User editor, String newContent, String title) {
         content = newContent;
-        dateModified = new Date();
+        dateModified = new GregorianCalendar();
         editors.addFirst(new AbstractMap.SimpleEntry(editor, dateModified));
         this.title = title;
     }
@@ -51,17 +50,13 @@ public class Article {
     public String getTitle() {
         return title;
     }
-
-    public User getAuthor() {
-        return author;
-    }
     
-    public LinkedList<AbstractMap.SimpleEntry<User, Date>> getEditEntries() {
+    public LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>> getEditEntries() {
         return getEditEntries(editors.size());
     }
 
-    public LinkedList<AbstractMap.SimpleEntry<User, Date>> getEditEntries(int n) {
-        LinkedList<AbstractMap.SimpleEntry<User, Date>> result = new LinkedList<AbstractMap.SimpleEntry<User, Date>>();
+    public LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>> getEditEntries(int n) {
+        LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>> result = new LinkedList<AbstractMap.SimpleEntry<User,GregorianCalendar>>();
         for(int i = 0; i < n; i++) {
             result.add(editors.get(i));
         }
@@ -84,12 +79,17 @@ public class Article {
         return content;
     }
 
-    public Date getDateCreated() {
+    public GregorianCalendar getDateCreated() {
         return dateCreated;
     }
 
-    public Date getDateModified() {
+    public GregorianCalendar getDateModified() {
         return dateModified;
+    }
+    public String calendarToString(GregorianCalendar c) {
+        return  c.get(GregorianCalendar.DAY_OF_MONTH)
+                + "/" + (c.get(GregorianCalendar.MONTH) + 1)
+                + " " + c.get(GregorianCalendar.YEAR);
     }
     
     public long getId() {
@@ -119,7 +119,8 @@ public class Article {
     
     @Override
     public String toString() {
-        return "Article{Id: " + id + " Author: " + author + " Content: " + content
-                + " dateCreated: " + dateCreated + " dateModified: " + dateModified;
+        return "Article{Id: " + id + " Content: " + content
+                + " dateCreated: " + calendarToString(dateCreated) + 
+                " dateModified: " + calendarToString(dateModified);
     }
 }

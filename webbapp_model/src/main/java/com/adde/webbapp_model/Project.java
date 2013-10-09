@@ -71,10 +71,14 @@ public class Project {
         return admin;
     }
 
-    public String getDateCreated() {
-        return "User created " + calendar.get(GregorianCalendar.DAY_OF_MONTH)
-                + "/" + (calendar.get(GregorianCalendar.MONTH)+1)
-                + " " + calendar.get(GregorianCalendar.YEAR);
+    public GregorianCalendar getDateCreated() {
+        return calendar;
+    }
+
+    public String calendarToString(GregorianCalendar c) {
+        return  c.get(GregorianCalendar.DAY_OF_MONTH)
+                + "/" + (c.get(GregorianCalendar.MONTH) + 1)
+                + " " + c.get(GregorianCalendar.YEAR);
     }
 
     public List<User> getCollaborators() {
@@ -143,7 +147,8 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{Name: " + name + "Admin: " + admin + " Id: " + id + " date created " + getDateCreated() +"}";
+        return "Project{Name: " + name + "Admin: " + admin + " Id: " + id +
+                " date created " + calendarToString(calendar) + "}";
     }
 
     @Override

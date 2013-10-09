@@ -24,14 +24,14 @@ public class ArticleTest {
     public void testAuthorContent() {
         Logger.getAnonymousLogger().log(Level.INFO, "Article1:{0}", article1.toString());
         
-        //Correct Author and Content?
-        assertTrue(article1.getAuthor().equals(user1));
-        assertFalse(article1.getAuthor().equals(user2));
+        //Correct Content?
         assertTrue(article1.getContent().equals("content1"));
         assertFalse(article1.getContent().equals("content12"));
         
         //Printing dates
-        Logger.getAnonymousLogger().log(Level.INFO, "Article created: {0} and modified {1}", new Object[]{article1.getDateCreated(), article1.getDateModified()});
+        Logger.getAnonymousLogger().log(Level.INFO, "Article created: {0} and modified {1}",
+                new Object[]{article1.calendarToString(article1.getDateCreated()),
+                    article1.calendarToString(article1.getDateModified())});
     }
     
     @Test
@@ -76,7 +76,7 @@ public class ArticleTest {
         assertFalse(a2.equals(a3));
         
         //Same id test
-        Article a5 = new Article(article1.getId(), article1.getAuthor(), article1.getContent(), article1.getTitle());
+        Article a5 = new Article(article1.getId(), article1.getEditors().get(0), article1.getContent(), article1.getTitle());
         assertTrue(a5.equals(article1));
         
         //Same id but different authors, should still be equal since equal-method just checks id
