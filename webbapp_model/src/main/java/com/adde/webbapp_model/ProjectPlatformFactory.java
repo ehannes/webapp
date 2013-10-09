@@ -5,8 +5,10 @@ package com.adde.webbapp_model;
  * @author Eric Ahlberg (eahlberg@gmail.com)
  */
 public class ProjectPlatformFactory {
+    
     // Total number of owners
     private final static int OWNERS = 5;
+    
     // Collaborators per project
     private final static int COLLABORATORS_PER_PROJECT = 3;
     
@@ -14,7 +16,7 @@ public class ProjectPlatformFactory {
     }
 
     public static ProjectPlatform getProjectPlatform(boolean initTestData) {
-        ProjectPlatform p = ProjectPlatform.getInstance();
+        ProjectPlatform p = new ProjectPlatform();
         if (initTestData) {
             initTestData(p);
         }
