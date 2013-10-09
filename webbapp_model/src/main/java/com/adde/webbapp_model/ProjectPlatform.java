@@ -14,19 +14,11 @@ public class ProjectPlatform {
     
     private List<User> users;
     private List<Project> projects;
-    private static ProjectPlatform instance;
     
-    private ProjectPlatform() {
+    public ProjectPlatform() {
         users = new ArrayList<User>();
         projects = new ArrayList<Project>();
         Logger.getAnonymousLogger().log(Level.INFO, "ProjectPlatform alive {0}", this.hashCode());
-    }
-    
-    public static ProjectPlatform getInstance(){
-        if(instance == null){
-            instance = new ProjectPlatform();
-        }
-        return instance;
     }
     
     public void addUser(User user) throws Exception {
@@ -76,9 +68,36 @@ public class ProjectPlatform {
         return userProjects;
     }
     
-    public User getUserByUserName(String name) {
+    public User getUserByUserName(String username) {
         for(User u : users) {
-            if(u.getUserName().equals(name)) {
+            if(u.getUserName().equals(username)) {
+                return u;
+            }
+        }
+        return null;
+    }
+    
+    public User getUserByFirstName(String firstname) {
+        for(User u : users) {
+            if(u.getFirstName().equals(firstname)) {
+                return u;
+            }
+        }
+        return null;
+    }
+    
+    public User getUserByLastName(String lastname) {
+        for(User u : users) {
+            if(u.getLastName().equals(lastname)) {
+                return u;
+            }
+        }
+        return null;
+    }
+    
+    public User getUserByEmail(String email) {
+        for(User u : users) {
+            if(u.getEmail().equals(email)) {
                 return u;
             }
         }
