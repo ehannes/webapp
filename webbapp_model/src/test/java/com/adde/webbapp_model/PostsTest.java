@@ -21,8 +21,8 @@ public class PostsTest {
     
     @Before
     public void setup(){
-        user1 = new User("user1");
-        user2 = new User("user2");
+        user1 = new User("user1", "email1");
+        user2 = new User("user2", "email1");
         date1 = new Date(System.currentTimeMillis());
         date2 = new Date(System.currentTimeMillis() + 86400); //+ 24 hours
         post1 = new Post(user1, STR1);

@@ -24,7 +24,7 @@ public class ProjectTest {
     @Before
     public void before() {
         
-        testUser = new User("kalle");
+        testUser = new User("kalle", "kallemail");
         project1 = new Project("Project1", testUser);
         project2 = new Project("Project2", testUser);
     }
@@ -49,7 +49,7 @@ public class ProjectTest {
         assertTrue(project1.getName().equals("ProjectGroup1"));
         
         //Change admin
-        User newTestUser = new User("Lisa");
+        User newTestUser = new User("Lisa", "lisamail");
         try {
             project1.setAdmin(newTestUser, newTestUser);
         } catch (Exception ex) {
@@ -67,7 +67,7 @@ public class ProjectTest {
     @Test
     public void addRemoveTest() {
         //add and remove elements
-        User testUser2 = new User("Lisa");
+        User testUser2 = new User("Lisa", "lisamail");
 
         //user
         try {

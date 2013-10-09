@@ -14,8 +14,8 @@ public class ArticleTest {
     
     @Before
     public void before() {
-        user1 = new User("user1");
-        user2 = new User("user2");
+        user1 = new User("user1", "email1");
+        user2 = new User("user2", "email2");
         article1 = new Article(user1, "content1", "title1");
         article2 = new Article(user2, "content2", "title2");
     }
@@ -52,7 +52,7 @@ public class ArticleTest {
     
     @Test
     public void testEquality() {
-        Article a1 = new Article(new User("Author 1"), "test equals", "authorTitle1");
+        Article a1 = new Article(new User("Author 1", "Aemail1"), "test equals", "authorTitle1");
         
         // Pointer equality
         Article a2 = a1;
@@ -63,7 +63,7 @@ public class ArticleTest {
         assertTrue(a1.equals(a3));
         
         // Same content, shouldn't be equal
-        Article a4 = new Article(new User("Author 4"), "test equals", "authorTitle4");
+        Article a4 = new Article(new User("Author 4", "aemail4"), "test equals", "authorTitle4");
         assertFalse(a1.equals(a4));
         
         // Test Collection compability (depends on hashcode)

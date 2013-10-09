@@ -1,5 +1,6 @@
 package com.adde.webbapp_model;
 
+import java.util.GregorianCalendar;
 import java.util.Objects;
 import java.util.Random;
 
@@ -7,40 +8,82 @@ import java.util.Random;
  * Simple user.
  * 
  * Ideer till framtiden:
- * Fler attribut: förnamn, efternamn emailadress, kost beskrivning,
- * företag, klass, ålder, nickname osv...
- *  
+ * Fler attribut: kort beskrivning, företag, klass, ålder, nickname osv...
+ * Nickname unique, should not be able to change name.
+ * Assuming here that nickname is unique, checked in GUI and not here.
+ * 
  * @author ehannes
  */
 public class User {
     private final long id;
-    private String name;
+    private final String nickname;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private GregorianCalendar calendar;
     
-    public User(String name) {
+    public User(String nickname, String email) {
         id = new Long(new Random().nextInt(1000000));
-        this.name = name;
+        this.nickname = nickname;
+        initUser(email);
     }
     
-    public User(long id, String name) {
+    public User(long id, String nickname, String email) {
         this.id = id;
-        this.name = name;
+        this.nickname = nickname;
+        initUser(email);
+    }
+    
+    private void initUser(String email) {
+        this.email = email;
+        this.firstname = "";
+        this.lastname = "";
+        calendar = new GregorianCalendar();
     }
     
     public long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getNickName() {
+        return nickname;
     }
     
-    public void setName(String newName) {
-        this.name = newName;
+    public String getFirstName(){
+        return firstname;
+    }
+    
+    public void setFirstName(String firstname) {
+        this.firstname = firstname;
+    }
+    
+    public String getLastName() {
+        return lastname;
+    }
+    
+    public void setLastName(String lastname) {
+        this.lastname = lastname;
+    }
+    
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email){
+        this.email = email;
+    }
+    
+    public String getDateCreated() {
+        return "User created " + calendar.get(GregorianCalendar.DAY_OF_MONTH)
+                + "/" + (calendar.get(GregorianCalendar.MONTH)+1)
+                + " " + calendar.get(GregorianCalendar.YEAR);
     }
     
     @Override
     public String toString(){
-        return "User{Name: " + name + " Id: " + id + "}";
+        return "User{Id: " + id + ", Nickname: " + nickname + ", First name: " +
+                firstname + ", Last name: " + lastname + ", Email: " + email +
+                ", " + getDateCreated() + "}";
     }
     
     @Override

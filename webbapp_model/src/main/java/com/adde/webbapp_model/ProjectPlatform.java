@@ -68,9 +68,9 @@ public class ProjectPlatform {
         return userProjects;
     }
     
-    public User getUserByName(String name) {
+    public User getUserByNickName(String name) {
         for(User u : users) {
-            if(u.getName().equals(name)) {
+            if(u.getNickName().equals(name)) {
                 return u;
             }
         }

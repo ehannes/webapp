@@ -25,7 +25,7 @@ public class ProjectPlatformTest {
     @Before 
     public void setup() {
         projectPlatform = ProjectPlatformFactory.getProjectPlatform(true);
-        benny = new User("Benny");
+        benny = new User("Benny", "bennyemail");
         project = new Project("Bennys Wiki", benny);
     }
 
@@ -54,7 +54,7 @@ public class ProjectPlatformTest {
         assertTrue(projectPlatform.getProjectsByUser(benny).get(0).equals(project));
         
         // Get a user by his name
-        assertTrue(projectPlatform.getUserByName(benny.getName()).equals(benny));
+        assertTrue(projectPlatform.getUserByNickName(benny.getNickName()).equals(benny));
         
         } catch (NullPointerException e) {
             System.out.println(e.toString());
@@ -73,7 +73,7 @@ public class ProjectPlatformTest {
             assertFalse(projectPlatform.getUsers().contains(benny));
             
             // Shouldn't be able to remove a user who's not added to the platform
-            assertFalse(projectPlatform.removeUser(new User("Bo")));
+            assertFalse(projectPlatform.removeUser(new User("Bo", "bomail")));
         } catch (NullPointerException e) {
             System.out.println(e.toString());
         } catch (Exception e) {
