@@ -82,4 +82,11 @@ public class ArticleTest {
         //Same id but different authors, should still be equal since equal-method just checks id
         a5.update(user2, a5.getContent(), a5.getTitle());
     }
+    
+    // Just for checking the printed output, not really a test
+    @Test
+    public void printArticle() {
+        Article a1 = new Article(new User("Author 1", "Aemail1"), "test equals", "authorTitle1");
+        System.out.println(a1.toString());
+    }
 }

@@ -119,8 +119,15 @@ public class Article {
     
     @Override
     public String toString() {
-        return "Article{Id: " + id + " Content: " + content
+        List<User> editorList = new ArrayList<User>();
+        for(AbstractMap.SimpleEntry se : editors) {
+            
+            // Necessary to type cast here?
+            editorList.add((User) se.getKey());
+        }
+        return "Article{Id: " + id + " Title: " + title + " Content: " + content
                 + " dateCreated: " + calendarToString(dateCreated) + 
-                " dateModified: " + calendarToString(dateModified);
+                " dateModified: " + calendarToString(dateModified)+ " Editors: "
+                + editorList + "}";
     }
 }
