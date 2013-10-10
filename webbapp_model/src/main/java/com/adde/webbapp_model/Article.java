@@ -31,13 +31,7 @@ public class Article {
     }
     
     public Article(User editor, String content, String title) {
-        this.content = content;
-        editors = new LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>>();
-        dateCreated = new GregorianCalendar();
-        dateModified = dateCreated;
-        this.title = title;
-        id = new Long(new Random().nextInt(1000));
-        editors.addFirst(new AbstractMap.SimpleEntry(editor, dateModified));
+        this(new Long(new Random().nextInt(1000)), editor, content, title);
     }
     
     public void update(User editor, String newContent, String title) {
