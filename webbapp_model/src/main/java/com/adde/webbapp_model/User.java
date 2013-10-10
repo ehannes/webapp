@@ -6,6 +6,7 @@ import java.util.Random;
 
 /**
  * Simple user.
+ * Test
  * 
  * Ideer till framtiden:
  * Fler attribut: kort beskrivning, företag, klass, ålder, username osv...
