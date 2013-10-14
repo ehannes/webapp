@@ -4,20 +4,17 @@
  */
 package com.adde.webbapp_model;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
-
 /**
  *
  * @author hannes
  */
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable {
-    private static final long serialVersionUID = 1L;
+public abstract class AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull

@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Ignore;
 
 public class PostsTest {
     private User user1;
@@ -29,6 +30,7 @@ public class PostsTest {
         post1 = new Post(user1, STR1);
     }
     
+    @Ignore
     @Test
     public void PostTest(){
         Post post2 = new Post(user1, STR1);
@@ -69,6 +71,7 @@ public class PostsTest {
         Logger.getAnonymousLogger().log(Level.INFO, "WallPost: {0}", post2.toString());
     }
     
+    @Ignore
     @Test
     public void WallPostTest(){
         wallPost = new WallPost(user1, STR1);
@@ -96,6 +99,7 @@ public class PostsTest {
         Logger.getAnonymousLogger().log(Level.INFO, "WallPost: {0}", wallPost.toString());
     }
     
+    @Ignore
     @Test
     public void TodoPostTest(){
         todoPost = new TodoPost(user1, STR1);

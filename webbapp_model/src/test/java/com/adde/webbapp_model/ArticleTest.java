@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ArticleTest {
@@ -20,6 +21,7 @@ public class ArticleTest {
         article2 = new Article(user2, "content2", "title2");
     }
     
+    @Ignore
     @Test
     public void testAuthorContent() {
         Logger.getAnonymousLogger().log(Level.INFO, "Article1:{0}", article1.toString());
@@ -34,6 +36,7 @@ public class ArticleTest {
                     article1.calendarToString(article1.getDateModified())});
     }
     
+    @Ignore
     @Test
     public void testUpdatedEditors() {
         article1.update(user1, "updatedContent1", "updateTitle1");
@@ -50,6 +53,7 @@ public class ArticleTest {
         assertTrue(article1.getEditors().get(0).equals(user1));
     }
     
+    @Ignore
     @Test
     public void testEquality() {
         Article a1 = new Article(new User("Author 1", "Aemail1"), "test equals", "authorTitle1");
@@ -84,6 +88,7 @@ public class ArticleTest {
     }
     
     // Just for checking the printed output, not really a test
+    @Ignore
     @Test
     public void printArticle() {
         Article a1 = new Article(new User("Author 1", "Aemail1"), "test equals", "authorTitle1");

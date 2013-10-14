@@ -1,25 +1,18 @@
 package com.adde.webbapp_model;
 
 import java.util.GregorianCalendar;
-import java.util.Random;
 
-public class Post {
+public class Post extends AbstractEntity {
     private User author;
     private GregorianCalendar dateCreated;
     private GregorianCalendar dateModified;
     private String msg;
-    private final long id;
     
     public Post(User author, String msg){
         this.author = author;
         this.msg = msg;
         dateCreated = new GregorianCalendar();
         dateModified = dateCreated;
-        id = new Long(new Random().nextInt(777));
-    }
-    
-    public long getId(){
-        return id;
     }
     
     public GregorianCalendar getDateCreated(){
@@ -57,7 +50,7 @@ public class Post {
     
     @Override
     public String toString(){
-        return "Post{id=" + id + ", author=" + author + ", msg=" + msg + ", dateCreated="
+        return "Post{id=" + getId() + ", author=" + author + ", msg=" + msg + ", dateCreated="
             + getStringDateCreated() + ", dateModified=" + getStringDateModified() + '}';
     }
     
@@ -66,7 +59,7 @@ public class Post {
         boolean result = false;
         if(o instanceof Post){
             Post o2 = (Post) o;
-            result = o2.getId() == id;
+            result = o2.getId() == getId();
         }
         return result;
     }
@@ -74,7 +67,7 @@ public class Post {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 37 * hash + (int) (getId() ^ (getId() >>> 32));
         return hash;
     }
 }

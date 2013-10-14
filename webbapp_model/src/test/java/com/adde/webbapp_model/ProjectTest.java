@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -29,6 +30,7 @@ public class ProjectTest {
         project2 = new Project("Project2", testUser);
     }
 
+    @Ignore
     @Test
     public void testProject() {
         Logger.getAnonymousLogger().log(Level.INFO,
@@ -64,6 +66,7 @@ public class ProjectTest {
         assertTrue(project1.getAdmin() == newTestUser);
     }
 
+    @Ignore
     @Test
     public void addRemoveTest() {
         //add and remove elements
