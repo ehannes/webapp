@@ -1,8 +1,7 @@
 package com.adde.webbapp_model;
 
 import java.util.GregorianCalendar;
-import java.util.Objects;
-import java.util.Random;
+import javax.persistence.Entity;
 
 /**
  * Simple user.
@@ -15,22 +14,18 @@ import java.util.Random;
  * 
  * @author ehannes
  */
-public class User {
-    private final long id;
-    private final String username;
+@Entity
+public class User extends AbstractEntity {
+    private String username;
     private String firstname;
     private String lastname;
     private String email;
     private GregorianCalendar calendar;
     
-    public User(String nickname, String email) {
-        id = new Long(new Random().nextInt(1000000));
-        this.username = nickname;
-        initUser(email);
+    public User() {
     }
     
-    public User(long id, String nickname, String email) {
-        this.id = id;
+    public User(String nickname, String email) {
         this.username = nickname;
         initUser(email);
     }
@@ -42,10 +37,6 @@ public class User {
         calendar = new GregorianCalendar();
     }
     
-    public long getId() {
-        return id;
-    }
-
     public String getUserName() {
         return username;
     }
@@ -82,29 +73,8 @@ public class User {
     
     @Override
     public String toString(){
-        return "User{Id: " + id + ", Nickname: " + username + ", First name: " +
+        return super.toString() + ", Nickname: " + username + ", First name: " +
                 firstname + ", Last name: " + lastname + ", Email: " + email +
                 ", " + getDateCreated() + "}";
-    }
-    
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        return hash;
-    }
-    
-    @Override
-    public boolean equals(Object o){
-        if(o == null) {
-            return false;
-        }
-        if(o instanceof User) {
-            User u = (User) o;
-            if(u.getId() == this.id) { //equal if same id
-                return true;
-            }
-        }
-        return false;
     }
 }
