@@ -3,19 +3,22 @@ package com.adde.webbapp_model;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  *
  *
  * @author Joakim Danielsson
  */
-public class Project {
+@Entity
+public class Project extends AbstractEntity {
 
     private String name;
-    private final long id;
+    
+    @OneToMany
     private Person admin;
+    
     private List<Person> collaborators;
     private List<TodoPost> todoPosts;
     private List<TodoPost> milestonePosts;
@@ -23,8 +26,10 @@ public class Project {
     private List<WallPost> wallPosts;
     private GregorianCalendar calendar;
 
+    public Project(){
+    }
+    
     public Project(String name, Person admin) {
-        id = new Long(new Random().nextInt(1000000));
         this.name = name;
         this.admin = admin;
         this.milestonePosts = new ArrayList<>();
@@ -35,27 +40,12 @@ public class Project {
         this.calendar = new GregorianCalendar();
     }
 
-    public Project(long id, String name, Person admin) {
-        this.id = id;
-        this.name = name;
-        this.admin = admin;
-        this.milestonePosts = new ArrayList<>();
-        this.collaborators = new ArrayList<>();
-        this.todoPosts = new ArrayList<>();
-        this.articles = new ArrayList<>();
-        this.wallPosts = new ArrayList<>();
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String newName) {
         this.name = newName;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public void setAdmin(Person currentAdmin, Person newAdmin) throws Exception {
@@ -147,28 +137,7 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project{Name: " + name + "Admin: " + admin + " Id: " + id +
+        return "Project{Name: " + name + "Admin: " + admin + " Id: " + super.toString() +
                 " date created " + calendarToString(calendar) + "}";
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null) {
-            return false;
-        }
-        if (o instanceof Project) {
-            Project p = (Project) o;
-            if (p.getId() == this.id) { //equal if same id
-                return true;
-            }
-        }
-        return false;
     }
 }

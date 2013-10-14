@@ -9,12 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
-/** 
+
+/**
  *
  * @author hannes
  */
 @MappedSuperclass
 public abstract class AbstractEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
@@ -45,6 +47,7 @@ public abstract class AbstractEntity {
     }
 
     @Override
-    public abstract String toString();
-    
+    public String toString() {
+        return "Id " + this.id;
+    }
 }
