@@ -5,12 +5,12 @@ import javax.persistence.ManyToOne;
 
 public class Post extends AbstractEntity {
     @ManyToOne
-    private User author;
+    private Person author;
     private GregorianCalendar dateCreated;
     private GregorianCalendar dateModified;
     private String msg;
     
-    public Post(User author, String msg){
+    public Post(Person author, String msg){
         this.author = author;
         this.msg = msg;
         dateCreated = new GregorianCalendar();
@@ -37,7 +37,7 @@ public class Post extends AbstractEntity {
                 + " " + dateModified.get(GregorianCalendar.YEAR);
     }
     
-    public User getAuthor(){
+    public Person getAuthor(){
         return author;
     }
     

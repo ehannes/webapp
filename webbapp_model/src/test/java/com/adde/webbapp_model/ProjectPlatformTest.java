@@ -18,7 +18,7 @@ import org.junit.Ignore;
 public class ProjectPlatformTest {
 
     private ProjectPlatform projectPlatform;
-    User benny;
+    Person benny;
     Project project;
     
     // Total number of owners
@@ -30,7 +30,7 @@ public class ProjectPlatformTest {
     @Before
     public void setup() {
         projectPlatform = ProjectPlatformFactory.getProjectPlatform(true);
-        benny = new User("Benny", "benny@benny.com");
+        benny = new Person("Benny", "benny@benny.com");
         benny.setFirstName("Benny");
         benny.setLastName("Bennysson");
         project = new Project("Bennys Wiki", benny);
@@ -141,7 +141,7 @@ public class ProjectPlatformTest {
     @Test
     public void oneUserMultipleProjects() {
         List<Project> bennysProjects = new ArrayList<Project>();
-        List<User> bennysCollaborators = new ArrayList<User>();
+        List<Person> bennysCollaborators = new ArrayList<Person>();
         try {
             projectPlatform.addUser(benny);
             projectPlatform.addProject(project);
@@ -152,7 +152,7 @@ public class ProjectPlatformTest {
             bennysProjects.add(project);
             bennysProjects.add(secondProject);
             for (int i = 0; i < COLLABORATORS_PER_PROJECT; i++) {
-                User collaborator = new User("Collaborator " + i, 
+                Person collaborator = new Person("Collaborator " + i, 
                         "collaborator " + i + "@collaborators.com");
                 bennysCollaborators.add(collaborator);
                 projectPlatform.addUser(collaborator);
@@ -191,7 +191,7 @@ public class ProjectPlatformTest {
         assertFalse(projectPlatform.getUsers().contains(benny));
 
         // Shouldn't be able to remove a user who's not added to the platform
-        assertFalse(projectPlatform.removeUser(new User("Bo", "bomail")));
+        assertFalse(projectPlatform.removeUser(new Person("Bo", "bomail")));
     }
 
     @Ignore
@@ -217,13 +217,13 @@ public class ProjectPlatformTest {
     @Ignore
     @Test
     public void printInitData() {
-        for (User u : projectPlatform.getUsers()) {
+        for (Person u : projectPlatform.getUsers()) {
             System.out.println("In platform: " + u);
         }
 
         for (Project proj : projectPlatform.getProjects()) {
             System.out.println("In platform: " + proj);
-            for (User usr : proj.getCollaborators()) {
+            for (Person usr : proj.getCollaborators()) {
                 System.out.println("Collaborator in " + proj.toString());
             }
         }

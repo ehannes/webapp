@@ -15,32 +15,32 @@ public class Project {
 
     private String name;
     private final long id;
-    private User admin;
-    private List<User> collaborators;
+    private Person admin;
+    private List<Person> collaborators;
     private List<TodoPost> todoPosts;
     private List<TodoPost> milestonePosts;
     private List<Article> articles;
     private List<WallPost> wallPosts;
     private GregorianCalendar calendar;
 
-    public Project(String name, User admin) {
+    public Project(String name, Person admin) {
         id = new Long(new Random().nextInt(1000000));
         this.name = name;
         this.admin = admin;
         this.milestonePosts = new ArrayList<TodoPost>();
-        this.collaborators = new ArrayList<User>();
+        this.collaborators = new ArrayList<Person>();
         this.todoPosts = new ArrayList<TodoPost>();
         this.articles = new ArrayList<Article>();
         this.wallPosts = new ArrayList<WallPost>();
         this.calendar = new GregorianCalendar();
     }
 
-    public Project(long id, String name, User admin) {
+    public Project(long id, String name, Person admin) {
         this.id = id;
         this.name = name;
         this.admin = admin;
         this.milestonePosts = new ArrayList<TodoPost>();
-        this.collaborators = new ArrayList<User>();
+        this.collaborators = new ArrayList<Person>();
         this.todoPosts = new ArrayList<TodoPost>();
         this.articles = new ArrayList<Article>();
         this.wallPosts = new ArrayList<WallPost>();
@@ -58,7 +58,7 @@ public class Project {
         return id;
     }
 
-    public void setAdmin(User currentAdmin, User newAdmin) throws Exception {
+    public void setAdmin(Person currentAdmin, Person newAdmin) throws Exception {
         if (currentAdmin.equals(admin)) {
             admin = newAdmin;
             collaborators.add(admin);
@@ -67,7 +67,7 @@ public class Project {
         throw new Exception("Current admin in setAdmin was incorrect");
     }
 
-    public User getAdmin() {
+    public Person getAdmin() {
         return admin;
     }
 
@@ -81,7 +81,7 @@ public class Project {
                 + " " + c.get(GregorianCalendar.YEAR);
     }
 
-    public List<User> getCollaborators() {
+    public List<Person> getCollaborators() {
         return collaborators;
     }
 
@@ -101,7 +101,7 @@ public class Project {
         return wallPosts;
     }
 
-    public void addCollaborator(User user) throws Exception {
+    public void addCollaborator(Person user) throws Exception {
         if (user.equals(admin)) {
             throw new Exception("The user is Admin");
         } else {
@@ -109,23 +109,23 @@ public class Project {
         }
     }
 
-    public void createMilestonePost(User author, String msg) {
+    public void createMilestonePost(Person author, String msg) {
         milestonePosts.add(new TodoPost(author, msg));
     }
 
-    public void createTodoPost(User author, String msg) {
+    public void createTodoPost(Person author, String msg) {
         todoPosts.add(new TodoPost(author, msg));
     }
 
-    public void createArticle(User author, String content, String title) {
+    public void createArticle(Person author, String content, String title) {
         articles.add(new Article(author, content, title));
     }
 
-    public void createWallPost(User author, String msg) {
+    public void createWallPost(Person author, String msg) {
         wallPosts.add(new WallPost(author, msg));
     }
 
-    public void deleteCollaborator(User u) {
+    public void deleteCollaborator(Person u) {
         collaborators.remove(u);
     }
 

@@ -8,18 +8,18 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Test class for User.
+ * Test class for Person.
  * @author hannes
  */
-public class UserTest {
-    private User user1, user2, userWithSetId, nullTest;
+public class PersonTest {
+    private Person user1, user2, userWithSetId, nullTest;
     
     @Before
     public void before() {
-        user1 = new User("User1", "email1");
-        user2 = new User("User2", "email2");
-        userWithSetId = new User("UserWithSetId", "email");
-        nullTest = new User("newUser", "newUserEmail");
+        user1 = new Person("User1", "email1");
+        user2 = new Person("User2", "email2");
+        userWithSetId = new Person("UserWithSetId", "email");
+        nullTest = new Person("newUser", "newUserEmail");
     }
     
     @Test
@@ -58,12 +58,12 @@ public class UserTest {
         assertTrue(user1.equals(user1));
         
         //New user with same Id as user1. Though different nicknames, users should now be equal
-        User user3 = new User(user1.getId(), "User3", "email3");
+        Person user3 = new Person(user1.getId(), "User3", "email3");
         assertTrue(user3.equals(user1));
         assertTrue(user1.equals(user3));
         
         //Same nickname doesn't mean equal
-        User user4 = new User("User1", "email1");
+        Person user4 = new Person("User1", "email1");
         assertTrue(user4.getUserName().equals(user1.getUserName()));
         assertFalse(user4.equals(user1));
         */

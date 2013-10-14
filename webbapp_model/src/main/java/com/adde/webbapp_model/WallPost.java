@@ -6,7 +6,7 @@ import java.util.List;
 public class WallPost extends Post {
     private LinkedList<Post> comments;
     
-    public WallPost(User author, String msg){
+    public WallPost(Person author, String msg){
         super(author, msg);
         comments = new LinkedList<Post>();
     }
@@ -15,7 +15,7 @@ public class WallPost extends Post {
         return comments;
     }
     
-    public void addComment(User author, String msg){
+    public void addComment(Person author, String msg){
         comments.add(new Post(author, msg));
     }
     
@@ -27,7 +27,7 @@ public class WallPost extends Post {
         comments.remove(comment);
     }
     
-    public void removeCommentsByUser(User user) {
+    public void removeCommentsByUser(Person user) {
         for(Post comment : comments){
             if(comment.getAuthor().equals(user)){
                 comments.remove(comment);

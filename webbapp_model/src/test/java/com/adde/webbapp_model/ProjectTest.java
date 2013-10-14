@@ -20,12 +20,12 @@ import org.junit.Test;
 public class ProjectTest {
 
     Project project1, project2;
-    User testUser;
+    Person testUser;
 
     @Before
     public void before() {
         
-        testUser = new User("kalle", "kallemail");
+        testUser = new Person("kalle", "kallemail");
         project1 = new Project("Project1", testUser);
         project2 = new Project("Project2", testUser);
     }
@@ -51,7 +51,7 @@ public class ProjectTest {
         assertTrue(project1.getName().equals("ProjectGroup1"));
         
         //Change admin
-        User newTestUser = new User("Lisa", "lisamail");
+        Person newTestUser = new Person("Lisa", "lisamail");
         try {
             project1.setAdmin(newTestUser, newTestUser);
         } catch (Exception ex) {
@@ -70,7 +70,7 @@ public class ProjectTest {
     @Test
     public void addRemoveTest() {
         //add and remove elements
-        User testUser2 = new User("Lisa", "lisamail");
+        Person testUser2 = new Person("Lisa", "lisamail");
 
         //user
         try {
@@ -78,7 +78,7 @@ public class ProjectTest {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        List<User> users = project2.getCollaborators();
+        List<Person> users = project2.getCollaborators();
         assertFalse(users.size() == 1);
 
         try {
@@ -86,7 +86,7 @@ public class ProjectTest {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        List<User> users2 = project2.getCollaborators();
+        List<Person> users2 = project2.getCollaborators();
         assertTrue(users2.size() == 1);
 
         project2.deleteCollaborator(testUser2);

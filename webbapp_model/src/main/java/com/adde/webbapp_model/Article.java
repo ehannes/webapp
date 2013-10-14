@@ -13,16 +13,16 @@ import java.util.*;
  */
 public class Article {
 
-    private LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>> editors;
+    private LinkedList<AbstractMap.SimpleEntry<Person, GregorianCalendar>> editors;
     private String title;
     private String content;
     private GregorianCalendar dateCreated;
     private GregorianCalendar dateModified;
     private final long id;
 
-    public Article(long id, User editor, String content, String title) {
+    public Article(long id, Person editor, String content, String title) {
         this.content = content;
-        editors = new LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>>();
+        editors = new LinkedList<AbstractMap.SimpleEntry<Person, GregorianCalendar>>();
         dateCreated = new GregorianCalendar();
         dateModified = dateCreated;
         this.title = title;
@@ -30,11 +30,11 @@ public class Article {
         editors.addFirst(new AbstractMap.SimpleEntry(editor, dateModified));
     }
     
-    public Article(User editor, String content, String title) {
+    public Article(Person editor, String content, String title) {
         this(new Long(new Random().nextInt(1000)), editor, content, title);
     }
     
-    public void update(User editor, String newContent, String title) {
+    public void update(Person editor, String newContent, String title) {
         content = newContent;
         dateModified = new GregorianCalendar();
         editors.addFirst(new AbstractMap.SimpleEntry(editor, dateModified));
@@ -45,24 +45,24 @@ public class Article {
         return title;
     }
     
-    public LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>> getEditEntries() {
+    public LinkedList<AbstractMap.SimpleEntry<Person, GregorianCalendar>> getEditEntries() {
         return getEditEntries(editors.size());
     }
 
-    public LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>> getEditEntries(int n) {
-        LinkedList<AbstractMap.SimpleEntry<User, GregorianCalendar>> result = new LinkedList<AbstractMap.SimpleEntry<User,GregorianCalendar>>();
+    public LinkedList<AbstractMap.SimpleEntry<Person, GregorianCalendar>> getEditEntries(int n) {
+        LinkedList<AbstractMap.SimpleEntry<Person, GregorianCalendar>> result = new LinkedList<AbstractMap.SimpleEntry<Person,GregorianCalendar>>();
         for(int i = 0; i < n; i++) {
             result.add(editors.get(i));
         }
         return result;
     }
 
-    public List<User> getEditors() {
+    public List<Person> getEditors() {
         return getEditors(editors.size());
     }
     
-    public List<User> getEditors(int n) {
-        List<User> result = new ArrayList<User>();
+    public List<Person> getEditors(int n) {
+        List<Person> result = new ArrayList<Person>();
         for(int i = 0; i < n; i++) {
             result.add(editors.get(i).getKey());
         }
@@ -113,11 +113,11 @@ public class Article {
     
     @Override
     public String toString() {
-        List<User> editorList = new ArrayList<User>();
+        List<Person> editorList = new ArrayList<Person>();
         for(AbstractMap.SimpleEntry se : editors) {
             
             // Necessary to type cast here?
-            editorList.add((User) se.getKey());
+            editorList.add((Person) se.getKey());
         }
         return "Article{Id: " + id + " Title: " + title + " Content: " + content
                 + " dateCreated: " + calendarToString(dateCreated) + 

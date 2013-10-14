@@ -1,5 +1,6 @@
 package com.adde.webbapp_model;
 
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 import javax.persistence.Entity;
 
@@ -15,17 +16,17 @@ import javax.persistence.Entity;
  * @author ehannes
  */
 @Entity
-public class User extends AbstractEntity {
+public class Person extends AbstractEntity implements Serializable {
     private String username;
     private String firstname;
     private String lastname;
     private String email;
     private GregorianCalendar calendar;
     
-    public User() {
+    public Person() {
     }
     
-    public User(String nickname, String email) {
+    public Person(String nickname, String email) {
         this.username = nickname;
         initUser(email);
     }

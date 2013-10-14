@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 
 public class PostsTest {
-    private User user1;
-    private User user2;
+    private Person user1;
+    private Person user2;
     private Post post1;
     private WallPost wallPost;
     private TodoPost todoPost;
@@ -24,8 +24,8 @@ public class PostsTest {
     
     @Before
     public void setup(){
-        user1 = new User("user1", "email1");
-        user2 = new User("user2", "email1");
+        user1 = new Person("user1", "email1");
+        user2 = new Person("user2", "email1");
         time1 = new GregorianCalendar();
         post1 = new Post(user1, STR1);
     }
@@ -105,7 +105,7 @@ public class PostsTest {
         todoPost = new TodoPost(user1, STR1);
         assertTrue(todoPost.getAssignedTo().isEmpty());
         todoPost.assignTo(user1);
-        LinkedList<User> l = new LinkedList<User>();
+        LinkedList<Person> l = new LinkedList<Person>();
         l.add(user1);
         l.add(user2);
         todoPost.assignTo(l);

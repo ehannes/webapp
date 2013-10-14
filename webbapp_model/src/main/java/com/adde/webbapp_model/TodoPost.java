@@ -8,15 +8,15 @@ public class TodoPost extends Post {
     private GregorianCalendar deadline; //may be null
     public static enum Priority{LOW, MEDIUM, HIGH};
     private Priority currentPrio;
-    private List<User> assignedTo;
+    private List<Person> assignedTo;
 
-    public TodoPost(User author, String msg){
+    public TodoPost(Person author, String msg){
         this(author, msg, null);
     }
     
-    public TodoPost(User author, String msg, GregorianCalendar deadline){
+    public TodoPost(Person author, String msg, GregorianCalendar deadline){
         super(author, msg);
-        assignedTo = new LinkedList<User>();
+        assignedTo = new LinkedList<Person>();
         this.deadline = deadline;
     }
 
@@ -29,21 +29,21 @@ public class TodoPost extends Post {
     }
 
     public void clearAssignedTo(){
-        assignedTo = new LinkedList<User>();
+        assignedTo = new LinkedList<Person>();
     }
 
-    public void assignTo(User u){
+    public void assignTo(Person u){
         if(!assignedTo.contains(u)){
             assignedTo.add(u);
         }
     }
 
     //Only accepts non-null lists, also no duplicates!
-    public boolean assignTo(List<User> assignTo){
+    public boolean assignTo(List<Person> assignTo){
         if(assignTo == null){
             return false;
         }
-        for(User u : assignTo){
+        for(Person u : assignTo){
             if(!assignedTo.contains(u)){
                 assignedTo.add(u);
             }
@@ -51,7 +51,7 @@ public class TodoPost extends Post {
         return true;
     }
     
-    public void unassign(User u){
+    public void unassign(Person u){
         assignedTo.remove(u);
     }
 
@@ -65,7 +65,7 @@ public class TodoPost extends Post {
                 + " " + deadline.get(GregorianCalendar.YEAR);
     }
     
-    public List<User> getAssignedTo(){
+    public List<Person> getAssignedTo(){
         return assignedTo;
     }
     

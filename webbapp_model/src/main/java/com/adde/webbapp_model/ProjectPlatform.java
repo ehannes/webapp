@@ -12,16 +12,16 @@ import java.util.logging.Logger;
 
 public class ProjectPlatform {
     
-    private List<User> users;
+    private List<Person> users;
     private List<Project> projects;
     
     public ProjectPlatform() {
-        users = new ArrayList<User>();
+        users = new ArrayList<Person>();
         projects = new ArrayList<Project>();
         Logger.getAnonymousLogger().log(Level.INFO, "ProjectPlatform alive {0}", this.hashCode());
     }
     
-    public void addUser(User user) throws Exception {
+    public void addUser(Person user) throws Exception {
         if (user == null) {
             throw new NullPointerException("Nulls not allowed");
         }
@@ -42,7 +42,7 @@ public class ProjectPlatform {
     }
     
     // Possibly throw exception instead of returning boolean
-    public boolean removeUser(User user) {
+    public boolean removeUser(Person user) {
         return users.remove(user);
     }
     
@@ -50,7 +50,7 @@ public class ProjectPlatform {
         return projects.remove(project);
     }
     
-    public List<User> getUsers() {
+    public List<Person> getUsers() {
         return users;
     }
     
@@ -58,7 +58,7 @@ public class ProjectPlatform {
         return projects;
     }
     
-    public List<Project> getProjectsByUser(User user) {
+    public List<Project> getProjectsByUser(Person user) {
         List<Project> userProjects = new ArrayList<Project>();
         for(Project p : projects) {
             if(p.getCollaborators().contains(user) || user.equals(p.getAdmin())) {
@@ -68,8 +68,8 @@ public class ProjectPlatform {
         return userProjects;
     }
     
-    public User getUserByUserName(String username) {
-        for(User u : users) {
+    public Person getUserByUserName(String username) {
+        for(Person u : users) {
             if(u.getUserName().equals(username)) {
                 return u;
             }
@@ -77,8 +77,8 @@ public class ProjectPlatform {
         return null;
     }
     
-    public User getUserByFirstName(String firstname) {
-        for(User u : users) {
+    public Person getUserByFirstName(String firstname) {
+        for(Person u : users) {
             if(u.getFirstName().equals(firstname)) {
                 return u;
             }
@@ -86,8 +86,8 @@ public class ProjectPlatform {
         return null;
     }
     
-    public User getUserByLastName(String lastname) {
-        for(User u : users) {
+    public Person getUserByLastName(String lastname) {
+        for(Person u : users) {
             if(u.getLastName().equals(lastname)) {
                 return u;
             }
@@ -95,8 +95,8 @@ public class ProjectPlatform {
         return null;
     }
     
-    public User getUserByEmail(String email) {
-        for(User u : users) {
+    public Person getUserByEmail(String email) {
+        for(Person u : users) {
             if(u.getEmail().equals(email)) {
                 return u;
             }
