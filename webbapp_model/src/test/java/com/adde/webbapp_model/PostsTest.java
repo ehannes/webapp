@@ -105,7 +105,7 @@ public class PostsTest {
         todoPost = new TodoPost(user1, STR1);
         assertTrue(todoPost.getAssignedTo().isEmpty());
         todoPost.assignTo(user1);
-        LinkedList<Person> l = new LinkedList<Person>();
+        LinkedList<Person> l = new LinkedList<>();
         l.add(user1);
         l.add(user2);
         todoPost.assignTo(l);

@@ -140,8 +140,8 @@ public class ProjectPlatformTest {
     @Ignore
     @Test
     public void oneUserMultipleProjects() {
-        List<Project> bennysProjects = new ArrayList<Project>();
-        List<Person> bennysCollaborators = new ArrayList<Person>();
+        List<Project> bennysProjects = new ArrayList<>();
+        List<Person> bennysCollaborators = new ArrayList<>();
         try {
             projectPlatform.addUser(benny);
             projectPlatform.addProject(project);

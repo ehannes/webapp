@@ -27,11 +27,11 @@ public class Project {
         id = new Long(new Random().nextInt(1000000));
         this.name = name;
         this.admin = admin;
-        this.milestonePosts = new ArrayList<TodoPost>();
-        this.collaborators = new ArrayList<Person>();
-        this.todoPosts = new ArrayList<TodoPost>();
-        this.articles = new ArrayList<Article>();
-        this.wallPosts = new ArrayList<WallPost>();
+        this.milestonePosts = new ArrayList<>();
+        this.collaborators = new ArrayList<>();
+        this.todoPosts = new ArrayList<>();
+        this.articles = new ArrayList<>();
+        this.wallPosts = new ArrayList<>();
         this.calendar = new GregorianCalendar();
     }
 
@@ -39,11 +39,11 @@ public class Project {
         this.id = id;
         this.name = name;
         this.admin = admin;
-        this.milestonePosts = new ArrayList<TodoPost>();
-        this.collaborators = new ArrayList<Person>();
-        this.todoPosts = new ArrayList<TodoPost>();
-        this.articles = new ArrayList<Article>();
-        this.wallPosts = new ArrayList<WallPost>();
+        this.milestonePosts = new ArrayList<>();
+        this.collaborators = new ArrayList<>();
+        this.todoPosts = new ArrayList<>();
+        this.articles = new ArrayList<>();
+        this.wallPosts = new ArrayList<>();
     }
 
     public String getName() {

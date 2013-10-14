@@ -8,7 +8,7 @@ public class WallPost extends Post {
     
     public WallPost(Person author, String msg){
         super(author, msg);
-        comments = new LinkedList<Post>();
+        comments = new LinkedList<>();
     }
     
     public List<Post> getComments(){

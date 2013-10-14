@@ -16,8 +16,8 @@ public class ProjectPlatform {
     private List<Project> projects;
     
     public ProjectPlatform() {
-        users = new ArrayList<Person>();
-        projects = new ArrayList<Project>();
+        users = new ArrayList<>();
+        projects = new ArrayList<>();
         Logger.getAnonymousLogger().log(Level.INFO, "ProjectPlatform alive {0}", this.hashCode());
     }
     
@@ -59,7 +59,7 @@ public class ProjectPlatform {
     }
     
     public List<Project> getProjectsByUser(Person user) {
-        List<Project> userProjects = new ArrayList<Project>();
+        List<Project> userProjects = new ArrayList<>();
         for(Project p : projects) {
             if(p.getCollaborators().contains(user) || user.equals(p.getAdmin())) {
                 userProjects.add(p);

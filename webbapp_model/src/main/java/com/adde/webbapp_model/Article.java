@@ -22,7 +22,7 @@ public class Article {
 
     public Article(long id, Person editor, String content, String title) {
         this.content = content;
-        editors = new LinkedList<AbstractMap.SimpleEntry<Person, GregorianCalendar>>();
+        editors = new LinkedList<>();
         dateCreated = new GregorianCalendar();
         dateModified = dateCreated;
         this.title = title;
@@ -50,7 +50,7 @@ public class Article {
     }
 
     public LinkedList<AbstractMap.SimpleEntry<Person, GregorianCalendar>> getEditEntries(int n) {
-        LinkedList<AbstractMap.SimpleEntry<Person, GregorianCalendar>> result = new LinkedList<AbstractMap.SimpleEntry<Person,GregorianCalendar>>();
+        LinkedList<AbstractMap.SimpleEntry<Person, GregorianCalendar>> result = new LinkedList<>();
         for(int i = 0; i < n; i++) {
             result.add(editors.get(i));
         }
@@ -62,7 +62,7 @@ public class Article {
     }
     
     public List<Person> getEditors(int n) {
-        List<Person> result = new ArrayList<Person>();
+        List<Person> result = new ArrayList<>();
         for(int i = 0; i < n; i++) {
             result.add(editors.get(i).getKey());
         }
@@ -113,7 +113,7 @@ public class Article {
     
     @Override
     public String toString() {
-        List<Person> editorList = new ArrayList<Person>();
+        List<Person> editorList = new ArrayList<>();
         for(AbstractMap.SimpleEntry se : editors) {
             
             // Necessary to type cast here?

@@ -16,7 +16,7 @@ public class TodoPost extends Post {
     
     public TodoPost(Person author, String msg, GregorianCalendar deadline){
         super(author, msg);
-        assignedTo = new LinkedList<Person>();
+        assignedTo = new LinkedList<>();
         this.deadline = deadline;
     }
 
@@ -29,7 +29,7 @@ public class TodoPost extends Post {
     }
 
     public void clearAssignedTo(){
-        assignedTo = new LinkedList<Person>();
+        assignedTo = new LinkedList<>();
     }
 
     public void assignTo(Person u){
