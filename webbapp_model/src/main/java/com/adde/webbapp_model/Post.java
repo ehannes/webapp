@@ -1,8 +1,10 @@
 package com.adde.webbapp_model;
 
 import java.util.GregorianCalendar;
+import javax.persistence.ManyToOne;
 
 public class Post extends AbstractEntity {
+    @ManyToOne
     private User author;
     private GregorianCalendar dateCreated;
     private GregorianCalendar dateModified;
@@ -58,8 +60,7 @@ public class Post extends AbstractEntity {
     public boolean equals(Object o){
         boolean result = false;
         if(o instanceof Post){
-            Post o2 = (Post) o;
-            result = o2.getId() == getId();
+            result = super.equals(o);
         }
         return result;
     }
