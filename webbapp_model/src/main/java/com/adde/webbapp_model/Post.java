@@ -1,13 +1,21 @@
 package com.adde.webbapp_model;
 
 import com.adde.webbapp_model_util.AbstractEntity;
+import java.io.Serializable;
 import java.util.GregorianCalendar;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
-public class Post extends AbstractEntity {
+public class Post extends AbstractEntity implements Serializable {
     @ManyToOne
     private Person author;
+    @NotNull
+    @Temporal(TemporalType.DATE)
     private GregorianCalendar dateCreated;
+    @NotNull
+    @Temporal(TemporalType.DATE)
     private GregorianCalendar dateModified;
     private String msg;
     

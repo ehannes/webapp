@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class WallPost extends Post {
+    
     private LinkedList<Post> comments;
     
     public WallPost(Person author, String msg){
