@@ -5,6 +5,8 @@ import java.io.Serializable;
 import java.util.*;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * @author ehannes
@@ -23,7 +25,9 @@ public class Article extends AbstractEntity implements Serializable {
     private LinkedList<SimpleEditorEntry> editors;
     private String title;
     private String content;
+    @Temporal(TemporalType.DATE)
     private GregorianCalendar dateCreated;
+    @Temporal(TemporalType.DATE)
     private GregorianCalendar dateModified;
 
     public Article() {}
