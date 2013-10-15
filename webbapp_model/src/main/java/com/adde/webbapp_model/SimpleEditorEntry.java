@@ -18,12 +18,15 @@ public class SimpleEditorEntry extends AbstractEntity implements Serializable {
     private Person person;
     @Temporal(TemporalType.DATE)
     private GregorianCalendar calendar;
+    @ManyToOne
+    private Article article;
 
     public SimpleEditorEntry() {}
     
-    public SimpleEditorEntry(Person person, GregorianCalendar calendar) {
+    public SimpleEditorEntry(Person person, GregorianCalendar calendar, Article article) {
         this.person = person;
         this.calendar = calendar;
+        this.article = article;
     }
     
     public Person getKey() {
@@ -40,6 +43,10 @@ public class SimpleEditorEntry extends AbstractEntity implements Serializable {
 
     public void setValue(GregorianCalendar calendar) {
         this.calendar = calendar;
+    }
+    
+    public Article getArticle() {
+        return article;
     }
     
     @Override

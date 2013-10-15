@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -35,8 +36,8 @@ public class Project extends AbstractEntity implements Serializable {
     private List<TodoPost> todoPosts;
     
     private List<TodoPost> milestonePosts;
-    
-    private List<Article> articles;
+    //@OneToMany(cascade= {CascadeType.ALL})
+    //private List<Article> articles;
     
     private List<WallPost> wallPosts;
 
@@ -51,9 +52,8 @@ public class Project extends AbstractEntity implements Serializable {
         this.milestonePosts = new ArrayList<>();
         this.collaborators = new ArrayList<>();
         this.todoPosts = new ArrayList<>();
-        this.articles = new ArrayList<>();
+        //this.articles = new ArrayList<>();
         this.wallPosts = new ArrayList<>();
-    
     }
 
     public String getName() {
@@ -100,7 +100,8 @@ public class Project extends AbstractEntity implements Serializable {
     }
 
     public List<Article> getArticles() {
-        return articles;
+        return ArticleDAO.newInstance().getAll();
+        //return articles;
     }
 
     public List<WallPost> getWallPosts() {
@@ -123,9 +124,9 @@ public class Project extends AbstractEntity implements Serializable {
         todoPosts.add(new TodoPost(this, author, msg));
     }
 
-    public void createArticle(Person author, String content, String title) {
+    /*public void createArticle(Person author, String content, String title) {
         articles.add(new Article(author, content, title));
-    }
+    }*/
 
     public void createWallPost(Person author, String msg) {
         wallPosts.add(new WallPost(this, author, msg));
@@ -135,9 +136,9 @@ public class Project extends AbstractEntity implements Serializable {
         collaborators.remove(u);
     }
 
-    public void deleteArticle(Article a) {
+    /*public void deleteArticle(Article a) {
         articles.remove(a);
-    }
+    }*/
 
     public void deleteMilestonePost(TodoPost m) {
         milestonePosts.remove(m);

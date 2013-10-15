@@ -31,7 +31,9 @@ public class ProjectPlatformTest {
     public void addUser() {
         projectPlatform.addUser(testPerson);
         projectPlatform.addProject(testProject);
-        
+        //ArticleDAO ad = new ArticleDAO(ProjectPlatform.PU);
+        Article article = new Article(testPerson, "content", "title");
+        //ad.add(article);
     }
 
 //    // Depends on the static data initialized in another class (see boolean above). Bad?

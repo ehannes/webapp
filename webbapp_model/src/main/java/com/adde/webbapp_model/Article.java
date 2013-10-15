@@ -4,7 +4,6 @@ import com.adde.webbapp_model_util.AbstractEntity;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,8 +20,8 @@ import javax.persistence.TemporalType;
 @Entity
 public class Article extends AbstractEntity implements Serializable {
 
-    @OneToMany
-    private LinkedList<SimpleEditorEntry> editors;
+    //@ManyToMany
+    //private LinkedList<SimpleEditorEntry> editors;
     private String title;
     private String content;
     @Temporal(TemporalType.DATE)
@@ -37,13 +36,13 @@ public class Article extends AbstractEntity implements Serializable {
         dateCreated = new GregorianCalendar();
         dateModified = dateCreated;
         this.title = title;
-        editors.addFirst(new SimpleEditorEntry(editor, dateModified));
+        EditorDAO.newInstance().add(new SimpleEditorEntry(editor,dateCreated, this));//editors.addFirst(new SimpleEditorEntry(editor, dateModified));
     }
     
     public void update(Person editor, String newContent, String title) {
         content = newContent;
         dateModified = new GregorianCalendar();
-        editors.addFirst(new SimpleEditorEntry(editor, dateModified));
+        EditorDAO.newInstance().add(new SimpleEditorEntry(editor, dateModified, this));
         this.title = title;
     }
     
@@ -51,29 +50,40 @@ public class Article extends AbstractEntity implements Serializable {
         return title;
     }
     
-    public LinkedList<SimpleEditorEntry> getEditEntries() {
-        return getEditEntries(editors.size());
+    public List<SimpleEditorEntry> getEditEntriesByPerson(Person p) {
+        List<SimpleEditorEntry> found = new ArrayList<>();
+        for(SimpleEditorEntry entry : EditorDAO.newInstance().getAll()){
+            if(entry.getKey().equals(p)){
+                found.add(entry);
+            }
+        }
+        return found;
     }
-
-    public LinkedList<SimpleEditorEntry> getEditEntries(int n) {
+    
+    /*public LinkedList<SimpleEditorEntry> getEditEntries(int n) {
         LinkedList<SimpleEditorEntry> result = new LinkedList<>();
         for(int i = 0; i < n; i++) {
             result.add(editors.get(i));
         }
         return result;
-    }
-
+    }*/
+    
     public List<Person> getEditors() {
-        return getEditors(editors.size());
+        List<Person> found = new ArrayList<>();
+        for(SimpleEditorEntry entry : EditorDAO.newInstance().getAll()){
+            found.add(entry.getKey());
+        }
+        return found;
     }
     
+    /*
     public List<Person> getEditors(int n) {
         List<Person> result = new ArrayList<>();
         for(int i = 0; i < n; i++) {
             result.add(editors.get(i).getKey());
         }
         return result;
-    }
+    }*/
     
     public String getContent() {
         return content;
@@ -97,6 +107,6 @@ public class Article extends AbstractEntity implements Serializable {
         return "Article{" + super.toString() + " Title: " + title + " Content: " + content
                 + " dateCreated: " + calendarToString(dateCreated) + 
                 " dateModified: " + calendarToString(dateModified)+ " Editors: "
-                + editors.toString() + "}";
+                + "}"; //editors.toString() + "}";
     }
 }

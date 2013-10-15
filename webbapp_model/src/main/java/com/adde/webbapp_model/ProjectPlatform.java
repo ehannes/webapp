@@ -13,6 +13,7 @@ public class ProjectPlatform {
 
     private final ProjectDAO projectDAO;
     private final PersonDAO personDAO;
+    public final static String PU = "webapp_pu";
 
     public ProjectPlatform(String puName) {
         projectDAO = ProjectDAO.newInstance(puName);
