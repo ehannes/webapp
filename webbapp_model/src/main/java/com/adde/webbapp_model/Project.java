@@ -6,10 +6,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -111,11 +109,11 @@ public class Project extends AbstractEntity implements Serializable {
     }
 
     public void createMilestonePost(Person author, String msg) {
-        milestonePosts.add(new TodoPost(author, msg));
+        milestonePosts.add(new TodoPost(this, author, msg));
     }
 
     public void createTodoPost(Person author, String msg) {
-        todoPosts.add(new TodoPost(author, msg));
+        todoPosts.add(new TodoPost(this, author, msg));
     }
 
     public void createArticle(Person author, String content, String title) {
@@ -123,7 +121,7 @@ public class Project extends AbstractEntity implements Serializable {
     }
 
     public void createWallPost(Person author, String msg) {
-        wallPosts.add(new WallPost(author, msg));
+        wallPosts.add(new WallPost(this, author, msg));
     }
 
     public void deleteCollaborator(Person u) {

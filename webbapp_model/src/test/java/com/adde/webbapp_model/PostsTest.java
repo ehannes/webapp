@@ -1,132 +1,61 @@
 package com.adde.webbapp_model;
 
-import com.adde.webbapp_model.TodoPost.Priority;
 import java.util.GregorianCalendar;
-import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.Ignore;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class PostsTest {
-    private Person user1;
-    private Person user2;
-    private Post post1;
-    private WallPost wallPost;
-    private TodoPost todoPost;
+    private Person person1;
+    private Person person2;
+    private Comment comment1;
+    private Comment comment2;
+    private WallPost wallPost1;
+    private WallPost wallPost2;
+    private TodoPost todoPost1;
     private TodoPost todoPost2;
     private GregorianCalendar time1;
+    private Project project1;
+    private Project project2;
     
-    private static final String STR1 = "PostContent";
-    private static final String STR2 = "EditedPostContent";
+    private static final String STR1 = "Content";
+    private static final String STR2 = "EditedContent";
     
     @Before
     public void setup(){
-        user1 = new Person("user1", "email1");
-        user2 = new Person("user2", "email1");
+        person1 = new Person("person1", "email1");
+        person2 = new Person("person2", "email2");
         time1 = new GregorianCalendar();
-        post1 = new Post(user1, STR1);
+        project1 = new Project();
+        project2 = new Project();
+        todoPost1 = new TodoPost(project1, person1, STR1);
+        todoPost2 = new TodoPost(project2, person2, STR2);
+        wallPost1 = new WallPost(project1, person1, STR1);
+        wallPost2 = new WallPost(project2, person2, STR2);
+        comment1 = new Comment(wallPost1, person1, STR1);
+        comment2 = new Comment(wallPost2, person2, STR2);
     }
     
-    @Ignore
     @Test
-    public void PostTest(){
-        Post post2 = new Post(user1, STR1);
-        assertTrue(post2.getMsg().equals(STR1));
-        assertTrue(post2.getAuthor().equals(user1));
-        assertTrue(post2.getDateCreated().equals(post2.getDateModified()));
-                  
-        // Test pointer equality
-        Post post3 = post2;
-        assertTrue(post2.equals(post3));
-        
-        // Test null
-        Post post4 = null;
-        assertFalse(post2.equals(post4));
-        
-        String toStringBefore = post2.toString();
-        int hashCodeBefore = post2.hashCode();
-        post2.setMsg(STR2);
-        assertFalse(post2.toString().equals(toStringBefore));
-        assertTrue(post2.hashCode() == hashCodeBefore);
-        
-        try {
-                Thread.sleep(1);
-        } catch (InterruptedException ex) {
-                System.out.println("Exception at Thread.sleep(1) in PostsTest!"
-                        + "\n" + ex.getMessage());
-                System.exit(1);
+    public void CommentTest(){
+        assertTrue(comment1.equals(comment1));
+        String tmp1 = comment1.toString();
+        GregorianCalendar cal1 = comment1.getDateCreated();
+        GregorianCalendar cal2 = comment2.getDateModified();
+        assertTrue(cal1.equals(cal2));
+        try{
+            Thread.sleep(1);
+        } catch(InterruptedException e){
+            System.out.println("PostsTest.CommentTest: "
+                    + "Interrupted on Thread.sleep");
         }
-        post2.setMsg(STR1); //now dateModified should differ form dateCreated!
-                            //program is too fast otherwise so it would be
-                            //the same millisecond!
+        comment1.setMsg(STR2);
+        assertTrue(comment1.getMsg().equals(STR2));
+        assertFalse(tmp1.equals(comment1.getMsg()));
+        assertFalse(cal1.equals(comment1.getDateModified()));
+        assertFalse(cal2.equals(comment1.getDateModified()));
+        assertTrue(cal1.equals(comment1.getDateCreated()));
         
-        assertFalse(post2.getDateCreated().equals(post2.getDateModified()));
-        assertTrue(post2.equals(post2));
-        assertFalse(post2.equals(post1)); //different id expected
-        
-        //Check toString
-        Logger.getAnonymousLogger().log(Level.INFO, "WallPost: {0}", post2.toString());
-    }
-    
-    @Ignore
-    @Test
-    public void WallPostTest(){
-        wallPost = new WallPost(user1, STR1);
-        
-        assertTrue(wallPost.getDateCreated().equals(wallPost.getDateModified()));
-        assertFalse(wallPost.getComments() == null);
-        assertTrue(wallPost.getComments().isEmpty());
-        
-        wallPost.addComment(post1);
-        assertTrue(wallPost.getComments().size() == 1);
-        assertTrue(wallPost.getComments().get(0).equals(post1));
-        
-        wallPost.addComment(user2, STR2);
-        assertTrue(wallPost.getComments().size() == 2);
-        
-        wallPost.removeComment(post1);
-        assertTrue(wallPost.getComments().size() == 1);
-        assertFalse(wallPost.getComments().get(0).equals(post1));
-        
-        wallPost.removeCommentsByUser(user2);
-        assertTrue(wallPost.getComments().isEmpty());
-        assertTrue(wallPost.equals(wallPost));
-        
-        //Check toString
-        Logger.getAnonymousLogger().log(Level.INFO, "WallPost: {0}", wallPost.toString());
-    }
-    
-    @Ignore
-    @Test
-    public void TodoPostTest(){
-        todoPost = new TodoPost(user1, STR1);
-        assertTrue(todoPost.getAssignedTo().isEmpty());
-        todoPost.assignTo(user1);
-        LinkedList<Person> l = new LinkedList<>();
-        l.add(user1);
-        l.add(user2);
-        todoPost.assignTo(l);
-        assertTrue(todoPost.getAssignedTo().size() == 2);
-        todoPost.unassign(user2);
-        assertTrue(todoPost.getAssignedTo().size() == 1);
-        todoPost.clearAssignedTo();
-        assertTrue(todoPost.getAssignedTo().isEmpty());
-        assertTrue(todoPost.getPriority() == null);
-        assertTrue(todoPost.getDeadline() == null);
-        todoPost.setDeadline(time1);
-        assertTrue(todoPost.getDeadline().equals(time1));
-        todoPost.setPriority(Priority.LOW);
-        assertTrue(todoPost.getPriority().equals(Priority.LOW));
-        assertFalse(todoPost.getPriority().equals(Priority.MEDIUM));
-        
-        //Checking the other constructor too
-        todoPost2 = new TodoPost(user1, STR1, time1);
-        assertTrue(todoPost2.getDateCreated() != null);
-        
-        //Check toString
-        Logger.getAnonymousLogger().log(Level.INFO, "TodoPost: {0}", todoPost2.toString());
     }
 }
