@@ -7,7 +7,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -20,7 +22,7 @@ public class Project extends AbstractEntity implements Serializable {
     private String name;
     private GregorianCalendar calendar;  
    
-    @ManyToMany
+    @ManyToOne
     private Person admin;
     
     @OneToMany
