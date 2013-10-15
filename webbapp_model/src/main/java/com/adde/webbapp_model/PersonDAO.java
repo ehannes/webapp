@@ -24,7 +24,7 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
 
     public List<Person> getByUserName(String name) {
         List<Person> found = new ArrayList<>();
-        for (Person p : getRange(0, getCount())) {
+        for (Person p : getAll()) {
             if (p.getUserName().equals(name)) {
                 found.add(p);
             }
@@ -34,7 +34,7 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
 
     public List<Person> getUsers() {
         List<Person> found = new ArrayList<>();
-        for (Person p : getRange(0, getCount())) {
+        for (Person p : getAll()) {
             found.add(p);
         }
         return found;
@@ -42,7 +42,7 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
 
     public List<Person> getByFirstName(String name) {
         List<Person> found = new ArrayList<>();
-        for (Person p : getRange(0, getCount())) {
+        for (Person p : getAll()) {
             if (p.getFirstName().equals(name)) {
                 found.add(p);
             }
@@ -51,7 +51,7 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
     }
         public List<Person> getByLastName(String name) {
         List<Person> found = new ArrayList<>();
-        for (Person p : getRange(0, getCount())) {
+        for (Person p : getAll()) {
             if (p.getLastName().equals(name)) {
                 found.add(p);
             }
@@ -60,7 +60,7 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
     }
       public List<Person> getByEmail(String name) {
         List<Person> found = new ArrayList<>();
-        for (Person p : getRange(0, getCount())) {
+        for (Person p : getAll()) {
             if (p.getEmail().equals(name)) {
                 found.add(p);
             }

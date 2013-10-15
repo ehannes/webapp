@@ -24,7 +24,7 @@ public class ProjectDAO extends AbstractDAO<Project, Long> {
 
     public List<Project> getByName(String name) {
         List<Project> found = new ArrayList<>();
-        for (Project p : getRange(0, getCount())) {
+        for (Project p : getAll()) {
             if (p.getName().equals(name)) {
                 found.add(p);
             }
@@ -34,7 +34,7 @@ public class ProjectDAO extends AbstractDAO<Project, Long> {
 
     public List<Project> getProjects() {
         List<Project> found = new ArrayList<>();
-        for (Project p : getRange(0, getCount())) {
+        for (Project p : getAll()) {
             found.add(p);
         }
         return found;
@@ -42,7 +42,7 @@ public class ProjectDAO extends AbstractDAO<Project, Long> {
 
     public List<Project> getByUser(Person user) {
         List<Project> found = new ArrayList<>();
-        for (Project p : getRange(0, getCount())) {
+        for (Project p : getAll()) {
             if (p.getCollaborators().contains(user) || p.getAdmin().equals(user)) {
                 found.add(p);
             }
@@ -52,7 +52,7 @@ public class ProjectDAO extends AbstractDAO<Project, Long> {
 
     public List<Project> getByAdmin(Person user) {
         List<Project> found = new ArrayList<>();
-        for (Project p : getRange(0, getCount())) {
+        for (Project p : getAll()) {
             if (p.getAdmin().equals(user)) {
                 found.add(p);
             }
