@@ -3,19 +3,29 @@ package com.adde.webbapp_model;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
-public class TodoPost extends Post {
+@Entity
+public class TodoPost extends Post<Project> {
     private GregorianCalendar deadline; //may be null
     public static enum Priority{LOW, MEDIUM, HIGH};
     private Priority currentPrio;
+    @ManyToMany(cascade = {CascadeType.REFRESH})
     private List<Person> assignedTo;
 
-    public TodoPost(Person author, String msg){
-        this(author, msg, null);
+    //To satisfy requirements of @Entity annotation. Don't ever use it!
+    public TodoPost() {
+        this(null,null,null);
+    }
+
+    public TodoPost(Project context, Person author, String msg){
+        this(context, author, msg, null);
     }
     
-    public TodoPost(Person author, String msg, GregorianCalendar deadline){
-        super(author, msg);
+    public TodoPost(Project context, Person author, String msg, GregorianCalendar deadline){
+        super(context, author, msg);
         assignedTo = new LinkedList<>();
         this.deadline = deadline;
     }
@@ -75,9 +85,11 @@ public class TodoPost extends Post {
     
     @Override
     public String toString(){
-        return "DeadlinePost{id=" + getId() + ", author=" + getAuthor() + ", msg=" + getMsg()
-                + ", deadline=" + getStringDeadline() + ", currentPrio=" + currentPrio
-                + ", dateCreated=" + getStringDateCreated() + ", dateModified="
-                + getStringDateModified() + ", assignedTo=" + assignedTo + '}';
+        return "TodoPost{id: " + getId() + ", author: " + getAuthor()
+                + ", msg: " + getMsg() + ", deadline: " + getStringDeadline()
+                + ", currentPrio: " + currentPrio + ", dateCreated: "
+                + getStringDateCreated() + ", dateModified: "
+                + getStringDateModified() + ", assignedTo: " + assignedTo
+                + '}';
     }
 }

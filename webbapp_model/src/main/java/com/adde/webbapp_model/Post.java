@@ -3,13 +3,14 @@ package com.adde.webbapp_model;
 import com.adde.webbapp_model_util.AbstractEntity;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
+import javax.persistence.CascadeType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-public class Post extends AbstractEntity implements Serializable {
-    @ManyToOne
+public abstract class Post<T> extends AbstractEntity implements Serializable {
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     private Person author;
     @NotNull
     @Temporal(TemporalType.DATE)
@@ -18,8 +19,9 @@ public class Post extends AbstractEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     private GregorianCalendar dateModified;
     private String msg;
+    private T context;
     
-    public Post(Person author, String msg){
+    public Post(T context, Person author, String msg){
         this.author = author;
         this.msg = msg;
         dateCreated = new GregorianCalendar();
@@ -28,6 +30,10 @@ public class Post extends AbstractEntity implements Serializable {
     
     public GregorianCalendar getDateCreated(){
         return dateCreated;
+    }
+    
+    public T getContext(){
+        return context;
     }
 
     public String getStringDateCreated() {
@@ -60,24 +66,5 @@ public class Post extends AbstractEntity implements Serializable {
     }
     
     @Override
-    public String toString(){
-        return "Post{id=" + getId() + ", author=" + author + ", msg=" + msg + ", dateCreated="
-            + getStringDateCreated() + ", dateModified=" + getStringDateModified() + '}';
-    }
-    
-    @Override
-    public boolean equals(Object o){
-        boolean result = false;
-        if(o instanceof Post){
-            result = super.equals(o);
-        }
-        return result;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + (int) (getId() ^ (getId() >>> 32));
-        return hash;
-    }
+    public abstract String toString();
 }
