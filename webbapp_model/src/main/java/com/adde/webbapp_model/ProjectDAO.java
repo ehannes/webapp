@@ -13,8 +13,8 @@ import java.util.List;
  * @author Joakim
  */
 public class ProjectDAO extends AbstractDAO<Project, Long> {
-    
-        public static ProjectDAO newInstance(String puName) {
+
+    public static ProjectDAO newInstance(String puName) {
         return new ProjectDAO(puName);
     }
 
@@ -31,5 +31,20 @@ public class ProjectDAO extends AbstractDAO<Project, Long> {
         }
         return found;
     }
-    
+    public List<Project> getProjects() {
+        List<Project> found = new ArrayList<>();
+        for (Project p : getRange(0, getCount())) {
+            found.add(p);
+        }
+        return found;
+    }
+    public List<Project> getByUser(Person user) {
+        List<Project> found = new ArrayList<>();
+        for (Project p : getRange(0, getCount())) {
+            if (p.getCollaborators().contains(user) || p.getAdmin().equals(user)) {
+                found.add(p);
+            }
+        }
+        return found;
+    }
 }
