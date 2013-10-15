@@ -4,6 +4,8 @@
  */
 package com.adde.webbapp_model;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,25 +18,20 @@ public class ProjectPlatformTest {
     static ProjectPlatform projectPlatform;
     final static String PU = "webapp_pu";
     private Person testPerson;
+    private Project testProject;
 
-//    @Before
-//    public void setup() {
-//        projectPlatform = ProjectPlatformFactory.getProjectPlatform(true);
-//        benny = new Person("Benny", "benny@benny.com");
-//        benny.setFirstName("Benny");
-//        benny.setLastName("Bennysson");
-//        project = new Project("Bennys Wiki", benny);
-//    }
-    
     @Before
     public void setup() {
-        projectPlatform = ProjectPlatformFactory.getProjectPlatform(false, PU);
+        projectPlatform = ProjectPlatformFactory.getProjectPlatform(PU);
         testPerson = new Person("Test Testsson", "test@test.com");
+        testProject = new Project("testProject", testPerson);
     }
     
     @Test
     public void addUser() {
         projectPlatform.addUser(testPerson);
+        projectPlatform.addProject(testProject);
+        
     }
 
 //    // Depends on the static data initialized in another class (see boolean above). Bad?

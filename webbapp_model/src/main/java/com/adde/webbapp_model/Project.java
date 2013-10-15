@@ -6,8 +6,12 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -18,20 +22,22 @@ import javax.persistence.OneToMany;
 public class Project extends AbstractEntity implements Serializable {
 
     private String name;
+    
+    @Temporal(TemporalType.DATE)
     private GregorianCalendar calendar;  
    
     @ManyToOne
     private Person admin;
     
-    @OneToMany
+    @ManyToMany
     private List<Person> collaborators;
-    @OneToMany
+    
     private List<TodoPost> todoPosts;
-    @OneToMany
+    
     private List<TodoPost> milestonePosts;
-    @OneToMany
+    
     private List<Article> articles;
-    @OneToMany
+    
     private List<WallPost> wallPosts;
 
 
@@ -41,12 +47,13 @@ public class Project extends AbstractEntity implements Serializable {
     public Project(String name, Person admin) {
         this.name = name;
         this.admin = admin;
+        this.calendar = new GregorianCalendar();
         this.milestonePosts = new ArrayList<>();
         this.collaborators = new ArrayList<>();
         this.todoPosts = new ArrayList<>();
         this.articles = new ArrayList<>();
         this.wallPosts = new ArrayList<>();
-        this.calendar = new GregorianCalendar();
+    
     }
 
     public String getName() {

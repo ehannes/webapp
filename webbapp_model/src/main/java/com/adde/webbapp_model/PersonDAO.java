@@ -49,7 +49,8 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
         }
         return found;
     }
-        public List<Person> getByLastName(String name) {
+
+    public List<Person> getByLastName(String name) {
         List<Person> found = new ArrayList<>();
         for (Person p : getRange(0, getCount())) {
             if (p.getLastName().equals(name)) {
@@ -58,7 +59,8 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
         }
         return found;
     }
-      public List<Person> getByEmail(String name) {
+
+    public List<Person> getByEmail(String name) {
         List<Person> found = new ArrayList<>();
         for (Person p : getRange(0, getCount())) {
             if (p.getEmail().equals(name)) {
