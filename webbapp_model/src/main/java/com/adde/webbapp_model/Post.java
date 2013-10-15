@@ -1,5 +1,6 @@
 package com.adde.webbapp_model;
 
+import com.adde.webbapp_model_util.AbstractEntity;
 import java.util.GregorianCalendar;
 import javax.persistence.ManyToOne;
 
