@@ -95,6 +95,10 @@ public abstract class AbstractDAO<T, K> {
         T t = em.find(clazz, id);
         return t;
     }
+    
+    public List<T> getAll(){
+        return getRange(0,getCount()-1);
+    }
 
     public List<T> getRange(int first, int nItems) {
         EntityManager em = getEntityManager();
