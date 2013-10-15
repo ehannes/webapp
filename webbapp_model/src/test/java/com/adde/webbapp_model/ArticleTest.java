@@ -9,7 +9,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 public class ArticleTest {
-    
+    /*
     Article article1, article2;
     Person user1, user2;
     
@@ -93,5 +93,5 @@ public class ArticleTest {
     public void printArticle() {
         Article a1 = new Article(new Person("Author 1", "Aemail1"), "test equals", "authorTitle1");
         System.out.println(a1.toString());
-    }
+    }*/
 }
