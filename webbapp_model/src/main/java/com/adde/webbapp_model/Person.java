@@ -4,6 +4,9 @@ import com.adde.webbapp_model_util.AbstractEntity;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import javax.persistence.Entity;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  * Simple user.
@@ -18,10 +21,16 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Person extends AbstractEntity implements Serializable {
+    @NotNull
     private String username;
+    @NotNull
     private String firstname;
+    @NotNull
     private String lastname;
+    @NotNull
     private String email;
+    @NotNull
+    @Temporal(TemporalType.DATE)
     private GregorianCalendar calendar;
     
     public Person() {
