@@ -1,11 +1,15 @@
 package com.adde.webbapp_model;
 
 import com.adde.webbapp_model_util.AbstractEntity;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -13,19 +17,25 @@ import javax.persistence.OneToMany;
  * @author Joakim Danielsson
  */
 @Entity
-public class Project extends AbstractEntity {
+public class Project extends AbstractEntity implements Serializable {
 
     private String name;
-    
-    @OneToMany
+    private GregorianCalendar calendar;  
+   
+    @ManyToOne
     private Person admin;
     
+    @OneToMany
     private List<Person> collaborators;
+    @OneToMany
     private List<TodoPost> todoPosts;
+    @OneToMany
     private List<TodoPost> milestonePosts;
+    @OneToMany
     private List<Article> articles;
+    @OneToMany
     private List<WallPost> wallPosts;
-    private GregorianCalendar calendar;
+
 
     public Project(){
     }
