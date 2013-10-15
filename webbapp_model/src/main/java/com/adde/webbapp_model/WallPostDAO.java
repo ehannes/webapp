@@ -22,7 +22,7 @@ public class WallPostDAO extends AbstractDAO<WallPost,Long> {
     
     public List<WallPost> getWallPostByProject(Project p){
         List<WallPost> result = new LinkedList<>();
-        for(WallPost wp : getRange(0, getCount()-1)){
+        for(WallPost wp : getAll()){
             if(wp.getContext().equals(p)){
                 result.add(wp);
             }

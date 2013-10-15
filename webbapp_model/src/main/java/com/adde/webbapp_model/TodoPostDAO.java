@@ -20,7 +20,7 @@ public class TodoPostDAO extends AbstractDAO<TodoPost,Long>{
     
     public List<TodoPost> getWallPostByProject(Project p){
         List<TodoPost> result = new LinkedList<>();
-        for(TodoPost tp : getRange(0, getCount()-1)){
+        for(TodoPost tp : getAll()){
             if(tp.getContext().equals(p)){
                 result.add(tp);
             }
