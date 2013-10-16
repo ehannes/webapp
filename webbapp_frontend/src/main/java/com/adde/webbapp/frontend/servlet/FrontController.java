@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.adde.webbapp_frontend_servlet;
+package com.adde.webbapp.frontend.servlet;
 
-import com.adde.webbapp_model.Person;
-import com.adde.webbapp_model.ProjectPlatform;
+import com.adde.webbapp.model.dao.PersonDAO;
+import com.adde.webbapp.model.entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -41,19 +41,12 @@ public class FrontController extends HttpServlet {
         String view = request.getParameter("view");
         String action = request.getParameter("action");
         
-//        Shop shop = (Shop) request.getServletContext().getAttribute(Keys.SHOP.toString());
-//                IProductCatalogue pcat = shop.getProductCatalogue();
-        
-        ProjectPlatformWrapper projectPlatformWrapper = (ProjectPlatformWrapper) request.getServletContext().getAttribute("PROJECT_PLATFORM");
-        ProjectPlatform projectPlatform = projectPlatformWrapper.getProjectPlatform();
+        DAOFactoryWrapper daoFactoryWrapper = (DAOFactoryWrapper) request.getServletContext().getAttribute("DAOFACTORY");
+        PersonDAO personDAO = daoFactoryWrapper.getPersonDAO();
         
         if (action != null) {
             switch (action) {
                 case "validate":
-                    String username = request.getParameter("username");
-                    projectPlatform.addUser(new Person(username, username + "@" + username + ".com"));
-                    
-                    request.setAttribute("username", username);
                     request.getRequestDispatcher("WEB-INF/jsp/welcome.jspx").forward(request, response);
                     break;
                 default:
@@ -81,7 +74,7 @@ public class FrontController extends HttpServlet {
                     
                     request.setAttribute("username", username);
                     request.setAttribute("password", password);
-                    projectPlatform.addUser(new Person(username, username + "@" + username + ".com"));
+                    personDAO.add(new Person(username, username + "@" + username + ".com", password));
                     
                     request.getRequestDispatcher("WEB-INF/jsp/welcome.jspx").forward(request, response);
                     break;
