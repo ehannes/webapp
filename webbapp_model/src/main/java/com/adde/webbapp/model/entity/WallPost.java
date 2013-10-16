@@ -1,62 +1,29 @@
 package com.adde.webbapp.model.entity;
 
-import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 @Entity
-public class WallPost extends Post<Project> {
+public class WallPost extends Post {
     @OneToMany(cascade = {CascadeType.ALL})
-    private LinkedList<Comment> comments;
+    private List<Post> comments;
 
     //To satisfy requirements of @Entity annotation. Don't ever use it!
     public WallPost() {
-        this(null, null, null);
+        this(null, null);
     }
     
-    public WallPost(Project context, Person author, String msg){
-        super(context, author, msg);
-        comments = new LinkedList<>();
+    public WallPost(Person author, String msg){
+        super(author, msg);
     }
-    
-    public List<Comment> getComments(){
+
+    public List<Post> getComments() {
         return comments;
     }
-    
-    //doesn't allow duplicates
-    public void addComment(Comment c) throws IllegalArgumentException{
-        if(!c.getContext().equals(this)){
-            throw new IllegalArgumentException("WallPost.addComment: "
-                    + "Argument does not belong to this context!");
-        } else if(!comments.contains(c)){
-            comments.add(c);
-        }
-    }
-    
-    public void addComment(Person author, String msg){
-        comments.add(new Comment(this, author, msg));
-    }
-    
-    public void removeComment(Comment comment){
-        comments.remove(comment);
-    }
-    
-    public void removeCommentsByUser(Person user) {
-        for(Comment comment : comments){
-            if(comment.getAuthor().equals(user)){
-                comments.remove(comment);
-            }
-        }
-    }
-    
-    @Override
-    public String toString(){
-        return "WallPost{id: " + getId() + ", author: " + getAuthor()
-                + ", msg: " + getMsg() + ", dateCreated: "
-                + getStringDateCreated() + ", dateModified: "
-                + getStringDateModified() + ", comments: "
-                + comments.toString();
+
+    public void setComments(List<Post> comments) {
+        this.comments = comments;
     }
 }
