@@ -47,6 +47,7 @@ public class PostsTest {
         platform.addProject(project1);
     }
     
+    /*
     @Ignore
     @Test
     public void CommentTest(){
@@ -166,4 +167,5 @@ public class PostsTest {
         wallPost1.addComment(comment2);
         assertTrue(wallPost1.getComments().size() == 2);
     }
+    */
 }
