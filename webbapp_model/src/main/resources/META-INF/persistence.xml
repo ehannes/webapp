@@ -6,6 +6,12 @@
     <class>com.adde.webbapp_model.Article</class>
     <class>com.adde.webbapp_model.SimpleEditorEntry</class>
     <class>com.adde.webbapp_model.Project</class>
+    <class>com.adde.webbapp.model.entity.Article</class>
+    <class>com.adde.webbapp.model.entity.Person</class>
+    <class>com.adde.webbapp.model.entity.Project</class>
+    <class>com.adde.webbapp.model.entity.SimpleEditorEntry</class>
+    <class>com.adde.webbapp.model.entity.TodoPost</class>
+    <class>com.adde.webbapp.model.entity.WallPost</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/webappDatabase"/>
       <property name="javax.persistence.jdbc.password" value="adde"/>
