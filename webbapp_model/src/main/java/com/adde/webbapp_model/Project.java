@@ -1,5 +1,8 @@
 package com.adde.webbapp_model;
 
+import com.adde.webbapp_model_dao.ArticleDAO;
+import com.adde.webbapp_model_dao.WallPostDAO;
+import com.adde.webbapp_model_dao.TodoPostDAO;
 import com.adde.webbapp_model_util.AbstractEntity;
 import java.io.Serializable;
 import java.util.ArrayList;

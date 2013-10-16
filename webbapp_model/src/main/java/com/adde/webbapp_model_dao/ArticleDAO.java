@@ -1,5 +1,6 @@
-package com.adde.webbapp_model;
+package com.adde.webbapp_model_dao;
 
+import com.adde.webbapp_model.Article;
 import com.adde.webbapp_model_util.AbstractDAO;
 
 /**

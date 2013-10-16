@@ -1,5 +1,6 @@
 package com.adde.webbapp_model;
 
+import com.adde.webbapp_model_dao.CommentDAO;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;

@@ -4,6 +4,7 @@
  */
 package com.adde.webbapp_model;
 
+import com.adde.webbapp_model_dao.ProjectDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Before;

@@ -1,5 +1,7 @@
 package com.adde.webbapp_model;
 
+import com.adde.webbapp_model_dao.ProjectDAO;
+import com.adde.webbapp_model_dao.PersonDAO;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;

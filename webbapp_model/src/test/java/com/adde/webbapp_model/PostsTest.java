@@ -1,5 +1,8 @@
 package com.adde.webbapp_model;
 
+import com.adde.webbapp_model_dao.CommentDAO;
+import com.adde.webbapp_model_dao.TodoPostDAO;
+import com.adde.webbapp_model_dao.WallPostDAO;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;

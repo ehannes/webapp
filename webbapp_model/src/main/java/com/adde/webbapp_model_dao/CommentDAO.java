@@ -1,5 +1,8 @@
-package com.adde.webbapp_model;
+package com.adde.webbapp_model_dao;
 
+import com.adde.webbapp_model.Comment;
+import com.adde.webbapp_model.Person;
+import com.adde.webbapp_model.WallPost;
 import com.adde.webbapp_model_util.AbstractDAO;
 import java.util.LinkedList;
 import java.util.List;
