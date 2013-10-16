@@ -14,16 +14,22 @@
     <jsp:output omit-xml-declaration="true" />
     <jsp:output doctype-root-element="HTML" 
                 doctype-system="about:legacy-compat" />
-    <html>
+
+    <!DOCTYPE html>
+    <html lang="en">
         <head>
-            <title>Project Platform</title> 
-            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta charset="utf-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-            <!-- Bootstrap -->
-            <link href="resources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+            <meta name="description" content=""/>
+            <meta name="author" content=""/>
+
+            <title>Navbar Template for Bootstrap</title>
+
+            <!-- Bootstrap core CSS -->
+            <link href="resources/css/bootstrap.css" rel="stylesheet"/>
 
             <!-- Custom styles for this template -->
-            <link href="resources/css/navbar.css" rel="stylesheet"/>
+            <link href="resources/navbar.css" rel="stylesheet"/>
 
             <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!--[if lt IE 9]>
@@ -33,6 +39,7 @@
         </head>
 
         <body>
+
             <div class="container">
 
                 <!-- Static navbar -->
@@ -68,24 +75,29 @@
                             <li><a href="../navbar-static-top/">Static top</a></li>
                             <li><a href="../navbar-fixed-top/">Fixed top</a></li>
                         </ul>
-
-                        <!-- Main component for a primary marketing message or call to action -->
-                        <div class="jumbotron">
-                            <h1>Navbar example</h1>
-                            <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-                            <p>
-                                <a class="btn btn-lg btn-primary" href="../../components/#navbar">View navbar docs</a>
-                            </p>
-                        </div>
                     </div><!--/.nav-collapse -->
+                </div>
+
+                <!-- Main component for a primary marketing message or call to action -->
+                <div class="jumbotron">
+                    <h1>Navbar example</h1>
+                    <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+                    <p>
+                        <a class="btn btn-lg btn-primary" href="../../components/#navbar">View navbar docs &raquo;</a>
+                    </p>
                 </div>
 
             </div> <!-- /container -->
 
-            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+            <!-- Bootstrap core JavaScript
+            ================================================== -->
+            <!-- Placed at the end of the document so the pages load faster -->
             <script src="//code.jquery.com/jquery.js"></script>
-            <!-- Include all compiled plugins (below), or include individual files as needed -->
             <script src="resources/js/bootstrap.min.js"></script>
         </body>
     </html>
+
 </jsp:root>
+
+

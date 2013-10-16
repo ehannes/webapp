@@ -27,7 +27,7 @@
             <link href="resources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
             
             <!-- Custom styles for this template -->
-            <link href="resources/css/jumbotron-narrow.css" rel="stylesheet"/>
+            <link href="resources/css/signin.css" rel="stylesheet"/>
 
             <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!--[if lt IE 9]>
@@ -37,27 +37,15 @@
         </head>
         <body>
             <div class="container">
-                <div class="header">
-                    <ul class="nav nav-pills pull-right">
-                        <li class="active"><a href="fc?view=home">Home</a></li>
-                        <li><a href="fc?view=about">About</a></li>
-                        <li><a href="fc?view=contact">Contact</a></li>
-                    </ul>
-                    <h3 class="text-muted">Project Platform</h3>
-                </div>
 
-                <div class="jumbotron">
-                    <h1>Welcome!</h1>
-                    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn btn-lg btn-success" href="fc?view=signup">Sign up!</a></p>
-                </div>
+                <form action="fc?view=welcome" class="form-signin" method="post">
+                    <h2 class="form-signin-heading">Sign up</h2>
+                    <input type="text" class="form-control" name="username" placeholder="Username" autofocus="autofocus"/>
+                    <input type="password" class="form-control" name="password" placeholder="Password"/>
+                    <input type="submit" class="btn btn-lg btn-primary btn-block" />
+                </form>
 
-
-                <div class="footer">
-                    <!--<p>&copy; Company 2013</p>-->
-                </div>
-            </div> 
-            <!-- /container -->
+            </div> <!-- /container -->
            
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
             <script src="//code.jquery.com/jquery.js"></script>

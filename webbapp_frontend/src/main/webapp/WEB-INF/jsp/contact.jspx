@@ -39,7 +39,7 @@
             <div class="container">
                 <div class="header">
                     <ul class="nav nav-pills pull-right">
-                        <li class="active"><a href="fc?view=home">Home</a></li>
+                        <li class="active"><a href="/webbapp_frontend/">Home</a></li>
                         <li><a href="fc?view=about">About</a></li>
                         <li><a href="fc?view=contact">Contact</a></li>
                     </ul>
@@ -47,9 +47,8 @@
                 </div>
 
                 <div class="jumbotron">
-                    <h1>Welcome!</h1>
+                    <h1>Contact</h1>
                     <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn btn-lg btn-success" href="fc?view=signup">Sign up!</a></p>
                 </div>
 
 

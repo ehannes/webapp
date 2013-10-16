@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -33,21 +34,24 @@ public class FrontController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
         String view = request.getParameter("view");
         String action = request.getParameter("action");
-        out.println(view);
-        out.println(action);
         
-        //ProjectPlatform projectPlatform = (ProjectPlatform) request.getAttribute("PROJECT_PLATFORM");
+//        Shop shop = (Shop) request.getServletContext().getAttribute(Keys.SHOP.toString());
+//                IProductCatalogue pcat = shop.getProductCatalogue();
+        
+        ProjectPlatformWrapper projectPlatformWrapper = (ProjectPlatformWrapper) request.getServletContext().getAttribute("PROJECT_PLATFORM");
+        ProjectPlatform projectPlatform = projectPlatformWrapper.getProjectPlatform();
         
         if (action != null) {
             switch (action) {
                 case "validate":
                     String username = request.getParameter("username");
-                    //projectPlatform.addUser(new Person(username, username + "@" + username + ".com"));
+                    projectPlatform.addUser(new Person(username, username + "@" + username + ".com"));
                     
                     request.setAttribute("username", username);
                     request.getRequestDispatcher("WEB-INF/jsp/welcome.jspx").forward(request, response);
@@ -59,9 +63,27 @@ public class FrontController extends HttpServlet {
          // Navigation
         if (view != null) {
             switch (view) {
-                case "register":
+                case "home":
+                    request.getRequestDispatcher("WEB-INF/index.jspx").forward(request, response);
+                    break;
+                case "signup":
+                    request.getRequestDispatcher("WEB-INF/jsp/signup.jspx").forward(request, response);
+                    break;
+                case "about":
+                    request.getRequestDispatcher("WEB-INF/jsp/about.jspx").forward(request, response);
+                    break;
+                case "contact":
+                    request.getRequestDispatcher("WEB-INF/jsp/contact.jspx").forward(request, response);
+                    break;
+                case "welcome":
+                    String username = request.getParameter("username");
+                    String password = request.getParameter("password");
                     
-                    request.getRequestDispatcher("WEB-INF/jsp/register.jspx").forward(request, response);
+                    request.setAttribute("username", username);
+                    request.setAttribute("password", password);
+                    projectPlatform.addUser(new Person(username, username + "@" + username + ".com"));
+                    
+                    request.getRequestDispatcher("WEB-INF/jsp/welcome.jspx").forward(request, response);
                     break;
                 default:
                     ;
