@@ -42,14 +42,6 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
         return found;
     }
 
-    public List<Person> getUsers() {
-        List<Person> found = new ArrayList<>();
-        for (Person p : getAll()) {
-            found.add(p);
-        }
-        return found;
-    }
-
     public List<Person> getByFirstName(String name) {
         List<Person> found = new ArrayList<>();
         for (Person p : getAll()) {
