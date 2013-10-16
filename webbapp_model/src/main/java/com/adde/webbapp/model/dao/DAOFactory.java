@@ -1,10 +1,5 @@
 package com.adde.webbapp.model.dao;
 
-import com.adde.webbapp.model.dao.ProjectDAO;
-import com.adde.webbapp.model.dao.PersonDAO;
-import com.adde.webbapp.model.entity.Person;
-import com.adde.webbapp.model.entity.Project;
-import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -15,57 +10,55 @@ import java.util.logging.Logger;
  */
 public class DAOFactory {
 
-    private final ProjectDAO projectDAO;
+    private final ArticleDAO articleDAO;
+    private final CommentDAO commentDAO;
     private final PersonDAO personDAO;
-    public final static String PU = "webapp_pu";
+    private final ProjectDAO projectDAO;
+    private final SimpleEditorEntryDAO simpleEditorEntryDAO;
+    private final TodoPostDAO todoPostDAO;
+    private final WallPostDAO wallPostDAO;
+    private static final String PU = "webapp_pu";
 
     public DAOFactory(String puName) {
-        projectDAO = ProjectDAO.newInstance();
+        articleDAO = ArticleDAO.newInstance();
+        commentDAO = CommentDAO.newInstance();
         personDAO = PersonDAO.newInstance();
+        projectDAO = ProjectDAO.newInstance();
+        simpleEditorEntryDAO = SimpleEditorEntryDAO.newInstance();
+        todoPostDAO = TodoPostDAO.newInstance();
+        wallPostDAO = WallPostDAO.newInstance();
         Logger.getAnonymousLogger().log(Level.INFO, "ProjectPlatform alive {0}", this.hashCode());
     }
-    
-    public void addProject(Project project) {
-        projectDAO.add(project);
+
+    public static String getPU() {
+        return PU;
     }
 
-    public void removeProject(Project project) {
-        projectDAO.remove(project.getId());
+    public ArticleDAO getArticleDAO() {
+        return articleDAO;
     }
 
-    public List<Project> getProjects() {
-        return projectDAO.getProjects();
+    public CommentDAO getCommentDAO() {
+        return commentDAO;
     }
 
-    public List<Project> getProjectsByUser(Person user) {
-        return projectDAO.getByUser(user);
+    public PersonDAO getPersonDAO() {
+        return personDAO;
     }
 
-    public void addUser(Person user) {
-        personDAO.add(user);
+    public ProjectDAO getProjectDAO() {
+        return projectDAO;
     }
 
-    public void removeUser(Person user) {
-        personDAO.remove(user.getId());
+    public SimpleEditorEntryDAO getSimpleEditorEntryDAO() {
+        return simpleEditorEntryDAO;
     }
 
-    public List<Person> getUsers() {
-        return personDAO.getUsers();
+    public TodoPostDAO getTodoPostDAO() {
+        return todoPostDAO;
     }
 
-    public List<Person> getUserByUserName(String username) {
-        return personDAO.getByUserName(username);
-    }
-
-    public List<Person> getUserByFirstName(String firstname) {
-        return personDAO.getByFirstName(firstname);
-    }
-
-    public List<Person> getUserByLastName(String lastname) {
-        return personDAO.getByLastName(lastname);
-    }
-
-    public List<Person> getUserByEmail(String email) {
-        return personDAO.getByEmail(email);
+    public WallPostDAO getWallPostDAO() {
+        return wallPostDAO;
     }
 }
