@@ -1,8 +1,6 @@
 package com.adde.webbapp_model;
 
-import com.adde.webbapp_model_dao.ArticleDAO;
-import com.adde.webbapp_model_dao.WallPostDAO;
-import com.adde.webbapp_model_dao.TodoPostDAO;
+
 import com.adde.webbapp_model_util.AbstractEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,8 +8,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -31,8 +29,13 @@ public class Project extends AbstractEntity implements Serializable {
     @ManyToOne
     private Person admin;
     
-    @OneToMany(cascade = CascadeType.REFRESH)
+    @ManyToMany(cascade = CascadeType.REFRESH)
     private List<Person> collaborators;
+    
+    private List<Article> articles;
+    private List<WallPost> wallPosts;
+    private List<TodoPost> todoPosts;
+    //private List<TodoPost> milestonePosts;
     
     public Project(){
     }
@@ -42,6 +45,10 @@ public class Project extends AbstractEntity implements Serializable {
         this.admin = admin;
         this.calendar = new GregorianCalendar();
         this.collaborators = new ArrayList<>();
+        this.articles = new ArrayList<>();
+        this.wallPosts = new ArrayList<>();
+        this.todoPosts = new ArrayList<>();
+        //this.milestonePosts = new ArrayList<>();
     }
 
     public String getName() {
@@ -84,15 +91,15 @@ public class Project extends AbstractEntity implements Serializable {
 //    }
 //
     public List<TodoPost> getTodoPosts() {
-        return TodoPostDAO.newInstance().getAll();
+        return todoPosts;
     }
 
     public List<Article> getArticles() {
-        return ArticleDAO.newInstance().getAll();
+        return articles;
     }
 
     public List<WallPost> getWallPosts() {
-        return WallPostDAO.newInstance().getAll();
+        return wallPosts;
     }
 
     public void addCollaborator(Person user) throws Exception {
@@ -108,15 +115,15 @@ public class Project extends AbstractEntity implements Serializable {
 //    }
 //
     public void createTodoPost(Person author, String msg) {
-        TodoPostDAO.newInstance().add(new TodoPost(this, author, msg));
+        todoPosts.add(new TodoPost(this, author, msg));
     }
 
     public void createArticle(Person author, String content, String title) {
-        ArticleDAO.newInstance().add(new Article(author, content, title));
+        articles.add(new Article(author, content, title));
     }
 
     public void createWallPost(Person author, String msg) {
-        WallPostDAO.newInstance().add(new WallPost(this, author, msg));
+        wallPosts.add(new WallPost(this, author, msg));
     }
 
     public void deleteCollaborator(Person u) {
@@ -124,7 +131,7 @@ public class Project extends AbstractEntity implements Serializable {
     }
 
     public void deleteArticle(Article a) {
-        ArticleDAO.newInstance().remove(a.getId());
+        articles.remove(a);
     }
     
 //    public void deleteMilestonePost(TodoPost m) {
@@ -132,11 +139,11 @@ public class Project extends AbstractEntity implements Serializable {
 //    }
 
     public void deleteTodoPost(TodoPost d) {
-        TodoPostDAO.newInstance().remove(d.getId());
+        todoPosts.remove(d);
     }
 
     public void deleteWallPost(WallPost w) {
-        WallPostDAO.newInstance().remove(w.getId());
+        wallPosts.remove(w);
     }
 
     @Override
