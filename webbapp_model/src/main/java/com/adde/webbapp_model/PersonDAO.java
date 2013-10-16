@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class PersonDAO extends AbstractDAO<Person, Long> {
 
-    public static PersonDAO newInstance(String puName) {
-        return new PersonDAO(puName);
+    public static PersonDAO newInstance() {
+        return new PersonDAO();
     }
 
-    private PersonDAO(String puName) {
-        super(Person.class, puName);
+    private PersonDAO() {
+        super(Person.class);
     }
 
     public List<Person> getByUserName(String name) {

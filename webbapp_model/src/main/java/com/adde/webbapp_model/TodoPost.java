@@ -1,7 +1,6 @@
 package com.adde.webbapp_model;
 
 import java.util.GregorianCalendar;
-import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,7 +25,6 @@ public class TodoPost extends Post<Project> {
     
     public TodoPost(Project context, Person author, String msg, GregorianCalendar deadline){
         super(context, author, msg);
-        assignedTo = new LinkedList<>();
         this.deadline = deadline;
     }
 
@@ -39,11 +37,11 @@ public class TodoPost extends Post<Project> {
     }
 
     public void clearAssignedTo(){
-        assignedTo = new LinkedList<>();
+        assignedTo = null;
     }
 
     public void assignTo(Person u){
-        if(!assignedTo.contains(u)){
+        if(!(assignedTo == null || assignedTo.contains(u))){
             assignedTo.add(u);
         }
     }
@@ -51,18 +49,23 @@ public class TodoPost extends Post<Project> {
     //Only accepts non-null lists, also no duplicates!
     public boolean assignTo(List<Person> assignTo){
         if(assignTo == null){
+            System.out.println("TodoPost.add(List): list==null");
             return false;
         }
+        System.out.println("TodoPost.add(List): list!=null");
         for(Person u : assignTo){
             if(!assignedTo.contains(u)){
                 assignedTo.add(u);
+                System.out.println("TodoPost.add(List): added 1 pers");
             }
         }
         return true;
     }
     
     public void unassign(Person u){
-        assignedTo.remove(u);
+        if(assignedTo != null){
+            assignedTo.remove(u);
+        }
     }
 
     public GregorianCalendar getDeadline() {

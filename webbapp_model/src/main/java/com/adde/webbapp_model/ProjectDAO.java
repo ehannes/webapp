@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class ProjectDAO extends AbstractDAO<Project, Long> {
 
-    public static ProjectDAO newInstance(String puName) {
-        return new ProjectDAO(puName);
+    public static ProjectDAO newInstance() {
+        return new ProjectDAO();
     }
 
-    private ProjectDAO(String puName) {
-        super(Project.class, puName);
+    private ProjectDAO() {
+        super(Project.class);
     }
 
     public List<Project> getByName(String name) {

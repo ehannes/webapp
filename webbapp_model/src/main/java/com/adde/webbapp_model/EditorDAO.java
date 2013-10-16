@@ -11,8 +11,8 @@ public class EditorDAO extends AbstractDAO<SimpleEditorEntry, Long> {
         return new EditorDAO();
     }
     
-    private EditorDAO(){ //String puName) {
-        super(SimpleEditorEntry.class, ProjectPlatform.PU);
+    private EditorDAO(){
+        super(SimpleEditorEntry.class);
     }
     
 }

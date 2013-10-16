@@ -11,6 +11,6 @@ public class ArticleDAO extends AbstractDAO<Article,Long> {
     }
     
     private ArticleDAO() {
-        super(Article.class, ProjectPlatform.PU);
+        super(Article.class);
     }
 }
