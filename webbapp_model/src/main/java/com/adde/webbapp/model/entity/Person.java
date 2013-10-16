@@ -1,11 +1,12 @@
 package com.adde.webbapp.model.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 /**
  * Simple user.
@@ -20,30 +21,37 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 public class Person extends AbstractEntity implements Serializable {
-    @NotNull
+    
+    @Column(nullable=false)
     private String username;
-    @NotNull
+    
+    @Column(nullable=false)
     private String password;
-    @NotNull
+    
+    @Column(nullable=false)
     private String email;
-    @NotNull
+    
+    @Column(nullable=false)
     @Temporal(TemporalType.DATE)
-    private GregorianCalendar calendar;
+    private Calendar dateCreated;
     private String firstname;
     private String lastname;
     
     public Person() {
     }
     
-    public Person(String nickname, String email, String password) {
-        this.username = nickname;
+    public Person(String username, String email, String password) {
+        this.username = username;
         this.password = password;
         this.email = email;
-        calendar = new GregorianCalendar();
     }
     
     public String getUserName() {
         return username;
+    }
+    
+    public void setUserName(String username) {
+        this.username = username;
     }
     
     public String getFirstName(){
@@ -70,7 +78,6 @@ public class Person extends AbstractEntity implements Serializable {
         this.email = email;
     }
 
-    
     public String getPassword() {
         return password;
     }
@@ -79,16 +86,23 @@ public class Person extends AbstractEntity implements Serializable {
         this.password = password;
     }
     
-    public String getDateCreated() {
-        return "User created " + calendar.get(GregorianCalendar.DAY_OF_MONTH)
-                + "/" + (calendar.get(GregorianCalendar.MONTH)+1)
-                + " " + calendar.get(GregorianCalendar.YEAR);
+    public void setDateCreated(Calendar dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Calendar getDateCreated() {
+        return dateCreated;
     }
     
     @Override
     public String toString(){
-        return "User{id: " + getId() + ", Nickname: " + username + ", First name: " +
-                firstname + ", Last name: " + lastname + ", Email: " + email +
-                ", " + getDateCreated() + "}";
+        return super.toString() + ", username: " + username + ", first name: " + 
+                firstname + ", last name: " + ", email: " + email + dateToString();
+    }
+    
+    private String dateToString() {
+        return ", user created " + dateCreated.get(GregorianCalendar.DAY_OF_MONTH)
+                + "/" + (dateCreated.get(GregorianCalendar.MONTH)+1)
+                + " " + dateCreated.get(GregorianCalendar.YEAR);
     }
 }
