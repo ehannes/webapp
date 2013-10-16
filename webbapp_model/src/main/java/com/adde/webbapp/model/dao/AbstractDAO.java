@@ -22,7 +22,7 @@ public abstract class AbstractDAO<T, K> {
     
     protected AbstractDAO (Class<T> clazz) {
         this.clazz = clazz;
-        emf = Persistence.createEntityManagerFactory(DAOFactory.PU);
+        emf = Persistence.createEntityManagerFactory(DAOFactory.getPU());
     }
     
     protected EntityManager getEntityManager(){
