@@ -26,27 +26,20 @@ public class Person extends AbstractEntity implements Serializable {
     @NotNull
     private String password;
     @NotNull
-    private String firstname;
-    @NotNull
-    private String lastname;
-    @NotNull
     private String email;
     @NotNull
     @Temporal(TemporalType.DATE)
     private GregorianCalendar calendar;
+    private String firstname;
+    private String lastname;
     
     public Person() {
     }
     
-    public Person(String nickname, String email) {
+    public Person(String nickname, String email, String password) {
         this.username = nickname;
-        initUser(email);
-    }
-    
-    private void initUser(String email) {
+        this.password = password;
         this.email = email;
-        this.firstname = "";
-        this.lastname = "";
         calendar = new GregorianCalendar();
     }
     
