@@ -27,7 +27,6 @@ public abstract class AbstractDAO<T, K> {
     
     protected EntityManager getEntityManager(){
         EntityManager em = emf.createEntityManager();
-        Logger.getAnonymousLogger().log(Level.INFO, "Createing EM {0}", em);
         return em;
     }
     
