@@ -24,6 +24,8 @@ public class Person extends AbstractEntity implements Serializable {
     @NotNull
     private String username;
     @NotNull
+    private String password;
+    @NotNull
     private String firstname;
     @NotNull
     private String lastname;
@@ -74,6 +76,15 @@ public class Person extends AbstractEntity implements Serializable {
     
     public void setEmail(String email){
         this.email = email;
+    }
+
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
     
     public String getDateCreated() {
