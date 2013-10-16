@@ -16,16 +16,11 @@ import org.junit.Test;
  */
 public class PersonTest {
     PersonDAO personDAO;
-    private String PU;
     
     @Before
     public void before() {
         DAOFactory daoFactory = new DAOFactory();
         personDAO = daoFactory.getPersonDAO();
-        
-        PU = "webapp_pu";
-        
-        
     }
     
     @Test

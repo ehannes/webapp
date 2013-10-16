@@ -17,7 +17,6 @@ public class DAOFactory {
     private final SimpleEditorEntryDAO simpleEditorEntryDAO;
     private final TodoPostDAO todoPostDAO;
     private final WallPostDAO wallPostDAO;
-    private static final String PU = "webapp_pu";
 
     public DAOFactory() {
         articleDAO = ArticleDAO.newInstance();
@@ -28,10 +27,6 @@ public class DAOFactory {
         todoPostDAO = TodoPostDAO.newInstance();
         wallPostDAO = WallPostDAO.newInstance();
         Logger.getAnonymousLogger().log(Level.INFO, "ProjectPlatform alive {0}", this.hashCode());
-    }
-
-    public static String getPU() {
-        return PU;
     }
 
     public ArticleDAO getArticleDAO() {
