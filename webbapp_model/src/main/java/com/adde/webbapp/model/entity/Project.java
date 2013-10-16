@@ -3,7 +3,6 @@ package com.adde.webbapp.model.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -43,11 +42,11 @@ public class Project extends AbstractEntity implements Serializable {
     public Project(String name, Person admin) {
         this.name = name;
         this.admin = admin;
+        
         this.collaborators = new ArrayList<>();
         this.articles = new ArrayList<>();
         this.wallPosts = new ArrayList<>();
         this.todoPosts = new ArrayList<>();
-        //this.milestonePosts = new ArrayList<>();
     }
 
     public String getName() {
@@ -61,15 +60,18 @@ public class Project extends AbstractEntity implements Serializable {
     public Person getAdmin() {
         return admin;
     }
-
-    public void setAdmin(Person currentAdmin, Person newAdmin) throws Exception {
-        if (currentAdmin.equals(admin)) {
-            admin = newAdmin;
-            collaborators.add(admin);
-            collaborators.remove(newAdmin);
-        }
-        throw new Exception("Current admin in setAdmin was incorrect");
+    public void setAdmin(Person newAdmin){
+        this.admin = newAdmin;
     }
+
+//    public void setAdmin(Person currentAdmin, Person newAdmin) throws Exception {
+//        if (currentAdmin.equals(admin)) {
+//            admin = newAdmin;
+//            collaborators.add(admin);
+//            collaborators.remove(newAdmin);
+//        }
+//        throw new Exception("Current admin in setAdmin was incorrect");
+//    }
 
     public Calendar getDateCreated() {
         return dateCreated;
