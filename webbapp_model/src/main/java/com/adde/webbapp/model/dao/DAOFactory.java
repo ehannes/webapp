@@ -19,7 +19,7 @@ public class DAOFactory {
     private final WallPostDAO wallPostDAO;
     private static final String PU = "webapp_pu";
 
-    public DAOFactory(String puName) {
+    public DAOFactory() {
         articleDAO = ArticleDAO.newInstance();
         commentDAO = CommentDAO.newInstance();
         personDAO = PersonDAO.newInstance();
