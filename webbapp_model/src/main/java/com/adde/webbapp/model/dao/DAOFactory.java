@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class DAOFactory {
 
     private final ArticleDAO articleDAO;
-    private final CommentDAO commentDAO;
+    private final PostDAO postDAO;
     private final PersonDAO personDAO;
     private final ProjectDAO projectDAO;
     private final SimpleEditorEntryDAO simpleEditorEntryDAO;
@@ -21,7 +21,7 @@ public class DAOFactory {
 
     public DAOFactory() {
         articleDAO = ArticleDAO.newInstance();
-        commentDAO = CommentDAO.newInstance();
+        postDAO = PostDAO.newInstance();
         personDAO = PersonDAO.newInstance();
         projectDAO = ProjectDAO.newInstance();
         simpleEditorEntryDAO = SimpleEditorEntryDAO.newInstance();
@@ -38,8 +38,8 @@ public class DAOFactory {
         return articleDAO;
     }
 
-    public CommentDAO getCommentDAO() {
-        return commentDAO;
+    public PostDAO getPostDAO() {
+        return postDAO;
     }
 
     public PersonDAO getPersonDAO() {
