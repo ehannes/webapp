@@ -14,14 +14,24 @@ public class TodoPostDAO extends AbstractDAO<TodoPost,Long>{
         super(TodoPost.class, puName);
     }
     
-    public static TodoPostDAO newInstance(String puName){
-        return new TodoPostDAO(puName);
+    public static TodoPostDAO newInstance(){
+        return new TodoPostDAO(ProjectPlatform.PU);
     }
     
-    public List<TodoPost> getWallPostByProject(Project p){
+    public List<TodoPost> getTodoPostsByProject(Project p){
         List<TodoPost> result = new LinkedList<>();
         for(TodoPost tp : getAll()){
             if(tp.getContext().equals(p)){
+                result.add(tp);
+            }
+        }
+        return result;
+    }
+    
+    public List<TodoPost> getTodoPostsByPerson(Person p){
+        List<TodoPost> result = new LinkedList<>();
+        for(TodoPost tp : getAll()){
+            if(tp.getAuthor().equals(p)){
                 result.add(tp);
             }
         }

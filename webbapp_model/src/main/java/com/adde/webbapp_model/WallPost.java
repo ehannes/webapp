@@ -22,7 +22,18 @@ public class WallPost extends Post<Project> {
     }
     
     public List<Comment> getComments(){
+        CommentDAO.newInstance().getAll();
         return comments;
+    }
+    
+    //doesn't allow duplicates
+    public void addComment(Comment c) throws IllegalArgumentException{
+        if(!c.getContext().equals(this)){
+            throw new IllegalArgumentException("WallPost.addComment: "
+                    + "Argument does not belong to this context!");
+        } else if(!comments.contains(c)){
+            comments.add(c);
+        }
     }
     
     public void addComment(Person author, String msg){

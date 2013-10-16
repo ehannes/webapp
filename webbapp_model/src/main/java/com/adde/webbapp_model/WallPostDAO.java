@@ -16,8 +16,8 @@ public class WallPostDAO extends AbstractDAO<WallPost,Long> {
         super(WallPost.class, puName);
     }
     
-    public static WallPostDAO newInstance(String puName) {
-        return new WallPostDAO(puName);
+    public static WallPostDAO newInstance() {
+        return new WallPostDAO(ProjectPlatform.PU);
     }
     
     public List<WallPost> getWallPostByProject(Project p){
