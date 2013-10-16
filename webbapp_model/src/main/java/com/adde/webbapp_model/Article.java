@@ -1,10 +1,11 @@
 package com.adde.webbapp_model;
 
-import com.adde.webbapp_model_dao.EditorDAO;
 import com.adde.webbapp_model_util.AbstractEntity;
 import java.io.Serializable;
 import java.util.*;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,8 +22,8 @@ import javax.persistence.TemporalType;
 @Entity
 public class Article extends AbstractEntity implements Serializable {
 
-    //@ManyToMany
-    //private LinkedList<SimpleEditorEntry> editors;
+    @OneToMany(cascade={CascadeType.ALL})
+    private LinkedList<SimpleEditorEntry> editors;
     private String title;
     private String content;
     @Temporal(TemporalType.DATE)
@@ -37,13 +38,13 @@ public class Article extends AbstractEntity implements Serializable {
         dateCreated = new GregorianCalendar();
         dateModified = dateCreated;
         this.title = title;
-        EditorDAO.newInstance().add(new SimpleEditorEntry(editor,dateCreated, this));//editors.addFirst(new SimpleEditorEntry(editor, dateModified));
+        editors.addFirst(new SimpleEditorEntry(editor, dateCreated));
     }
     
     public void update(Person editor, String newContent, String title) {
         content = newContent;
         dateModified = new GregorianCalendar();
-        EditorDAO.newInstance().add(new SimpleEditorEntry(editor, dateModified, this));
+        editors.addFirst(new SimpleEditorEntry(editor, dateModified));
         this.title = title;
     }
     
@@ -51,7 +52,7 @@ public class Article extends AbstractEntity implements Serializable {
         return title;
     }
     
-    public List<SimpleEditorEntry> getEditEntriesByPerson(Person p) {
+    /*public List<SimpleEditorEntry> getEditEntriesByPerson(Person p) {
         List<SimpleEditorEntry> found = new ArrayList<>();
         for(SimpleEditorEntry entry : EditorDAO.newInstance().getAll()){
             if(entry.getKey().equals(p)){
@@ -59,7 +60,7 @@ public class Article extends AbstractEntity implements Serializable {
             }
         }
         return found;
-    }
+    }*/
     
     /*public LinkedList<SimpleEditorEntry> getEditEntries(int n) {
         LinkedList<SimpleEditorEntry> result = new LinkedList<>();
@@ -69,13 +70,13 @@ public class Article extends AbstractEntity implements Serializable {
         return result;
     }*/
     
-    public List<Person> getEditors() {
+    /*public List<Person> getEditors() {
         List<Person> found = new ArrayList<>();
         for(SimpleEditorEntry entry : EditorDAO.newInstance().getAll()){
             found.add(entry.getKey());
         }
         return found;
-    }
+    }*/
     
     /*
     public List<Person> getEditors(int n) {

@@ -3,6 +3,7 @@ package com.adde.webbapp_model;
 import com.adde.webbapp_model_util.AbstractEntity;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -14,19 +15,19 @@ import javax.persistence.TemporalType;
 @Entity
 public class SimpleEditorEntry extends AbstractEntity implements Serializable {
     
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.REFRESH})
     private Person person;
     @Temporal(TemporalType.DATE)
     private GregorianCalendar calendar;
-    @ManyToOne
-    private Article article;
+    //@ManyToOne(cascade={CascadeType.REFRESH})
+    //private Article article;
 
     public SimpleEditorEntry() {}
     
-    public SimpleEditorEntry(Person person, GregorianCalendar calendar, Article article) {
+    public SimpleEditorEntry(Person person, GregorianCalendar calendar) {
         this.person = person;
         this.calendar = calendar;
-        this.article = article;
+        //this.article = article;
     }
     
     public Person getKey() {
@@ -45,9 +46,9 @@ public class SimpleEditorEntry extends AbstractEntity implements Serializable {
         this.calendar = calendar;
     }
     
-    public Article getArticle() {
+    /*public Article getArticle() {
         return article;
-    }
+    }*/
     
     @Override
     public String toString() {
