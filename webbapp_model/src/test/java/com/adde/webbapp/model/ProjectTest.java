@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.adde.webbapp_model;
+package com.adde.webbapp.model;
 
 import java.util.List;
 import java.util.logging.Level;

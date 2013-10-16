@@ -1,6 +1,5 @@
-package com.adde.webbapp_model;
+package com.adde.webbapp.model.entity;
 
-import com.adde.webbapp_model_util.AbstractEntity;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import javax.persistence.Entity;

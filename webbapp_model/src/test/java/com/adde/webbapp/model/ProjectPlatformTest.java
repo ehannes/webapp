@@ -2,9 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.adde.webbapp_model;
+package com.adde.webbapp.model;
 
-import com.adde.webbapp_model_dao.ProjectDAO;
+import com.adde.webbapp.model.dao.DAOFactory;
+import com.adde.webbapp.model.entity.Project;
+import com.adde.webbapp.model.entity.Person;
+import com.adde.webbapp.model.dao.ProjectDAO;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Before;
@@ -17,7 +20,7 @@ import org.junit.Test;
  */
 public class ProjectPlatformTest {
 
-    static ProjectPlatform projectPlatform;
+    static DAOFactory projectPlatform;
     final static String PU = "webapp_pu";
     private Person testPerson;
     private Person collaborator;
@@ -25,9 +28,8 @@ public class ProjectPlatformTest {
 
     @Before
     public void setup() {
-        projectPlatform = ProjectPlatformFactory.getProjectPlatform(PU);
-        testPerson = new Person("Test Testsson", "test@test.com");
-        collaborator = new Person("Colla borator", "colla@test.com");
+        testPerson = new Person("Test Testsson", "test@test.com", "pass");
+        collaborator = new Person("Colla borator", "colla@test.com", "pass");
         testProject = new Project("testProject", testPerson);
     }
 

@@ -2,12 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.adde.webbapp_model_dao;
+package com.adde.webbapp.model.dao;
 
-import com.adde.webbapp_model.Person;
-import com.adde.webbapp_model.Project;
-import com.adde.webbapp_model.TodoPost;
-import com.adde.webbapp_model_util.AbstractDAO;
+import com.adde.webbapp.model.entity.Person;
+import com.adde.webbapp.model.entity.Project;
+import com.adde.webbapp.model.entity.TodoPost;
 import java.util.LinkedList;
 import java.util.List;
 

@@ -1,6 +1,5 @@
-package com.adde.webbapp_model;
+package com.adde.webbapp.model.entity;
 
-import com.adde.webbapp_model_util.AbstractEntity;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import javax.persistence.CascadeType;
@@ -18,39 +17,38 @@ public class SimpleEditorEntry extends AbstractEntity implements Serializable {
     @ManyToOne(cascade={CascadeType.REFRESH})
     private Person person;
     @Temporal(TemporalType.DATE)
-    private GregorianCalendar calendar;
+    private GregorianCalendar modificationTime;
     //@ManyToOne(cascade={CascadeType.REFRESH})
     //private Article article;
 
     public SimpleEditorEntry() {}
     
-    public SimpleEditorEntry(Person person, GregorianCalendar calendar) {
+    public SimpleEditorEntry(Person person) {
         this.person = person;
-        this.calendar = calendar;
-        //this.article = article;
+        this.modificationTime = modificationTime;
     }
-    
-    public Person getKey() {
+
+    public Person getPerson() {
         return person;
     }
-    
-    public void setKey(Person person){
+
+    public void setPerson(Person person) {
         this.person = person;
+    }   
+ 
+    public GregorianCalendar getModificationTime() {
+        return modificationTime;
     }
 
-    public GregorianCalendar getValue() {
-        return calendar;
+    public void setModificationTime(GregorianCalendar modificationTime) {
+        this.modificationTime = modificationTime;
     }
 
-    public void setValue(GregorianCalendar calendar) {
-        this.calendar = calendar;
-    }
-    
     /*public Article getArticle() {
         return article;
     }*/
     
-    @Override
+    /*@Override
     public String toString() {
         return "SimpleEditorEntry{" + super.toString() + ", Person: " + person.toString()
                 + ", Edited: " + calendar.get(GregorianCalendar.DAY_OF_MONTH)
@@ -59,6 +57,5 @@ public class SimpleEditorEntry extends AbstractEntity implements Serializable {
                 + " at " + calendar.get(GregorianCalendar.HOUR)
                 + ":" + calendar.get(GregorianCalendar.MINUTE)
                 + ":" + calendar.get(GregorianCalendar.SECOND);
-    }
-   
+    }*/
 }

@@ -1,6 +1,5 @@
-package com.adde.webbapp_model;
+package com.adde.webbapp.model.entity;
 
-import com.adde.webbapp_model_util.AbstractEntity;
 import java.io.Serializable;
 import java.util.*;
 import javax.persistence.CascadeType;
@@ -23,33 +22,41 @@ import javax.persistence.TemporalType;
 public class Article extends AbstractEntity implements Serializable {
 
     @OneToMany(cascade={CascadeType.ALL})
-    private LinkedList<SimpleEditorEntry> editors;
+    private List<SimpleEditorEntry> editors;
     private String title;
     private String content;
     @Temporal(TemporalType.DATE)
-    private GregorianCalendar dateCreated;
+    private Calendar dateCreated;
     @Temporal(TemporalType.DATE)
-    private GregorianCalendar dateModified;
+    private Calendar dateModified;
 
     public Article() {}
     
-    public Article(Person editor, String content, String title) {
+    public Article(String content, String title) {
         this.content = content;
-        dateCreated = new GregorianCalendar();
-        dateModified = dateCreated;
         this.title = title;
-        editors.addFirst(new SimpleEditorEntry(editor, dateCreated));
     }
     
-    public void update(Person editor, String newContent, String title) {
-        content = newContent;
-        dateModified = new GregorianCalendar();
-        editors.addFirst(new SimpleEditorEntry(editor, dateModified));
-        this.title = title;
+    /*public void update(Person editor, String newContent, String title) {
+    content = newContent;
+    dateModified = new GregorianCalendar();
+    editors.addFirst(new SimpleEditorEntry(editor, dateModified));
+    this.title = title;
+    }*/
+    public List<SimpleEditorEntry> getEditors() {
+        return editors;
+    }
+
+    public void setEditors(List<SimpleEditorEntry> editors) {
+        this.editors = editors;
     }
     
     public String getTitle() {
         return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
     
     /*public List<SimpleEditorEntry> getEditEntriesByPerson(Person p) {
@@ -91,24 +98,37 @@ public class Article extends AbstractEntity implements Serializable {
         return content;
     }
 
-    public GregorianCalendar getDateCreated() {
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Calendar getDateCreated() {
         return dateCreated;
     }
 
-    public GregorianCalendar getDateModified() {
+    public void setDateCreated(Calendar dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Calendar getDateModified() {
         return dateModified;
     }
-    public String calendarToString(GregorianCalendar c) {
+
+    public void setDateModified(Calendar dateModified) {
+        this.dateModified = dateModified;
+    }
+
+    private String calendarToString(GregorianCalendar c) {
         return  c.get(GregorianCalendar.DAY_OF_MONTH)
                 + "/" + (c.get(GregorianCalendar.MONTH) + 1)
                 + " " + c.get(GregorianCalendar.YEAR);
     }
     
-    @Override
+    /*@Override
     public String toString() {
         return "Article{" + super.toString() + " Title: " + title + " Content: " + content
                 + " dateCreated: " + calendarToString(dateCreated) + 
                 " dateModified: " + calendarToString(dateModified)+ " Editors: "
                 + "}"; //editors.toString() + "}";
-    }
+    }*/
 }

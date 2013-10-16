@@ -1,4 +1,4 @@
-package com.adde.webbapp_model;
+package com.adde.webbapp.model;
 
 import java.util.HashSet;
 import java.util.logging.Level;

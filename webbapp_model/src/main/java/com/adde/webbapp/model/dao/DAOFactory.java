@@ -1,7 +1,9 @@
-package com.adde.webbapp_model;
+package com.adde.webbapp.model.dao;
 
-import com.adde.webbapp_model_dao.ProjectDAO;
-import com.adde.webbapp_model_dao.PersonDAO;
+import com.adde.webbapp.model.dao.ProjectDAO;
+import com.adde.webbapp.model.dao.PersonDAO;
+import com.adde.webbapp.model.entity.Person;
+import com.adde.webbapp.model.entity.Project;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,13 +13,13 @@ import java.util.logging.Logger;
  *
  * @author Eric Ahlberg (eahlberg@gmail.com)
  */
-public class ProjectPlatform {
+public class DAOFactory {
 
     private final ProjectDAO projectDAO;
     private final PersonDAO personDAO;
     public final static String PU = "webapp_pu";
 
-    public ProjectPlatform(String puName) {
+    public DAOFactory(String puName) {
         projectDAO = ProjectDAO.newInstance();
         personDAO = PersonDAO.newInstance();
         Logger.getAnonymousLogger().log(Level.INFO, "ProjectPlatform alive {0}", this.hashCode());

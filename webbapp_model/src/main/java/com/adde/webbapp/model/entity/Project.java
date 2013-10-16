@@ -1,7 +1,6 @@
-package com.adde.webbapp_model;
+package com.adde.webbapp.model.entity;
 
 
-import com.adde.webbapp_model_util.AbstractEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -118,9 +117,9 @@ public class Project extends AbstractEntity implements Serializable {
         todoPosts.add(new TodoPost(this, author, msg));
     }
 
-    public void createArticle(Person author, String content, String title) {
+    /*public void createArticle(Person author, String content, String title) {
         articles.add(new Article(author, content, title));
-    }
+    }*/
 
     public void createWallPost(Person author, String msg) {
         wallPosts.add(new WallPost(this, author, msg));

@@ -1,4 +1,4 @@
-package com.adde.webbapp_model;
+package com.adde.webbapp.model.entity;
 
 import java.util.GregorianCalendar;
 import java.util.List;
