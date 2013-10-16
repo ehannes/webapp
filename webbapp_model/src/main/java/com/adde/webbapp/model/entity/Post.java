@@ -3,10 +3,12 @@ package com.adde.webbapp.model.entity;
 import java.io.Serializable;
 import java.util.Calendar;
 import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+@Entity
 public class Post extends AbstractEntity implements Serializable {
     @ManyToOne(cascade = {CascadeType.REFRESH})
     private Person author;
@@ -15,6 +17,11 @@ public class Post extends AbstractEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     private Calendar dateModified;
     private String msg;
+
+    //necessary to be an entity, NEVER USE!!!
+    public Post() {
+        this(null,null);
+    }
     
     public Post(Person author, String msg){
         this.author = author;
