@@ -15,7 +15,6 @@ import org.junit.Test;
  * @author hannes
  */
 public class PersonTest {
-    private Person user1, user2, userWithSetId, nullTest;
     PersonDAO personDAO;
     private String PU;
     
@@ -25,16 +24,37 @@ public class PersonTest {
         personDAO = daoFactory.getPersonDAO();
         
         PU = "webapp_pu";
-        user1 = new Person("testperson", "testperson@testpersons.com", "HsdE3324!gh");
-        user2 = new Person("testperson 2", "testperson2@testpersons.com", "YhIJKd!ad");
+        
+        
     }
     
     @Test
-    public void addUserToDB() {
+    public void addPersonRemovePerson() {
         //Logger.getAnonymousLogger().log(Level.INFO, "get users: " + personDAO.getUsers());
-        assertFalse(personDAO.getUsers().contains(user1));
-        personDAO.add(user1);
-        assertTrue(personDAO.getUsers().contains(user1));
+        String person1_pw = "HsdE3324!gh";
+        Person person1 = new Person("testperson", "testperson@testpersons.com", person1_pw);
+        
+        // Check that the user is not already in the database
+        assertFalse(personDAO.getAll().contains(person1));
+        
+        personDAO.add(person1);
+        assertTrue(personDAO.getAll().contains(person1));
+        
+        personDAO.remove(person1.getId());
+        assertFalse(personDAO.getAll().contains(person1));
+    }
+    
+    @Test
+    public void updatePerson() {
+        String person2_pw = "YhIJKd!ad";
+        Person person2 = new Person("testperson 2", "testperson2@testpersons.com", person2_pw);
+        personDAO.add(person2);
+        assertTrue(personDAO.find(person2.getId()).getPassword().equals(person2_pw));
+        
+        String person2_updated_pw = "nEw!paSSwoRD";
+        person2.setPassword(person2_updated_pw);
+        personDAO.update(person2);
+        assertTrue(personDAO.find(person2.getId()).getPassword().equals(person2_updated_pw));
     }
 }
     

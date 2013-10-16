@@ -94,11 +94,11 @@ public class Person extends AbstractEntity implements Serializable {
         return dateCreated;
     }
     
-    @Override
+    /*@Override
     public String toString(){
         return super.toString() + ", username: " + username + ", first name: " + 
                 firstname + ", last name: " + ", email: " + email + dateToString();
-    }
+    }*/
     
     private String dateToString() {
         return ", user created " + dateCreated.get(GregorianCalendar.DAY_OF_MONTH)
