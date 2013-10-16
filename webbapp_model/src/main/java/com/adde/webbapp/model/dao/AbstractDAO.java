@@ -19,7 +19,7 @@ public abstract class AbstractDAO<T, K> {
 
     private EntityManagerFactory emf;
     private final Class<T> clazz;
-    private final String PU = "webbapp_pu";
+    private final String PU = "webapp_pu";
     
     protected AbstractDAO (Class<T> clazz) {
         this.clazz = clazz;

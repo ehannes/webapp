@@ -18,7 +18,7 @@ public class DAOFactory {
     private final TodoPostDAO todoPostDAO;
     private final WallPostDAO wallPostDAO;
 
-    public DAOFactory() {
+    private DAOFactory() {
         articleDAO = ArticleDAO.newInstance();
         postDAO = PostDAO.newInstance();
         personDAO = PersonDAO.newInstance();
@@ -27,6 +27,11 @@ public class DAOFactory {
         todoPostDAO = TodoPostDAO.newInstance();
         wallPostDAO = WallPostDAO.newInstance();
         Logger.getAnonymousLogger().log(Level.INFO, "ProjectPlatform alive {0}", this.hashCode());
+    }
+    
+    public static DAOFactory getDAOFactory() {
+        DAOFactory daoFactory = new DAOFactory();
+        return daoFactory;
     }
 
     public ArticleDAO getArticleDAO() {
