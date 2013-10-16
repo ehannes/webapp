@@ -4,9 +4,12 @@
  */
 package com.adde.webbapp.model.dao;
 
+import com.adde.webbapp.model.entity.Article;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.Project;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -59,5 +62,11 @@ public class ProjectDAO extends AbstractDAO<Project, Long> {
             }
         }
         return found;
+    }
+        @Override
+    public void add(Project project) {
+        final Calendar time = new GregorianCalendar();
+        project.setDateCreated(time);
+        super.add(project);
     }
 }

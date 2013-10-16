@@ -6,6 +6,8 @@ package com.adde.webbapp.model.dao;
 
 import com.adde.webbapp.model.entity.Person;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -21,6 +23,14 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
     private PersonDAO() {
         super(Person.class);
     }
+    
+    @Override
+    public void add(Person person) {
+        final Calendar dateCreated = new GregorianCalendar();
+        person.setDateCreated(dateCreated);
+        super.add(person);
+    }
+    
 
     public List<Person> getByUserName(String name) {
         List<Person> found = new ArrayList<>();
