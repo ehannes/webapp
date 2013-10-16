@@ -15,13 +15,13 @@ import com.adde.webbapp.model.dao.PersonDAO;
 public enum DAOFactoryWrapper {
     INSTANCE;
     
-    private final DAOFactory daoFactory;
+    private final DAOFactory d;
     
     private DAOFactoryWrapper(){
-       daoFactory = new DAOFactory();
+       d = DAOFactory.getDAOFactory();
     }
     
     public PersonDAO getPersonDAO() {
-        return daoFactory.getPersonDAO();
+        return d.getPersonDAO();
     }
 }

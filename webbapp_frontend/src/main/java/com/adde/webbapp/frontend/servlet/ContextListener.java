@@ -22,6 +22,7 @@ public class ContextListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         Logger.getAnonymousLogger().log(Level.INFO, "Putting DAOFactory in application scope");
         sce.getServletContext().setAttribute("DAOFACTORY", DAOFactoryWrapper.INSTANCE);
+        
     }
 
     @Override
