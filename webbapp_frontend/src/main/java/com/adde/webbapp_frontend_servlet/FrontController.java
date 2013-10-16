@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.adde.webbapp_frontend.servlet;
+package com.adde.webbapp_frontend_servlet;
 
 import com.adde.webbapp_model.Person;
 import com.adde.webbapp_model.ProjectPlatform;
