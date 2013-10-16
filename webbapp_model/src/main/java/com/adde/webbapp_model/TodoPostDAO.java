@@ -10,12 +10,12 @@ import java.util.List;
 
 public class TodoPostDAO extends AbstractDAO<TodoPost,Long>{
     
-    private TodoPostDAO(String puName){
-        super(TodoPost.class, puName);
+    private TodoPostDAO(){
+        super(TodoPost.class);
     }
     
     public static TodoPostDAO newInstance(){
-        return new TodoPostDAO(ProjectPlatform.PU);
+        return new TodoPostDAO();
     }
     
     public List<TodoPost> getTodoPostsByProject(Project p){

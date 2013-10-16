@@ -16,8 +16,8 @@ public class ProjectPlatform {
     public final static String PU = "webapp_pu";
 
     public ProjectPlatform(String puName) {
-        projectDAO = ProjectDAO.newInstance(puName);
-        personDAO = PersonDAO.newInstance(puName);
+        projectDAO = ProjectDAO.newInstance();
+        personDAO = PersonDAO.newInstance();
         Logger.getAnonymousLogger().log(Level.INFO, "ProjectPlatform alive {0}", this.hashCode());
     }
     

@@ -12,12 +12,12 @@ import java.util.List;
 //use to fetch comments on wallposts from database.
 public class WallPostDAO extends AbstractDAO<WallPost,Long> {
     
-    private WallPostDAO(String puName){
-        super(WallPost.class, puName);
+    private WallPostDAO(){
+        super(WallPost.class);
     }
     
     public static WallPostDAO newInstance() {
-        return new WallPostDAO(ProjectPlatform.PU);
+        return new WallPostDAO();
     }
     
     public List<WallPost> getWallPostByProject(Project p){

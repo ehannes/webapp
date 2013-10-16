@@ -6,12 +6,12 @@ import java.util.List;
 
 public class CommentDAO extends AbstractDAO<Comment, Long> {
     
-    private CommentDAO(String puName){
-        super(Comment.class, puName);
+    private CommentDAO(){
+        super(Comment.class);
     }
     
     public static CommentDAO newInstance(){
-        return new CommentDAO(ProjectPlatform.PU);
+        return new CommentDAO();
     }
     
     public List<Comment> getCommentsByWallPost(WallPost wp){

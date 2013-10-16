@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import org.junit.Ignore;
 
 public class PostsTest {
     private Person person1;
@@ -22,6 +23,7 @@ public class PostsTest {
     private static final String STR1 = "Content";
     private static final String STR2 = "EditedContent";
     
+    @Ignore
     @Before
     public void setup(){
         person1 = new Person("person1", "email1");
@@ -29,19 +31,28 @@ public class PostsTest {
         time1 = new GregorianCalendar();
         project1 = new Project();
         todoPost1 = new TodoPost(project1, person1, STR1);
+        TodoPostDAO.newInstance().add(todoPost1);
         wallPost1 = new WallPost(project1, person1, STR1);
+        WallPostDAO.newInstance().add(wallPost1);
         comment1 = new Comment(wallPost1, person1, STR1);
         comment2 = new Comment(wallPost1, person2, STR2);
-        System.out.println("PostsTest: Name of PU hardcoded, "
-                + "change asap! (put static final string e.g. in platform)");
-        platform = ProjectPlatformFactory.getProjectPlatform("webapp_pu");
+        CommentDAO.newInstance().add(comment1);
+        CommentDAO.newInstance().add(comment2);
+        platform = ProjectPlatformFactory.getProjectPlatform(ProjectPlatform.PU);
         platform.addUser(person1);
         platform.addUser(person2);
+        platform.addProject(project1);
     }
     
+    @Ignore
     @Test
     public void CommentTest(){
-        //equals
+        //equals, storage in database
+        List<Comment> commentsTmp = wallPost1.getComments();
+        assertFalse(commentsTmp == null);
+        assertTrue(commentsTmp.size() == 2);
+        Comment commentTmp = commentsTmp.get(0);
+        assertTrue(commentTmp.equals(comment1) || commentTmp.equals(comment2));
         assertTrue(comment1.equals(comment1));
         
         //toString (used later on)
@@ -71,8 +82,16 @@ public class PostsTest {
         assertTrue(comment1.getAuthor().equals(person1));
     }
     
+    @Ignore
     @Test
     public void TodoPostTest(){
+        //storage in database
+        List<TodoPost> tps = TodoPostDAO.newInstance()
+                .getTodoPostsByProject(project1);
+        assertFalse(tps == null);
+        assertTrue(tps.size() == 1);
+        assertTrue(tps.get(0).equals(todoPost1));
+        
         //initial values
         assertTrue(todoPost1.getAssignedTo() == null);
         assertTrue(todoPost1.getDeadline() == null);
@@ -114,8 +133,15 @@ public class PostsTest {
         assertTrue(todoPost1.getContext().equals(project1));
     }
     
+    @Ignore
     @Test
     public void WallPostTest(){
+        //database storage
+        List<WallPost> wps = WallPostDAO.newInstance().getWallPostByProject(project1);
+        assertFalse(wps == null);
+        assertTrue(wps.size() == 1);
+        assertTrue(wps.get(0).equals(wallPost1));
+        
         //init value
         assertTrue(wallPost1.getComments().isEmpty());
         

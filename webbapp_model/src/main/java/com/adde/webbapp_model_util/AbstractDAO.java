@@ -1,5 +1,6 @@
 package com.adde.webbapp_model_util;
 
+import com.adde.webbapp_model.ProjectPlatform;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,9 +21,9 @@ public abstract class AbstractDAO<T, K> {
     private EntityManagerFactory emf;
     private final Class<T> clazz;
     
-    protected AbstractDAO (Class<T> clazz, String puName) {
+    protected AbstractDAO (Class<T> clazz) {
         this.clazz = clazz;
-        emf = Persistence.createEntityManagerFactory(puName);
+        emf = Persistence.createEntityManagerFactory(ProjectPlatform.PU);
     }
     
     protected EntityManager getEntityManager(){
