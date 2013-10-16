@@ -1,6 +1,5 @@
 package com.adde.webbapp.model.dao;
 
-import com.adde.webbapp.model.entity.Article;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.SimpleEditorEntry;
 import java.util.ArrayList;
