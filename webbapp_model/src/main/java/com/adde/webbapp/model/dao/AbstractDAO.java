@@ -97,7 +97,7 @@ public abstract class AbstractDAO<T, K> {
     }
     
     public List<T> getAll(){
-        return getRange(0,getCount()-1);
+        return getRange(0,getCount());
     }
 
     public List<T> getRange(int first, int nItems) {

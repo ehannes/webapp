@@ -3,9 +3,10 @@ package com.adde.webbapp.model;
 import com.adde.webbapp.model.dao.DAOFactory;
 import com.adde.webbapp.model.dao.PersonDAO;
 import com.adde.webbapp.model.entity.Person;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
- 
-
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,23 +17,25 @@ import org.junit.Test;
 public class PersonTest {
     private Person user1, user2, userWithSetId, nullTest;
     PersonDAO personDAO;
-    private static final String PU = "webapp_pu";
+    private String PU;
     
     @Before
     public void before() {
         DAOFactory daoFactory = new DAOFactory();
         personDAO = daoFactory.getPersonDAO();
         
+        PU = "webapp_pu";
         user1 = new Person("testperson", "testperson@testpersons.com", "HsdE3324!gh");
         user2 = new Person("testperson 2", "testperson2@testpersons.com", "YhIJKd!ad");
     }
     
     @Test
     public void addUserToDB() {
-//        boolean found = (personDAO.find(user1.getId())).equals(user1);
-//        assertFalse(found);
+        //Logger.getAnonymousLogger().log(Level.INFO, "get users: " + personDAO.getUsers());
+        assertFalse(personDAO.getUsers().contains(user1));
         personDAO.add(user1);
-    }    
+        assertTrue(personDAO.getUsers().contains(user1));
+    }
 }
     
 //    @Test
