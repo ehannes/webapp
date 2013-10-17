@@ -26,17 +26,9 @@ public class Article extends AbstractEntity implements Serializable {
 
     public Article() {}
     
-    public Article(String content, String title) {
+    public Article(String title, String content) {
         this.content = content;
         this.title = title;
-    }
-    
-    public List<SimpleEditorEntry> getEditors() {
-        return editorEntries;
-    }
-
-    public void setEditors(List<SimpleEditorEntry> editors) {
-        this.editorEntries = editors;
     }
     
     public String getTitle() {
