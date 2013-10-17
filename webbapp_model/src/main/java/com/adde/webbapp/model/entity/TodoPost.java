@@ -10,7 +10,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class TodoPost extends Post {
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar deadline; //may be null
     public static enum Priority{LOW, MEDIUM, HIGH};
     private Priority currentPrio;
