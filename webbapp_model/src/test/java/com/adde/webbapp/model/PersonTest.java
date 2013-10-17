@@ -64,10 +64,10 @@ public class PersonTest {
     
     @Test
     public void getBy() {
-        assertTrue(personDAO.getByUserName(person1.getUserName()).contains(person1));
+        assertTrue(personDAO.getByUserName(person1.getUserName()).equals(person1));
         assertTrue(personDAO.getByFirstName(person1.getFirstName()).contains(person1));
         assertTrue(personDAO.getByLastName(person1.getLastName()).contains(person1));
-        assertTrue(personDAO.getByEmail(person1.getEmail()).contains(person1));
+        assertTrue(personDAO.getByEmail(person1.getEmail()).equals(person1));
     }
     
     @Test

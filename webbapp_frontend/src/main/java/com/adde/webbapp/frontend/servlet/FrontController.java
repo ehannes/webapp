@@ -67,8 +67,9 @@ public class FrontController extends HttpServlet {
 
                     request.setAttribute("username", username);
                     request.setAttribute("password", password);
-                    personDAO.add(new Person(username, username + "@" + username + ".com", password));
-
+                    if (username != null && password != null) {
+                        personDAO.add(new Person(username, username + "@" + username + ".com", password));
+                    }
                     request.getRequestDispatcher("WEB-INF/jsp/welcome.jspx").forward(request, response);
                     break;
                 default:
