@@ -1,58 +1,95 @@
 package com.adde.webbapp.model;
 
-import java.util.HashSet;
+import com.adde.webbapp.model.dao.ArticleDAO;
+import com.adde.webbapp.model.dao.DAOFactory;
+import com.adde.webbapp.model.dao.PersonDAO;
+import com.adde.webbapp.model.dao.SimpleEditorEntryDAO;
+import com.adde.webbapp.model.entity.Article;
+import com.adde.webbapp.model.entity.Person;
+import com.adde.webbapp.model.entity.SimpleEditorEntry;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class ArticleTest {
-    /*
+    DAOFactory daoFactory;
     Article article1, article2;
-    Person user1, user2;
+    Person person1, person2;
     
     @Before
     public void before() {
-        user1 = new Person("user1", "email1");
-        user2 = new Person("user2", "email2");
-        article1 = new Article(user1, "content1", "title1");
-        article2 = new Article(user2, "content2", "title2");
+        daoFactory = DAOFactory.getDAOFactory();
+        person1 = new Person("person1", "email1", "pass1");
+        daoFactory.getPersonDAO().add(person1);
+        person2 = new Person("person2", "email2", "pass1");
+        daoFactory.getPersonDAO().add(person2);
+
+        article1 = new Article("content1", "title1");
+        article2 = new Article("content2", "title2");
+        
+        //Check
+        assertTrue(daoFactory.getPersonDAO().getAll().size() == 2);
+        assertTrue(daoFactory.getArticleDAO().getAll().isEmpty());
     }
     
-    @Ignore
+    @After
+    public void after() {
+        daoFactory.getPersonDAO().remove(person1.getId());
+        daoFactory.getPersonDAO().remove(person2.getId());
+        assertTrue(daoFactory.getPersonDAO().getAll().isEmpty());
+    }
+    
     @Test
-    public void testAuthorContent() {
-        Logger.getAnonymousLogger().log(Level.INFO, "Article1:{0}", article1.toString());
+    public void addAndAuthorContent() {
+        daoFactory.getArticleDAO().add(article1);
+        Article articleFromDB = daoFactory.getArticleDAO().find(article1.getId());
+        Logger.getAnonymousLogger().log(Level.INFO, "Article1:{0}", articleFromDB.toString());
         
         //Correct Content?
-        assertTrue(article1.getContent().equals("content1"));
-        assertFalse(article1.getContent().equals("content12"));
+        assertTrue(articleFromDB.getContent().equals("content1"));
         
-        //Printing dates
-        Logger.getAnonymousLogger().log(Level.INFO, "Article created: {0} and modified {1}",
-                new Object[]{article1.calendarToString(article1.getDateCreated()),
-                    article1.calendarToString(article1.getDateModified())});
+        //Clean
+        daoFactory.getArticleDAO().remove(articleFromDB.getId());
     }
     
-    @Ignore
     @Test
-    public void testUpdatedEditors() {
-        article1.update(user1, "updatedContent1", "updateTitle1");
+    public void testUpdatedEditorsAndFind() {/*
+        daoFactory.getArticleDAO().add(article1);
+        
+        //New Editor
+        Article articleFromDB = daoFactory.getArticleDAO().find(article1.getId());
+        articleFromDB.setContent("updatedContent1");
+        articleFromDB.setTitle("updatedTitle1");
+        //Persist new SimpleEditorEntry
+        SimpleEditorEntry see = new SimpleEditorEntry(person2);
+        daoFactory.getSimpleEditorEntryDAO().add(see);
+        //Add New SimpleEditorEntry to Article
+        List<SimpleEditorEntry> editorEntry = articleFromDB.getEditorEntries();
+        editorEntry.add(see);
+        daoFactory.getArticleDAO().update(article1);
         
         // Check if the updated content is correct
-        assertTrue(article1.getContent().equals("updatedContent1"));
-        assertTrue(article1.getTitle().equals("updateTitle1"));
+        articleFromDB = daoFactory.getArticleDAO().find(article1.getId());
+        assertTrue(articleFromDB.getTitle().equals("updateTitle1"));
+        assertTrue(articleFromDB.getContent().equals("updatedContent1"));*/
         
         // Check if the user has been added to the editors
-        assertTrue(article1.getEditors().contains(user1));
-        assertFalse(article1.getEditors().contains(user2));
+        /*daoFactory.getArticleDAO().update(article1);
+        assertTrue(article1.getEditors().contains(person1));
+        assertFalse(article1.getEditors().contains(person2));
         
         // Check if the last editor is first in the list of editors.
-        assertTrue(article1.getEditors().get(0).equals(user1));
+        assertTrue(article1.getEditors().get(0).equals(person1));
+        
+        //Clean
+        daoFactory.getArticleDAO().remove(article1.getId());*/
     }
-    
+    /*
     @Ignore
     @Test
     public void testEquality() {

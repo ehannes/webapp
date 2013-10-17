@@ -63,17 +63,17 @@ public class Article extends AbstractEntity implements Serializable {
         this.content = content;
     }
 
-    /*private String calendarToString(GregorianCalendar c) {
-        return  c.get(GregorianCalendar.DAY_OF_MONTH)
-                + "/" + (c.get(GregorianCalendar.MONTH) + 1)
-                + " " + c.get(GregorianCalendar.YEAR);
+    private String allEditors() {
+        String result = "";
+        for(SimpleEditorEntry see : editorEntries){
+            result += see.toString();
+        }
+        return result;
     }
     
     @Override
     public String toString() {
-        return "Article{" + super.toString() + " Title: " + title + " Content: " + content
-                + " dateCreated: " + calendarToString(dateCreated) + 
-                " dateModified: " + calendarToString(dateModified)+ " Editors: "
-                + "}"; //editors.toString() + "}";
-    }*/
+        return "Article{" + super.toString() + " Title: " + title
+                + " Content: " + content + allEditors();
+    }
 }
