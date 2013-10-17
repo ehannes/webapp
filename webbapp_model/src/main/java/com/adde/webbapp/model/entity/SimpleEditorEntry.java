@@ -3,6 +3,7 @@ package com.adde.webbapp.model.entity;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -15,8 +16,10 @@ import javax.persistence.TemporalType;
 public class SimpleEditorEntry extends AbstractEntity implements Serializable {
     
     @ManyToOne(cascade={CascadeType.REFRESH})
+    @Column(nullable=false)
     private Person editor;
     @Temporal(TemporalType.DATE)
+    @Column(nullable=false)
     private GregorianCalendar modificationTime;
 
     public SimpleEditorEntry() {}
