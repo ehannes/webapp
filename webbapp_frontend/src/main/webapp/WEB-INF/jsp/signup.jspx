@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Will output HTML5 
+
+-->
+<jsp:root 
+    xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns="http://www.w3.org/1999/xhtml"
+    version="2.0">
+
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
+    <jsp:output omit-xml-declaration="true" />
+    <jsp:output doctype-root-element="HTML" 
+                doctype-system="about:legacy-compat" />
+    <html>
+        <head>
+            <title>Project Platform</title> 
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+            <!--<link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
+            <link rel="stylesheet" type="text/css" href="resources/css/style.css" />-->
+
+            <!-- Bootstrap -->
+            <link href="resources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+            <!-- Custom styles for this template -->
+            <link href="resources/css/jumbotron-narrow.css" rel="stylesheet"/>
+
+            <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!--[if lt IE 9]>
+              <script src="../../assets/js/html5shiv.js"></script>
+              <script src="../../assets/js/respond.min.js"></script>
+            <![endif]-->
+        </head>
+        <body>
+            <div class="container">
+                <jsp:directive.include file="header.jspx" />
+                <form action="fc?view=welcome" class="form-signin" method="post">
+                    <h2 class="form-signin-heading">Sign up</h2>
+                    <input type="text" class="form-control" name="username" placeholder="Username" autofocus="autofocus"/>
+                    <input type="email" class="form-control" name="email" placeholder="Email"/>
+                    <input type="password" class="form-control" name="password" placeholder="Password"/>
+                    <input type="password" class="form-control" name="passwordrepeat" placeholder="Repeat Password"/>
+                    <input type="submit" value="Log in" class="btn btn-lg btn-primary btn-block" />
+                </form>
+            </div> <!-- /container -->
+        </body>
+    </html>
+</jsp:root>
