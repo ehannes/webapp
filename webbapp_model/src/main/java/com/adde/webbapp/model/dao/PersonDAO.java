@@ -5,10 +5,10 @@
 package com.adde.webbapp.model.dao;
 
 import com.adde.webbapp.model.entity.Person;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -31,44 +31,35 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
         super.add(person);
     }
     
-
-    public List<Person> getByUserName(String name) {
-        List<Person> found = new ArrayList<>();
-        for (Person p : getAll()) {
-            if (p.getUserName().equals(name)) {
-                found.add(p);
-            }
-        }
+    public List<Person> getByUserName(String username) {
+        EntityManager em = getEntityManager();
+        List<Person> found = em.createQuery("select p from Person p where"
+                + " p.username = :username", Person.class).
+                setParameter("username", username).getResultList();
+        return found;
+    }
+    
+    public List<Person> getByFirstName(String firstname) {
+        EntityManager em = getEntityManager();
+        List<Person> found = em.createQuery("select p from Person p where"
+                + " p.firstname = :firstname", Person.class).
+                setParameter("firstname", firstname).getResultList();
         return found;
     }
 
-    public List<Person> getByFirstName(String name) {
-        List<Person> found = new ArrayList<>();
-        for (Person p : getAll()) {
-            if (p.getFirstName().equals(name)) {
-                found.add(p);
-            }
-        }
+    public List<Person> getByLastName(String lastname) {
+        EntityManager em = getEntityManager();
+        List<Person> found = em.createQuery("select p from Person p where"
+                + " p.lastname = :lastname", Person.class).
+                setParameter("lastname", lastname).getResultList();
         return found;
     }
 
-    public List<Person> getByLastName(String name) {
-        List<Person> found = new ArrayList<>();
-        for (Person p : getAll()) {
-            if (p.getLastName().equals(name)) {
-                found.add(p);
-            }
-        }
-        return found;
-    }
-
-    public List<Person> getByEmail(String name) {
-        List<Person> found = new ArrayList<>();
-        for (Person p : getAll()) {
-            if (p.getEmail().equals(name)) {
-                found.add(p);
-            }
-        }
+    public List<Person> getByEmail(String email) {
+        EntityManager em = getEntityManager();
+        List<Person> found = em.createQuery("select p from Person p where"
+                + " p.email = :email", Person.class).
+                setParameter("email", email).getResultList();
         return found;
     }
 }

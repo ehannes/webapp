@@ -12,9 +12,9 @@ import javax.persistence.TemporalType;
 public class Post extends AbstractEntity implements Serializable {
     @ManyToOne(cascade = {CascadeType.REFRESH})
     private Person author;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar dateCreated;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar dateModified;
     private String msg;
 
