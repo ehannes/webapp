@@ -3,8 +3,11 @@ package com.adde.webbapp.model;
 import com.adde.webbapp.model.dao.DAOFactory;
 import com.adde.webbapp.model.dao.PersonDAO;
 import com.adde.webbapp.model.entity.Person;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.junit.After;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -16,6 +19,8 @@ import org.junit.Test;
  * @author hannes
  */
 public class PersonTest {
+    Person person1, person2;
+    String person1_pw, person2_pw;
 
     PersonDAO personDAO;
 
@@ -23,35 +28,43 @@ public class PersonTest {
     public void before() {
         DAOFactory daoFactory = DAOFactory.getDAOFactory();
         personDAO = daoFactory.getPersonDAO();
-    }
-
-    @Test
-    public void addPersonRemovePerson() {
-        //Logger.getAnonymousLogger().log(Level.INFO, "get users: " + personDAO.getUsers());
-        String person1_pw = "HsdE3324!gh";
-        Person person1 = new Person("testperson", "testperson@testpersons.com", person1_pw);
-
-        // Check that the user is not already in the database
-        assertFalse(personDAO.getAll().contains(person1));
-
+        
+        person1_pw = "HsdE3324!gh";
+        person1 = new Person("testperson", "testperson@testpersons.com", person1_pw);
+        
+        person2_pw = "YhIJKd!ad";
+        person2 = new Person("testperson 2", "testperson2@testpersons.com", person2_pw);
+        
         personDAO.add(person1);
-        assertTrue(personDAO.getAll().contains(person1));
-
+        personDAO.add(person2);
+        
+        List<Person> allPersons = personDAO.getAll();
+        
+        assertTrue(allPersons.contains(person1) && allPersons.contains(person2) && allPersons.size() == 2);
+    }
+    
+    @After
+    public void after() {
         personDAO.remove(person1.getId());
-        assertFalse(personDAO.getAll().contains(person1));
+        personDAO.remove(person2.getId());
+        
+        List<Person> allPersons = personDAO.getAll();
+        
+        assertFalse(allPersons.contains(person1) && allPersons.contains(person2) && allPersons.isEmpty());
     }
 
     @Test
-    public void updatePerson() {
-        String person2_pw = "YhIJKd!ad";
-        Person person2 = new Person("testperson 2", "testperson2@testpersons.com", person2_pw);
-        personDAO.add(person2);
-        assertTrue(personDAO.find(person2.getId()).getPassword().equals(person2_pw));
-
+    public void update() {
         String person2_updated_pw = "nEw!paSSwoRD";
         person2.setPassword(person2_updated_pw);
         personDAO.update(person2);
         assertTrue(personDAO.find(person2.getId()).getPassword().equals(person2_updated_pw));
+    }
+    
+    @Test
+    public void notNull() {
+        // Username, email and password shouldn't have any values set to null
+        //Person person = new Person()
     }
 }
 //    @Test

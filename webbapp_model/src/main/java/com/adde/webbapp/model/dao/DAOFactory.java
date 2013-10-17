@@ -26,7 +26,7 @@ public class DAOFactory {
         simpleEditorEntryDAO = SimpleEditorEntryDAO.newInstance();
         todoPostDAO = TodoPostDAO.newInstance();
         wallPostDAO = WallPostDAO.newInstance();
-        Logger.getAnonymousLogger().log(Level.INFO, "ProjectPlatform alive {0}", this.hashCode());
+        Logger.getAnonymousLogger().log(Level.INFO, "DAOFactory alive {0}", this.hashCode());
     }
     
     public static DAOFactory getDAOFactory() {
