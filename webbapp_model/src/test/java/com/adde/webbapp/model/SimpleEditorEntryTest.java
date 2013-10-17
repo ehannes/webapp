@@ -1,7 +1,6 @@
 package com.adde.webbapp.model;
 
-import com.adde.webbapp.model.dao.PersonDAO;
-import com.adde.webbapp.model.dao.SimpleEditorEntryDAO;
+import com.adde.webbapp.model.dao.DAOFactory;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.SimpleEditorEntry;
 import java.util.ArrayList;
@@ -16,19 +15,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- *
  * @author ehannes
  */
 public class SimpleEditorEntryTest {
-    SimpleEditorEntryDAO seeDAO;
+    DAOFactory daoFactory;
     SimpleEditorEntry see;
-    PersonDAO personDAO;
     ArrayList<String> nameList;
     ArrayList<Person> editorList;
     final int NR_OF_EDITORS = 20;
     
     @Before
     public void before() {
+        daoFactory = DAOFactory.getDAOFactory();
         //Creating editors
         nameList = new ArrayList<>();
         for(int i = 0; i < NR_OF_EDITORS; i++){
@@ -40,36 +38,31 @@ public class SimpleEditorEntryTest {
             editorList.add(new Person(nameList.get(i), "mail@mail.com", "hajk89"));
         }
         
-        personDAO = PersonDAO.newInstance();
         for(int i = 0; i < NR_OF_EDITORS; i++){
-            personDAO.add(editorList.get(i));
+            daoFactory.getPersonDAO().add(editorList.get(i));
         }
         
-        //Creating SimpleEditorEntry
-        seeDAO = SimpleEditorEntryDAO.newInstance();
-        
-        
         //No SimpleEditorEntry at start
-        assertTrue(personDAO.getAll().size() == NR_OF_EDITORS);
+        assertTrue(daoFactory.getPersonDAO().getAll().size() == NR_OF_EDITORS);
     }
     
     @After //Remember to remove all SimpleEditorEntries at end of all tests!
     public void after() {
         for(int i = 0; i < NR_OF_EDITORS; i++){
-            personDAO.remove(editorList.get(i).getId());
+            daoFactory.getPersonDAO().remove(editorList.get(i).getId());
         }
         
         //No SimpleEditorEntry after
-        assertTrue(seeDAO.getAll().isEmpty());
+        assertTrue(daoFactory.getSimpleEditorEntryDAO().getAll().isEmpty());
     } 
     
     @Test
     public void entryFunctions() {
         see = new SimpleEditorEntry(editorList.get(0));
-        seeDAO.add(see);
+        daoFactory.getSimpleEditorEntryDAO().add(see);
         
         //Fetch from DB
-        SimpleEditorEntry seeFromDB = seeDAO.find(see.getId());
+        SimpleEditorEntry seeFromDB = daoFactory.getSimpleEditorEntryDAO().find(see.getId());
         long id = seeFromDB.getId();
         assertTrue(seeFromDB.getEditor().equals(editorList.get(0)));
         
@@ -78,52 +71,52 @@ public class SimpleEditorEntryTest {
         
         //Change editor, update and check if editor still changed
         seeFromDB.setEditor(editorList.get(1));
-        seeDAO.update(seeFromDB);
-        seeFromDB = seeDAO.find(id);
+        daoFactory.getSimpleEditorEntryDAO().update(seeFromDB);
+        seeFromDB = daoFactory.getSimpleEditorEntryDAO().find(id);
         assertFalse(seeFromDB.getEditor().equals(editorList.get(0)));
         
         //Date rounds to day. Will not see any difference in time here...
         Logger.getAnonymousLogger().log(Level.INFO, "Modified: {0}", see.getModificationTime());
         seeFromDB.setModificationTime(new GregorianCalendar());
-        seeDAO.update(seeFromDB);
-        seeDAO.find(id);
+        daoFactory.getSimpleEditorEntryDAO().update(seeFromDB);
+        daoFactory.getSimpleEditorEntryDAO().find(id);
         Logger.getAnonymousLogger().log(Level.INFO, "Modified: {0}", see.getModificationTime());
         
         //Clean
-        seeDAO.remove(id);
+        daoFactory.getSimpleEditorEntryDAO().remove(id);
     }
     
     @Test
     public void simplePersist() {
         //Add 1
         see = new SimpleEditorEntry(editorList.get(0));
-        seeDAO.add(see);
+        daoFactory.getSimpleEditorEntryDAO().add(see);
         
         //Find
-        SimpleEditorEntry seeFromDatabase = seeDAO.find(see.getId());
+        SimpleEditorEntry seeFromDatabase = daoFactory.getSimpleEditorEntryDAO().find(see.getId());
         assertTrue(seeFromDatabase.equals(see));
         
         //GetAll
-        List<SimpleEditorEntry> seeList = seeDAO.getAll();
+        List<SimpleEditorEntry> seeList = daoFactory.getSimpleEditorEntryDAO().getAll();
         assertTrue(seeList.size() == 1);
         
         //Remove
-        seeDAO.remove(see.getId());
-        assertTrue(seeDAO.getAll().isEmpty());
+        daoFactory.getSimpleEditorEntryDAO().remove(see.getId());
+        assertTrue(daoFactory.getSimpleEditorEntryDAO().getAll().isEmpty());
     }
     
     @Test
     public void addMultiples() {
         for(int i = 0; i < NR_OF_EDITORS; i++){
-            seeDAO.add(new SimpleEditorEntry(editorList.get(i)));
+            daoFactory.getSimpleEditorEntryDAO().add(new SimpleEditorEntry(editorList.get(i)));
         }
         
-        assertTrue(seeDAO.getAll().size() == NR_OF_EDITORS);
+        assertTrue(daoFactory.getSimpleEditorEntryDAO().getAll().size() == NR_OF_EDITORS);
         
-        List<SimpleEditorEntry> allEntries = seeDAO.getAll();
+        List<SimpleEditorEntry> allEntries = daoFactory.getSimpleEditorEntryDAO().getAll();
         for(SimpleEditorEntry simpleEditorEntry : allEntries) {
-            seeDAO.remove(simpleEditorEntry.getId());
+            daoFactory.getSimpleEditorEntryDAO().remove(simpleEditorEntry.getId());
         }
-        assertTrue(seeDAO.getAll().isEmpty());
+        assertTrue(daoFactory.getSimpleEditorEntryDAO().getAll().isEmpty());
     }
 }
