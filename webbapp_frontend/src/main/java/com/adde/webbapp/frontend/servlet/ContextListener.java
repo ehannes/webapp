@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.adde.webbapp_frontend_servlet;
+package com.adde.webbapp.frontend.servlet;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,8 +20,9 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        Logger.getAnonymousLogger().log(Level.INFO, "Putting Project Platform in application scope");
-        sce.getServletContext().setAttribute("PROJECT_PLATFORM", ProjectPlatformWrapper.INSTANCE);
+        Logger.getAnonymousLogger().log(Level.INFO, "Putting DAOFactory in application scope");
+        sce.getServletContext().setAttribute("DAOFACTORY", DAOFactoryWrapper.INSTANCE);
+        
     }
 
     @Override
