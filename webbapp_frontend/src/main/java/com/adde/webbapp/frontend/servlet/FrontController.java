@@ -17,33 +17,23 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author eric
+ * @author Eric Ahlberg (eahlberg@gmail.com)
  */
 @WebServlet(name = "FrontController", urlPatterns = {"/fc"})
 public class FrontController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP
-     * <code>GET</code> and
-     * <code>POST</code> methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         String view = request.getParameter("view");
         String action = request.getParameter("action");
-        
+
         DAOFactoryWrapper daoFactoryWrapper = (DAOFactoryWrapper) request.getServletContext().getAttribute("DAOFACTORY");
         PersonDAO personDAO = daoFactoryWrapper.getPersonDAO();
-        
+
         if (action != null) {
             switch (action) {
                 case "validate":
@@ -53,7 +43,7 @@ public class FrontController extends HttpServlet {
                     ;
             }
         }
-         // Navigation
+        // Navigation
         if (view != null) {
             switch (view) {
                 case "home":
@@ -68,14 +58,17 @@ public class FrontController extends HttpServlet {
                 case "contact":
                     request.getRequestDispatcher("WEB-INF/jsp/contact.jspx").forward(request, response);
                     break;
+                case "login":
+                    request.getRequestDispatcher("WEB-INF/jsp/login.jspx").forward(request, response);
+                    break;
                 case "welcome":
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
-                    
+
                     request.setAttribute("username", username);
                     request.setAttribute("password", password);
                     personDAO.add(new Person(username, username + "@" + username + ".com", password));
-                    
+
                     request.getRequestDispatcher("WEB-INF/jsp/welcome.jspx").forward(request, response);
                     break;
                 default:

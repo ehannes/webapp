@@ -10,7 +10,7 @@ import com.adde.webbapp.model.dao.PersonDAO;
 /**
  * This is a wrapper to make the shop a singleton
  * Could have used CDI (?) but too much for now, introduced later
- * @author hajo
+ * @author Eric Ahlberg (eahlberg@gmail.com)
  */
 public enum DAOFactoryWrapper {
     INSTANCE;

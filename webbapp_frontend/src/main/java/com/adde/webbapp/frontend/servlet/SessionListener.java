@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSessionListener;
 /**
  * Web application lifecycle listener.
  *
- * @author eric
+ * @author hajo
  */
 @WebListener()
 public class SessionListener implements HttpSessionListener {

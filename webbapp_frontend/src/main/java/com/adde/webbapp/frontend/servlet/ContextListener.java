@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebListener;
 /**
  * Web application lifecycle listener.
  *
- * @author aheric
+ * @author Eric Ahlberg (eahlberg@gmail.com)
  */
 @WebListener()
 public class ContextListener implements ServletContextListener {

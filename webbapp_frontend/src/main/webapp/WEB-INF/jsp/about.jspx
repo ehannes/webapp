@@ -19,13 +19,13 @@
             <title>Project Platform</title> 
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-            
+
             <!--<link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
             <link rel="stylesheet" type="text/css" href="resources/css/style.css" />-->
-            
+
             <!-- Bootstrap -->
             <link href="resources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
-            
+
             <!-- Custom styles for this template -->
             <link href="resources/css/jumbotron-narrow.css" rel="stylesheet"/>
 
@@ -37,31 +37,8 @@
         </head>
         <body>
             <div class="container">
-                <div class="header">
-                    <ul class="nav nav-pills pull-right">
-                        <li class="active"><a href="/webbapp_frontend/">Home</a></li>
-                        <li><a href="fc?view=about">About</a></li>
-                        <li><a href="fc?view=contact">Contact</a></li>
-                    </ul>
-                    <h3 class="text-muted">Project Platform</h3>
-                </div>
-
-                <div class="jumbotron">
-                    <h1>About</h1>
-                    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                </div>
-
-
-                <div class="footer">
-                    <!--<p>&copy; Company 2013</p>-->
-                </div>
-            </div> 
-            <!-- /container -->
-           
-            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-            <script src="//code.jquery.com/jquery.js"></script>
-            <!-- Include all compiled plugins (below), or include individual files as needed -->
-            <script src="resources/js/bootstrap.min.js"></script>
+                <jsp:directive.include file="header.jspx" />
+            </div>
         </body>
     </html>
 </jsp:root>

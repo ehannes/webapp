@@ -37,14 +37,17 @@
         </head>
         <body>
             <div class="container">
-                <jsp:directive.include file="WEB-INF/jsp/header.jspx" />
-
-                <div class="jumbotron">
-                    <h1>Welcome!</h1>
-                    <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                    <p><a class="btn btn-lg btn-success" href="fc?view=signup">Sign up!</a></p>
-                </div>
-            </div>
+                <jsp:directive.include file="header.jspx" />
+                <form action="fc?view=welcome" class="form-signin" method="post">
+                    <h2 class="form-signin-heading">Log in</h2>
+                    <input type="text" class="form-control" name="username" placeholder="Username" autofocus="autofocus"/>
+                    <input type="password" class="form-control" name="password" placeholder="Password"/>
+                    <input type="submit" value="Log in" class="btn btn-lg btn-primary btn-block" />
+                    <label class="checkbox">
+                        <input type="checkbox" value="remember-me"/> Remember
+                    </label>
+                </form>
+            </div> <!-- /container -->
         </body>
     </html>
 </jsp:root>
