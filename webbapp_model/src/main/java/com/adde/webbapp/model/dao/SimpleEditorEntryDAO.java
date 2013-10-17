@@ -5,6 +5,7 @@ import com.adde.webbapp.model.entity.SimpleEditorEntry;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import javax.persistence.EntityManager;
 
 /**
  *
@@ -25,8 +26,8 @@ public class SimpleEditorEntryDAO extends AbstractDAO<SimpleEditorEntry, Long> {
         simpleEditorEntry.setModificationTime(new GregorianCalendar());
         super.add(simpleEditorEntry);
     }
-    
-    public List<SimpleEditorEntry> getEditEntriesByPerson(Person editor) {
+
+    /*public List<SimpleEditorEntry> getEditEntriesByPerson(Person editor) {
         List<SimpleEditorEntry> found = new ArrayList<>();
         for(SimpleEditorEntry entry : getAll()){
             if(entry.getEditor().equals(editor)){
@@ -36,7 +37,7 @@ public class SimpleEditorEntryDAO extends AbstractDAO<SimpleEditorEntry, Long> {
         return found;
     }
     
-    /*public List<SimpleEditorEntry> getEditEntries(int n) {
+    public List<SimpleEditorEntry> getEditEntries(int n) {
         List<SimpleEditorEntry> result = new ArrayList<>();
         
         return result;
