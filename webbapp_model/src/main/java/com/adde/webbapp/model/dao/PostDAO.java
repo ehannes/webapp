@@ -5,8 +5,6 @@ import com.adde.webbapp.model.entity.Post;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class PostDAO extends AbstractDAO<Post, Long> {
 

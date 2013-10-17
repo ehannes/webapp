@@ -29,11 +29,18 @@ public class TodoPostDAO extends AbstractDAO<TodoPost,Long>{
         super.add(tp);
     }
     
-    /*public List<TodoPost> getTodoPostsByProject(Project p){
-        List<TodoPost> result = new LinkedList<>();
-        
-        return result;
-    }*/
+    @Override
+    public TodoPost update(TodoPost tp){
+        //don't allow assigning duplicates
+        List<Person> assignedTo = new LinkedList<>();
+        for(Person p : tp.getAssignedTo()){
+            if(!assignedTo.contains(p)){
+                assignedTo.add(p);
+            }
+        }
+        tp.setAssignedTo(assignedTo);
+        return super.update(tp);
+    }
     
     public List<TodoPost> getTodoPostsByPerson(Person p){
         List<TodoPost> result = new LinkedList<>();
