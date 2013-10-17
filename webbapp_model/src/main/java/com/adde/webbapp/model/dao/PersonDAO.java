@@ -31,11 +31,11 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
         super.add(person);
     }
     
-    public List<Person> getByUserName(String username) {
+    public Person getByUserName(String username) {
         EntityManager em = getEntityManager();
-        List<Person> found = em.createQuery("select p from Person p where"
+        Person found = em.createQuery("select p from Person p where"
                 + " p.username = :username", Person.class).
-                setParameter("username", username).getResultList();
+                setParameter("username", username).getSingleResult();
         return found;
     }
     
@@ -55,11 +55,11 @@ public class PersonDAO extends AbstractDAO<Person, Long> {
         return found;
     }
 
-    public List<Person> getByEmail(String email) {
+    public Person getByEmail(String email) {
         EntityManager em = getEntityManager();
-        List<Person> found = em.createQuery("select p from Person p where"
+        Person found = em.createQuery("select p from Person p where"
                 + " p.email = :email", Person.class).
-                setParameter("email", email).getResultList();
+                setParameter("email", email).getSingleResult();
         return found;
     }
 }
