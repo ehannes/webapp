@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -29,8 +31,10 @@ public class Project extends AbstractEntity implements Serializable {
     private List<Person> collaborators;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Article> articles;
+    @JoinTable(name="PROJECT_WALLPOST")
     @OneToMany(cascade = CascadeType.ALL)
     private List<WallPost> wallPosts;
+    @JoinTable(name="PROJECT_TODOPOST")
     @OneToMany(cascade = CascadeType.ALL)
     private List<TodoPost> todoPosts;
 
