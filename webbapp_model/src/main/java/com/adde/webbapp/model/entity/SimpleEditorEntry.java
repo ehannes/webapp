@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -16,9 +17,9 @@ import javax.persistence.TemporalType;
 public class SimpleEditorEntry extends AbstractEntity implements Serializable {
     
     @ManyToOne(cascade={CascadeType.REFRESH})
-    @Column(nullable=false)
+    @JoinColumn(nullable=false)
     private Person editor;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable=false)
     private GregorianCalendar modificationTime;
 
