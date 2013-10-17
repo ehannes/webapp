@@ -30,7 +30,9 @@ public class PersonTest {
         personDAO = daoFactory.getPersonDAO();
         
         person1_pw = "HsdE3324!gh";
-        person1 = new Person("testperson", "testperson@testpersons.com", person1_pw);
+        person1 = new Person("testperson_username", "testperson@testpersons.com", person1_pw);
+        person1.setFirstName("person1_firstname");
+        person1.setLastName("person1_lastname");
         
         person2_pw = "YhIJKd!ad";
         person2 = new Person("testperson 2", "testperson2@testpersons.com", person2_pw);
@@ -45,12 +47,12 @@ public class PersonTest {
     
     @After
     public void after() {
-        personDAO.remove(person1.getId());
-        personDAO.remove(person2.getId());
-        
         List<Person> allPersons = personDAO.getAll();
+        for(Person p : allPersons) {
+            personDAO.remove(p.getId());
+        }
         
-        assertFalse(allPersons.contains(person1) && allPersons.contains(person2) && allPersons.isEmpty());
+        assertTrue(personDAO.getCount() == 0);
     }
 
     @Test
@@ -59,6 +61,14 @@ public class PersonTest {
         person2.setPassword(person2_updated_pw);
         personDAO.update(person2);
         assertTrue(personDAO.find(person2.getId()).getPassword().equals(person2_updated_pw));
+    }
+    
+    @Test
+    public void getBy() {
+        assertTrue(personDAO.getByUserName(person1.getUserName()).contains(person1));
+        assertTrue(personDAO.getByFirstName(person1.getFirstName()).contains(person1));
+        assertTrue(personDAO.getByLastName(person1.getLastName()).contains(person1));
+        assertTrue(personDAO.getByEmail(person1.getEmail()).contains(person1));
     }
     
     @Test
