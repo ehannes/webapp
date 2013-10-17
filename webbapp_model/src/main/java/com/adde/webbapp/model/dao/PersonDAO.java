@@ -5,7 +5,6 @@
 package com.adde.webbapp.model.dao;
 
 import com.adde.webbapp.model.entity.Person;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
