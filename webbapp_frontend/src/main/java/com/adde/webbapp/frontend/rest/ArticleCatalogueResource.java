@@ -4,6 +4,7 @@ import com.adde.webbapp.model.dao.ArticleCatalogue;
 import com.adde.webbapp.model.dao.DAOFactory;
 import com.adde.webbapp.model.dao.ProjectCatalogue;
 import com.adde.webbapp.model.dao.ArticleEditCatalogue;
+import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.entity.Article;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.ArticleEdit;
@@ -46,7 +47,10 @@ public class ArticleCatalogueResource {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(@FormParam("id") long projectId, @FormParam("title") String title,
-        @FormParam("content") String content, @FormParam("editor") Person editor) {
+        @FormParam("content") String content, @FormParam("editor") String username) { //Ta in person eller inte?
+        PersonCatalogue personCatalogue = daoFactory.getPersonDAO();
+        Person editor = personCatalogue.getByUserName(username);
+        
         Article article = new Article(title, content);
         articleCatalogue.add(addEditor(projectId, article, editor));
 
@@ -72,7 +76,10 @@ public class ArticleCatalogueResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response update(@PathParam("projectId") long projectId,
         @PathParam("id") long id, @FormParam("title") String title,
-        @FormParam("content") double content, @FormParam("editor") Person editor) {
+        @FormParam("content") double content, @FormParam("editor") String username) {
+        PersonCatalogue personCatalogue = daoFactory.getPersonDAO();
+        Person editor = personCatalogue.getByUserName(username);
+        
         Article oldArticle = articleCatalogue.find(id);
         if(oldArticle != null) {
             addEditor(projectId, oldArticle, editor);
