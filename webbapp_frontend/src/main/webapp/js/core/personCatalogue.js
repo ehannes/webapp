@@ -17,9 +17,9 @@ PersonCatalogue.prototype = (function(){
 //        getByName: function(name) {
 //            return $.getJSON(this.baseUri + "/byname/" + name);
 //        },
-        getCount: function() {
-            return $.getJSON(this.baseUri + "/count");
-        },
+//        getCount: function() {
+//            return $.getJSON(this.baseUri + "/count");
+//        },
         add: function(username, email, password) {
             return $.post(this.baseUri, {username: username, email: email, password: password});
         },
