@@ -5,7 +5,7 @@
 package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.PersonDAO;
+import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import java.net.URI;
 import java.util.*;
@@ -21,8 +21,8 @@ import javax.ws.rs.core.UriInfo;
  * @author eric
  */
 @Path("person")
-public class PersonDAOResource {
-   private final PersonDAO personDAO = DAOFactory.getDAOFactory().getPersonDAO();
+public class PersonCatalogueResource {
+   private final PersonCatalogue personDAO = DAOFactory.getDAOFactory().getPersonDAO();
 
    @Context
    private UriInfo uriInfo;

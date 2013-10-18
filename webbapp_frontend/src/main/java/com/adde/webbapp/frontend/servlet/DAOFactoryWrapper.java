@@ -4,14 +4,14 @@
  */
 package com.adde.webbapp.frontend.servlet;
 
-import com.adde.webbapp.model.dao.ArticleDAO;
+import com.adde.webbapp.model.dao.ArticleCatalogue;
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.PersonDAO;
-import com.adde.webbapp.model.dao.PostDAO;
-import com.adde.webbapp.model.dao.ProjectDAO;
-import com.adde.webbapp.model.dao.SimpleEditorEntryDAO;
-import com.adde.webbapp.model.dao.TodoPostDAO;
-import com.adde.webbapp.model.dao.WallPostDAO;
+import com.adde.webbapp.model.dao.PersonCatalogue;
+import com.adde.webbapp.model.dao.PostCatalogue;
+import com.adde.webbapp.model.dao.ProjectCatalogue;
+import com.adde.webbapp.model.dao.ArticleEditCatalogue;
+import com.adde.webbapp.model.dao.TodoPostCatalogue;
+import com.adde.webbapp.model.dao.WallPostCatalogue;
 
 /**
  * This is a wrapper to make the shop a singleton Could have used CDI (?) but
@@ -28,30 +28,30 @@ public enum DAOFactoryWrapper {
         d = DAOFactory.getDAOFactory();
     }
 
-    public PersonDAO getPersonDAO() {
+    public PersonCatalogue getPersonDAO() {
         return d.getPersonDAO();
     }
 
-    public ProjectDAO getProjectDAO() {
+    public ProjectCatalogue getProjectDAO() {
         return d.getProjectDAO();
     }
 
-    public PostDAO getPostDAO() {
+    public PostCatalogue getPostDAO() {
         return d.getPostDAO();
     }
 
-    public TodoPostDAO getTodoPostDAO() {
+    public TodoPostCatalogue getTodoPostDAO() {
         return d.getTodoPostDAO();
     }
 
-    public ArticleDAO getArticleDAO() {
+    public ArticleCatalogue getArticleDAO() {
         return d.getArticleDAO();
     }
 
-    public WallPostDAO getWallPostDAO() {
+    public WallPostCatalogue getWallPostDAO() {
         return d.getWallPostDAO();
     }
-    public SimpleEditorEntryDAO getSimpleEditorEntryDAO() {
+    public ArticleEditCatalogue getSimpleEditorEntryDAO() {
         return d.getSimpleEditorEntryDAO();
     }
 }

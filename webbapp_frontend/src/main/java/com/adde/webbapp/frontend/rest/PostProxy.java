@@ -41,12 +41,12 @@ public class PostProxy {
 
     @XmlElement (required=true)
     public Calendar getDateCreated(){
-        return post.getDateCreated();
+        return post.getTimeCreated();
     }
     
     @XmlElement (required=true)
     public Calendar getDateModified(){
-        return post.getDateModified();
+        return post.getTimeModified();
     }
     
     @XmlElement (required=true)

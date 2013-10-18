@@ -1,7 +1,7 @@
 package com.adde.webbapp.frontend.servlet.auth;
 
 import com.adde.webbapp.frontend.servlet.DAOFactoryWrapper;
-import com.adde.webbapp.model.dao.PersonDAO;
+import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,7 +34,7 @@ public class AuthServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAOFactoryWrapper daoFactoryWrapper = (DAOFactoryWrapper) request.getServletContext().getAttribute("DAOFACTORY");
-        PersonDAO personDAO = daoFactoryWrapper.getPersonDAO();
+        PersonCatalogue personDAO = daoFactoryWrapper.getPersonDAO();
         String action = request.getParameter("action");
 
         if (action != null) {

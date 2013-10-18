@@ -4,7 +4,7 @@
  */
 package com.adde.webbapp.frontend.servlet;
 
-import com.adde.webbapp.model.dao.PersonDAO;
+import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,7 +32,7 @@ public class FrontController extends HttpServlet {
         String action = request.getParameter("action");
 
         DAOFactoryWrapper daoFactoryWrapper = (DAOFactoryWrapper) request.getServletContext().getAttribute("DAOFACTORY");
-        PersonDAO personDAO = daoFactoryWrapper.getPersonDAO();
+        PersonCatalogue personDAO = daoFactoryWrapper.getPersonDAO();
 
         if (action != null) {
             switch (action) {

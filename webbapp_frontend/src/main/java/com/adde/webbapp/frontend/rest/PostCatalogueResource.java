@@ -5,7 +5,7 @@
 package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.PostDAO;
+import com.adde.webbapp.model.dao.PostCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.Post;
 import java.net.URI;
@@ -28,9 +28,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 @Path("/inside/post")
-public class PostDAOResource {
+public class PostCatalogueResource {
 
-    private final PostDAO postDAO = DAOFactory.getDAOFactory().getPostDAO();
+    private final PostCatalogue postDAO = DAOFactory.getDAOFactory().getPostDAO();
     @Context
     private UriInfo uriInfo;
 

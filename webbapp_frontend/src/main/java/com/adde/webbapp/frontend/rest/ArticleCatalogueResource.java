@@ -1,12 +1,12 @@
 package com.adde.webbapp.frontend.rest;
 
-import com.adde.webbapp.model.dao.ArticleDAO;
+import com.adde.webbapp.model.dao.ArticleCatalogue;
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.ProjectDAO;
-import com.adde.webbapp.model.dao.SimpleEditorEntryDAO;
+import com.adde.webbapp.model.dao.ProjectCatalogue;
+import com.adde.webbapp.model.dao.ArticleEditCatalogue;
 import com.adde.webbapp.model.entity.Article;
 import com.adde.webbapp.model.entity.Person;
-import com.adde.webbapp.model.entity.SimpleEditorEntry;
+import com.adde.webbapp.model.entity.ArticleEdit;
 import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,11 +31,11 @@ import javax.ws.rs.core.UriInfo;
  * @author ehannes
  */
 @Path("/inside/{projectId}/articles")
-public class ArticleDAOResource {/*
+public class ArticleCatalogueResource {/*
     private final DAOFactory daoFactory = DAOFactory.getDAOFactory();
-    private final ArticleDAO articleDAO = daoFactory.getArticleDAO();
-    private final SimpleEditorEntryDAO simpleEditorEntryDAO = daoFactory.getSimpleEditorEntryDAO();
-    private final ProjectDAO projectDAO = daoFactory.getProjectDAO();
+    private final ArticleCatalogue articleDAO = daoFactory.getArticleDAO();
+    private final ArticleEditCatalogue simpleEditorEntryDAO = daoFactory.getSimpleEditorEntryDAO();
+    private final ProjectCatalogue projectDAO = daoFactory.getProjectDAO();
     
     @Context
     private UriInfo uriInfo;
@@ -125,7 +125,7 @@ public class ArticleDAOResource {/*
     }
     
     private Article addEditor(long projectId, Article article, Person editor) {
-        SimpleEditorEntry simpleEditorEntry = new SimpleEditorEntry(editor);
+        ArticleEdit simpleEditorEntry = new ArticleEdit(editor);
         simpleEditorEntryDAO.add(simpleEditorEntry);
         article.getEditorEntries().add(simpleEditorEntry);
         

@@ -5,7 +5,7 @@
 package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.ProjectDAO;
+import com.adde.webbapp.model.dao.ProjectCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.Project;
 import java.net.URI;
@@ -33,9 +33,9 @@ import javax.ws.rs.core.UriInfo;
  * @author Joakim
  */
 @Path("/inside/projects")
-public class ProjectDAOResource {
+public class ProjectCatalogueResource {
 
-    private final ProjectDAO projectDAO = DAOFactory.getDAOFactory().getProjectDAO();
+    private final ProjectCatalogue projectDAO = DAOFactory.getDAOFactory().getProjectDAO();
     @Context
     private UriInfo uriInfo;
 
