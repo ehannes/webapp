@@ -3,12 +3,12 @@
   <persistence-unit name="webapp_pu" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.adde.webbapp.model.entity.Article</class>
+    <class>com.adde.webbapp.model.entity.ArticleEdit</class>
     <class>com.adde.webbapp.model.entity.Person</class>
+    <class>com.adde.webbapp.model.entity.Post</class>
     <class>com.adde.webbapp.model.entity.Project</class>
-    <class>com.adde.webbapp.model.entity.SimpleEditorEntry</class>
     <class>com.adde.webbapp.model.entity.TodoPost</class>
     <class>com.adde.webbapp.model.entity.WallPost</class>
-    <class>com.adde.webbapp.model.entity.Post</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/webappDatabase"/>
       <property name="javax.persistence.jdbc.password" value="adde"/>

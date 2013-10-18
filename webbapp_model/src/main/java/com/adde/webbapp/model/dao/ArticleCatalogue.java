@@ -1,24 +1,24 @@
 package com.adde.webbapp.model.dao;
 
 import com.adde.webbapp.model.entity.Article;
-import com.adde.webbapp.model.entity.SimpleEditorEntry;
+import com.adde.webbapp.model.entity.ArticleEdit;
 import java.util.List;
 
 /**
  * @author ehannes
  */
-public class ArticleDAO extends AbstractDAO<Article,Long> {
-    public static ArticleDAO newInstance(){
-        return new ArticleDAO();
+public class ArticleCatalogue extends AbstractDAO<Article,Long> {
+    public static ArticleCatalogue newInstance(){
+        return new ArticleCatalogue();
     }
     
-    private ArticleDAO() {
+    private ArticleCatalogue() {
         super(Article.class);
     }
     
     /*public List<SimpleEditorEntry> getLatestEntry(Article article) {
         List<SimpleEditorEntry> simpleEditorEntry = getEntityManager().createQuery(
-                "SELECT a.editorEntries FROM Article a ORDER BY a.editorEntries.modificationTime DESC", SimpleEditorEntry.class)
+                "SELECT a.editorEntries FROM Article a ORDER BY a.editorEntries.modificationTime DESC", ArticleEdit.class)
                 .setMaxResults(1).getResultList();
         return simpleEditorEntry;
     }*/

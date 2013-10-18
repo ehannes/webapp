@@ -1,12 +1,12 @@
 package com.adde.webbapp.model;
 
-import com.adde.webbapp.model.dao.ArticleDAO;
+import com.adde.webbapp.model.dao.ArticleCatalogue;
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.PersonDAO;
-import com.adde.webbapp.model.dao.SimpleEditorEntryDAO;
+import com.adde.webbapp.model.dao.PersonCatalogue;
+import com.adde.webbapp.model.dao.ArticleEditCatalogue;
 import com.adde.webbapp.model.entity.Article;
 import com.adde.webbapp.model.entity.Person;
-import com.adde.webbapp.model.entity.SimpleEditorEntry;
+import com.adde.webbapp.model.entity.ArticleEdit;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,9 +18,9 @@ import org.junit.Test;
 
 public class ArticleTest {
     DAOFactory daoFactory;
-    PersonDAO personDAO;
-    ArticleDAO articleDAO;
-    SimpleEditorEntryDAO seeDAO;
+    PersonCatalogue personDAO;
+    ArticleCatalogue articleDAO;
+    ArticleEditCatalogue seeDAO;
     Article article1, article2;
     Person person1, person2;
     
@@ -76,11 +76,11 @@ public class ArticleTest {
         Article articleFromDB = articleDAO.find(article1.getId());
         articleFromDB.setContent("updatedContent1");
         articleFromDB.setTitle("updatedTitle1");
-        //Persist new SimpleEditorEntry
-        SimpleEditorEntry see = new SimpleEditorEntry(person2);
+        //Persist new ArticleEdit
+        ArticleEdit see = new ArticleEdit(person2);
         seeDAO.add(see);
-        //Add New SimpleEditorEntry to Article
-        List<SimpleEditorEntry> editorEntry = articleFromDB.getEditorEntries();
+        //Add New ArticleEdit to Article
+        List<ArticleEdit> editorEntry = articleFromDB.getArticleEditions();
         editorEntry.add(see);
         
         articleDAO.update(articleFromDB);
@@ -93,7 +93,7 @@ public class ArticleTest {
         // Check if the user has been added to the editors
         articleDAO.update(articleFromDB);
         articleFromDB = articleDAO.find(article1.getId());
-        List<SimpleEditorEntry> editorEntries = articleFromDB.getEditorEntries();
+        List<ArticleEdit> editorEntries = articleFromDB.getArticleEditions();
         assertTrue(editorEntries.size() == 1);
         assertTrue(editorEntries.get(0).getEditor().equals(person2));
         

@@ -4,12 +4,12 @@
  */
 package com.adde.webbapp.model;
 
-import com.adde.webbapp.model.dao.ArticleDAO;
+import com.adde.webbapp.model.dao.ArticleCatalogue;
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.PersonDAO;
-import com.adde.webbapp.model.dao.ProjectDAO;
-import com.adde.webbapp.model.dao.TodoPostDAO;
-import com.adde.webbapp.model.dao.WallPostDAO;
+import com.adde.webbapp.model.dao.PersonCatalogue;
+import com.adde.webbapp.model.dao.ProjectCatalogue;
+import com.adde.webbapp.model.dao.TodoPostCatalogue;
+import com.adde.webbapp.model.dao.WallPostCatalogue;
 import com.adde.webbapp.model.entity.Article;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.Project;
@@ -26,11 +26,11 @@ import org.junit.Test;
  */
 public class ProjectTest {
 
-    ProjectDAO projectDAO;
-    PersonDAO personDAO;
-    TodoPostDAO todoPostDAO;
-    ArticleDAO articleDAO;
-    WallPostDAO wallPostDAO;
+    ProjectCatalogue projectDAO;
+    PersonCatalogue personDAO;
+    TodoPostCatalogue todoPostDAO;
+    ArticleCatalogue articleDAO;
+    WallPostCatalogue wallPostDAO;
     Project cascadingProject;
     Person testUser;
     Person collaborator;

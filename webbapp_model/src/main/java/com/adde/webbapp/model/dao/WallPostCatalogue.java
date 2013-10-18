@@ -9,21 +9,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 //use to fetch comments on wallposts from database.
-public class WallPostDAO extends AbstractDAO<WallPost, Long> {
+public class WallPostCatalogue extends AbstractDAO<WallPost, Long> {
 
-    private WallPostDAO() {
+    private WallPostCatalogue() {
         super(WallPost.class);
     }
 
-    public static WallPostDAO newInstance() {
-        return new WallPostDAO();
+    public static WallPostCatalogue newInstance() {
+        return new WallPostCatalogue();
     }
 
     @Override
     public void add(WallPost wp) {
         Calendar c = new GregorianCalendar();
-        wp.setDateCreated(c);
-        wp.setDateModified(c);
+        wp.setTimeCreated(c);
+        wp.setTimeModified(c);
         super.add(wp);
     }
 

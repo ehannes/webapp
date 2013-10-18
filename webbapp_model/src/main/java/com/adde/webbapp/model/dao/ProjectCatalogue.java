@@ -12,13 +12,13 @@ import java.util.GregorianCalendar;
  *
  * @author Joakim
  */
-public class ProjectDAO extends AbstractDAO<Project, Long> {
+public class ProjectCatalogue extends AbstractDAO<Project, Long> {
 
-    public static ProjectDAO newInstance() {
-        return new ProjectDAO();
+    public static ProjectCatalogue newInstance() {
+        return new ProjectCatalogue();
     }
 
-    private ProjectDAO() {
+    private ProjectCatalogue() {
         super(Project.class);
     }
            

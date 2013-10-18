@@ -14,18 +14,18 @@ import javax.persistence.TemporalType;
  * @author ehannes
  */
 @Entity
-public class SimpleEditorEntry extends AbstractEntity implements Serializable {
+public class ArticleEdit extends AbstractEntity implements Serializable {
     
     @ManyToOne(cascade={CascadeType.REFRESH})
     @JoinColumn(nullable=false)
     private Person editor;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable=false)
-    private GregorianCalendar modificationTime;
+    private GregorianCalendar editTime;
 
-    public SimpleEditorEntry() {}
+    public ArticleEdit() {}
     
-    public SimpleEditorEntry(Person person) {
+    public ArticleEdit(Person person) {
         this.editor = person;
     }
 
@@ -37,22 +37,22 @@ public class SimpleEditorEntry extends AbstractEntity implements Serializable {
         this.editor = editor;
     }   
  
-    public GregorianCalendar getModificationTime() {
-        return modificationTime;
+    public GregorianCalendar getEditTime() {
+        return editTime;
     }
 
-    public void setModificationTime(GregorianCalendar modificationTime) {
-        this.modificationTime = modificationTime;
+    public void setEditTime(GregorianCalendar editTime) {
+        this.editTime = editTime;
     }
     
     @Override
     public String toString() {
         return "SimpleEditorEntry{" + super.toString() + ", Person: " + editor.toString()
-                + ", Edited: " + modificationTime.get(GregorianCalendar.DAY_OF_MONTH)
-                + "/" + (modificationTime.get(GregorianCalendar.MONTH)+1)
-                + " " + modificationTime.get(GregorianCalendar.YEAR)
-                + " at " + modificationTime.get(GregorianCalendar.HOUR)
-                + ":" + modificationTime.get(GregorianCalendar.MINUTE)
-                + ":" + modificationTime.get(GregorianCalendar.SECOND);
+                + ", Edited: " + editTime.get(GregorianCalendar.DAY_OF_MONTH)
+                + "/" + (editTime.get(GregorianCalendar.MONTH)+1)
+                + " " + editTime.get(GregorianCalendar.YEAR)
+                + " at " + editTime.get(GregorianCalendar.HOUR)
+                + ":" + editTime.get(GregorianCalendar.MINUTE)
+                + ":" + editTime.get(GregorianCalendar.SECOND);
     }
 }

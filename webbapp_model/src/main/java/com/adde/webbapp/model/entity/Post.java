@@ -13,9 +13,9 @@ public class Post extends AbstractEntity implements Serializable {
     @ManyToOne(cascade = {CascadeType.REFRESH})
     private Person author;
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar dateCreated;
+    private Calendar timeCreated;
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar dateModified;
+    private Calendar timeModified;
     private String msg;
 
     //necessary to be an entity, NEVER USE!!!
@@ -36,20 +36,20 @@ public class Post extends AbstractEntity implements Serializable {
         this.author = author;
     }
 
-    public Calendar getDateCreated() {
-        return dateCreated;
+    public Calendar getTimeCreated() {
+        return timeCreated;
     }
 
-    public void setDateCreated(Calendar dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setTimeCreated(Calendar timeCreated) {
+        this.timeCreated = timeCreated;
     }
 
-    public Calendar getDateModified() {
-        return dateModified;
+    public Calendar getTimeModified() {
+        return timeModified;
     }
 
-    public void setDateModified(Calendar dateModified) {
-        this.dateModified = dateModified;
+    public void setTimeModified(Calendar timeModified) {
+        this.timeModified = timeModified;
     }
 
     public String getMsg() {

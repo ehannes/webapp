@@ -13,7 +13,7 @@ public class TodoPost extends Post {
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar deadline; //may be null
     public static enum Priority{LOW, MEDIUM, HIGH};
-    private Priority currentPrio;
+    private Priority priority;
     @ManyToMany(cascade = {CascadeType.REFRESH})
     private List<Person> assignedTo;
 
@@ -34,18 +34,18 @@ public class TodoPost extends Post {
         this.deadline = deadline;
     }
 
-    public Priority getCurrentPrio() {
-        return currentPrio;
+    public Priority getPriority() {
+        return priority;
     }
 
-    public void setCurrentPrio(Priority currentPrio) {
-        this.currentPrio = currentPrio;
+    public void setPriority(Priority priority) {
+        this.priority = priority;
     }
 
     public List<Person> getAssignedTo() {
         return assignedTo;
     }
-
+    
     public void setAssignedTo(List<Person> assignedTo) {
         this.assignedTo = assignedTo;
     }

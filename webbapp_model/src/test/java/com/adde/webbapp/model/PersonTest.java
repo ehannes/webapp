@@ -1,7 +1,7 @@
 package com.adde.webbapp.model;
 
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.PersonDAO;
+import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,7 +21,7 @@ public class PersonTest {
     Person person1, person2;
     String person1_pw, person2_pw;
 
-    PersonDAO personDAO;
+    PersonCatalogue personDAO;
 
     @Before
     public void before() {

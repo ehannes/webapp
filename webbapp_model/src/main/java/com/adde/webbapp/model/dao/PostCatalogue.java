@@ -6,22 +6,22 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
-public class PostDAO extends AbstractDAO<Post, Long> {
+public class PostCatalogue extends AbstractDAO<Post, Long> {
 
-    private PostDAO() {
+    private PostCatalogue() {
         super(Post.class);
     }
 
-    public static PostDAO newInstance() {
-        return new PostDAO();
+    public static PostCatalogue newInstance() {
+        return new PostCatalogue();
     }
 
     @Override
     public void add(Post p) {
         if (p.getId() == null) {
             GregorianCalendar c = new GregorianCalendar();
-            p.setDateCreated(c);
-            p.setDateModified(c);
+            p.setTimeCreated(c);
+            p.setTimeModified(c);
             super.add(p);
         }
     }
@@ -47,7 +47,7 @@ public class PostDAO extends AbstractDAO<Post, Long> {
     public void setMsg(Long id, String msg) {
         Post p = super.find(id);
         p.setMsg(msg);
-        p.setDateModified(new GregorianCalendar());
+        p.setTimeModified(new GregorianCalendar());
         super.update(p);
     }
 }

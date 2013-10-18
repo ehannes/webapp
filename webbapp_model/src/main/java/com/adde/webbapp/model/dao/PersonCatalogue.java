@@ -14,13 +14,13 @@ import javax.persistence.EntityManager;
  *
  * @author eric
  */
-public class PersonDAO extends AbstractDAO<Person, Long> {
+public class PersonCatalogue extends AbstractDAO<Person, Long> {
 
-    public static PersonDAO newInstance() {
-        return new PersonDAO();
+    public static PersonCatalogue newInstance() {
+        return new PersonCatalogue();
     }
 
-    private PersonDAO() {
+    private PersonCatalogue() {
         super(Person.class);
     }
     

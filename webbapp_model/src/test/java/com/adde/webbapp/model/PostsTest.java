@@ -57,7 +57,7 @@ public class PostsTest {
     public void PostTest() {
         daos.getPostDAO().add(post1);
         daos.getPostDAO().add(post2);
-        cal1 = post1.getDateCreated();
+        cal1 = post1.getTimeCreated();
         assertFalse(cal1 == null);
 
         //persistence tests
@@ -81,9 +81,9 @@ public class PostsTest {
         assertTrue(post1.equals(post1));
         assertFalse(post1.equals(post2));
         assertTrue(post1.getAuthor().equals(person1));
-        assertFalse(post1.getDateCreated() == null);
-        assertTrue(post1.getDateCreated().equals(cal1));
-        assertTrue(post1.getDateCreated().equals(post1.getDateModified()));
+        assertFalse(post1.getTimeCreated() == null);
+        assertTrue(post1.getTimeCreated().equals(cal1));
+        assertTrue(post1.getTimeCreated().equals(post1.getTimeModified()));
         assertTrue(post1.getMsg().equals(STR1));
         try {
             //Date modified test (got to wait 1ms)
@@ -96,8 +96,8 @@ public class PostsTest {
         daos.getPostDAO().setMsg(post1.getId(), STR2);
         assertTrue(daos.getPostDAO().find(post1.getId()).getMsg().equals(STR2));
         post1 = daos.getPostDAO().find(post1.getId());
-        assertTrue(post1.getDateCreated().equals(cal1));
-        assertFalse(post1.getDateModified().equals(cal1));
+        assertTrue(post1.getTimeCreated().equals(cal1));
+        assertFalse(post1.getTimeModified().equals(cal1));
 
         daos.getPostDAO().remove(post1.getId());
         daos.getPostDAO().remove(post2.getId());
@@ -154,16 +154,16 @@ public class PostsTest {
         assertTrue(todoPost1.getId() == null);
         daos.getTodoPostDAO().add(todoPost1);
         assertFalse(todoPost1.getId() == null);
-        cal1 = todoPost1.getDateCreated();
+        cal1 = todoPost1.getTimeCreated();
 
         //initial values
         assertTrue(todoPost1.getAssignedTo().isEmpty());
         assertTrue(todoPost1.getDeadline() == null);
-        assertTrue(todoPost1.getCurrentPrio() == null);
+        assertTrue(todoPost1.getPriority() == null);
 
         //set priority
-        todoPost1.setCurrentPrio(TodoPost.Priority.LOW);
-        assertTrue(todoPost1.getCurrentPrio().equals(TodoPost.Priority.LOW));
+        todoPost1.setPriority(TodoPost.Priority.LOW);
+        assertTrue(todoPost1.getPriority().equals(TodoPost.Priority.LOW));
 
         //add
         List<Person> list = new LinkedList<>();

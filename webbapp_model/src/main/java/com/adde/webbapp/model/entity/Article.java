@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
 public class Article extends AbstractEntity implements Serializable {
 
     @OneToMany(cascade={CascadeType.ALL})
-    private List<SimpleEditorEntry> editorEntries;
+    private List<ArticleEdit> articleEditions;
     private String title;
     private String content;
 
@@ -39,12 +39,8 @@ public class Article extends AbstractEntity implements Serializable {
         this.title = title;
     }
 
-    public List<SimpleEditorEntry> getEditorEntries() {
-        return editorEntries;
-    }
-    
-    public void setEditorEntries(List<SimpleEditorEntry> editorEntries) {
-        this.editorEntries = editorEntries;
+    public List<ArticleEdit> getArticleEditions() {
+        return articleEditions;
     }
 
     public String getContent() {
@@ -57,7 +53,7 @@ public class Article extends AbstractEntity implements Serializable {
 
     private String allEditors() {
         String result = "";
-        for(SimpleEditorEntry see : editorEntries){
+        for(ArticleEdit see : articleEditions){
             result += see.toString();
         }
         return result;
