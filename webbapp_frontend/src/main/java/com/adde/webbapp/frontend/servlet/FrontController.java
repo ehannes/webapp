@@ -74,6 +74,9 @@ public class FrontController extends HttpServlet {
                     }
                     request.getRequestDispatcher("WEB-INF/jsp/rs/welcome.jspx").forward(request, response);
                     break;
+                case "logedin":
+                    request.getRequestDispatcher("WEB-INF/jsp/rs/welcome.jspx").forward(request, response);
+                    break;
                 default:
                     ;
             }

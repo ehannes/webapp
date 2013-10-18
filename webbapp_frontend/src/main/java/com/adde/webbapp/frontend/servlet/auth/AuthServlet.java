@@ -4,6 +4,8 @@ import com.adde.webbapp.frontend.servlet.DAOFactoryWrapper;
 import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +33,7 @@ public class AuthServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DAOFactoryWrapper daoFactoryWrapper = (DAOFactoryWrapper) request.getServletContext().getAttribute("DAOFACTORY");
-        PersonCatalogue personDAO = daoFactoryWrapper.getPersonDAO();
+        PersonCatalogue personCatalogue = daoFactoryWrapper.getPersonDAO();
         String action = request.getParameter("action");
 
         if (action != null) {
@@ -39,15 +41,23 @@ public class AuthServlet extends HttpServlet {
                 String username = request.getParameter("username");
                 String password = request.getParameter("password");
                 if (password != null && username != null) {
-                    Person person = personDAO.getByUserName(username);
+                    Logger.getAnonymousLogger().log(Level.INFO, "Name and password not null");
+                    Person person = personCatalogue.getByUserName(username);
+                    Logger.getAnonymousLogger().log(Level.INFO, "Person: " + person);
                     if (person != null
                             && person.getPassword().equals(password)) {
+                        Logger.getAnonymousLogger().log(Level.INFO, "User found and correct password!");
                         HttpSession session = request.getSession(true);
                         session.setAttribute("person", person);
-                        response.sendRedirect("rs");
+                        response.sendRedirect("fc?view=logedin"); //jsp/rs/welcome.jspx
+                    } else{
+                        Logger.getAnonymousLogger().log(Level.INFO, "User not found or wrong password!");
+                        request.getRequestDispatcher("WEB-INF/jsp/login.jspx").forward(request, response);
                     }
+                } else{
+                    Logger.getAnonymousLogger().log(Level.INFO, "Incorrect input!");
+                    request.getRequestDispatcher("WEB-INF/jsp/login.jspx").forward(request, response);
                 }
-                request.getRequestDispatcher("WEB-INF/jsp/login");
             }
         }
     }

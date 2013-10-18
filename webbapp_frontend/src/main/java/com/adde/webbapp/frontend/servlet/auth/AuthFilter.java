@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author ehannes
  */
-@WebFilter(filterName = "AuthFilter", urlPatterns = {"/inside/*"})
+@WebFilter(filterName = "AuthFilter", urlPatterns = {"/rs/*"})
 public class AuthFilter implements Filter {
     
     private static final boolean debug = true;
