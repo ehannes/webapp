@@ -5,12 +5,14 @@
 package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.dao.WallPostCatalogue;
+import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.WallPost;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -32,10 +34,12 @@ import javax.ws.rs.core.UriInfo;
  */
 @Path("wallposts")
 public class WallPostCatalogueResource {
-    
+
     private final WallPostCatalogue wallPostCatalogue = DAOFactory.getDAOFactory().getWallPostDAO();
     @Context
     private UriInfo uriInfo;
+    @Context
+    HttpServletRequest request;
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -61,9 +65,10 @@ public class WallPostCatalogueResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response add(@FormParam("authorId") Long authorId,
-            @FormParam("msg") String msg) {
-        WallPost w = new WallPost(PersonCatalogue.newInstance().find(authorId), msg);
+    public Response add(@FormParam("msg") String msg) {
+        HttpSession session = request.getSession(true);
+        Person person = (Person) session.getAttribute("person");
+        WallPost w = new WallPost(person, msg);
         try {
             wallPostCatalogue.add(w);
 
@@ -89,16 +94,17 @@ public class WallPostCatalogueResource {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response update(@PathParam("id") Long id, @FormParam("authorId") Long authorId,
-            @FormParam("msg") String msg) {
+    public Response update(@PathParam("id") Long id, @FormParam("msg") String msg) {
+        HttpSession session = request.getSession(true);
+        Person person = (Person) session.getAttribute("person");
         WallPost oldWallPost = wallPostCatalogue.find(id);
         if (oldWallPost != null) {
-            oldWallPost.setAuthor(PersonCatalogue.newInstance().find(authorId));
+            oldWallPost.setAuthor(person);
             oldWallPost.setMsg(msg);
             wallPostCatalogue.update(oldWallPost);
             return Response.ok(new WallPostProxy(oldWallPost)).build();
         }
-        return Response.notModified("WallPost not found").build();
+        return Response.noContent().build();
     }
 
     @GET
@@ -117,5 +123,4 @@ public class WallPostCatalogueResource {
         };
         return ge;
     }
-    
 }

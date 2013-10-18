@@ -5,12 +5,13 @@
 package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.dao.ProjectCatalogue;
+import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.Project;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -25,7 +26,7 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-
+import javax.servlet.http.HttpServletRequest;
 /**
  *
  * @author Joakim
@@ -37,6 +38,9 @@ public class ProjectCatalogueResource {
     @Context
     private UriInfo uriInfo;
 
+    @Context
+    HttpServletRequest request;
+    
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response get() {
@@ -61,9 +65,10 @@ public class ProjectCatalogueResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response add(@FormParam("name") String name,
-            @FormParam("personId") Long personId) {
-        Project p = new Project(name, PersonCatalogue.newInstance().find(personId));
+    public Response add(@FormParam("name") String name) {
+        HttpSession session = request.getSession(true);
+        Person person = (Person) session.getAttribute("person");
+        Project p = new Project(name, person);
         try {
             projectCatalogue.add(p);
 
@@ -89,16 +94,17 @@ public class ProjectCatalogueResource {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response update(@PathParam("id") Long id, @FormParam("name") String name,
-            @FormParam("adminId") Long adminId) {
+    public Response update(@PathParam("id") Long id, @FormParam("name") String name) {
+        HttpSession session = request.getSession(true);
+        Person person = (Person) session.getAttribute("person");
         Project oldProject = projectCatalogue.find(id);
         if (oldProject != null) {
-            oldProject.setAdmin(PersonCatalogue.newInstance().find(adminId));
+            oldProject.setAdmin(person);
             oldProject.setName(name);
             projectCatalogue.update(oldProject);
             return Response.ok(new ProjectProxy(oldProject)).build();
         }
-        return Response.notModified("Project not found").build();
+        return Response.noContent().build();
     }
 
     @GET
