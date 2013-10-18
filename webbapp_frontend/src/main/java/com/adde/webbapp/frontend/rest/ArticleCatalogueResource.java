@@ -8,8 +8,6 @@ import com.adde.webbapp.model.entity.Article;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.ArticleEdit;
 import java.net.URI;
-import java.util.LinkedList;
-import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -21,7 +19,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -30,12 +27,12 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author ehannes
  */
-@Path("/inside/{projectId}/articles")
-public class ArticleCatalogueResource {/*
+@Path("articles") ///{projectId}/
+public class ArticleCatalogueResource {
     private final DAOFactory daoFactory = DAOFactory.getDAOFactory();
-    private final ArticleCatalogue articleDAO = daoFactory.getArticleDAO();
-    private final ArticleEditCatalogue simpleEditorEntryDAO = daoFactory.getSimpleEditorEntryDAO();
-    private final ProjectCatalogue projectDAO = daoFactory.getProjectDAO();
+    private final ArticleCatalogue articleCatalogue = daoFactory.getArticleDAO();
+    private final ArticleEditCatalogue articleEditCatalogue = daoFactory.getSimpleEditorEntryDAO();
+    private final ProjectCatalogue projectCatalogue = daoFactory.getProjectDAO();
     
     @Context
     private UriInfo uriInfo;
@@ -43,7 +40,7 @@ public class ArticleCatalogueResource {/*
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getAll() {
-        return Response.ok(getRangePriv(0, articleDAO.getCount())).build();
+        return Response.ok(articleCatalogue.getRange(0, articleCatalogue.getCount())).build();
     }
 
     @POST
@@ -51,20 +48,19 @@ public class ArticleCatalogueResource {/*
     public Response add(@FormParam("id") long projectId, @FormParam("title") String title,
         @FormParam("content") String content, @FormParam("editor") Person editor) {
         Article article = new Article(title, content);
-        articleDAO.add(addEditor(projectId, article, editor));
+        articleCatalogue.add(addEditor(projectId, article, editor));
 
         URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(article.getId())).build(article);
         return Response.created(uri).build();
     }
-    
-    ////////////////////// COPY PASTE CODE BELOW! //////////////////////////////
+
     @DELETE
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response remove(@PathParam("id") long id) {
-        Article article = articleDAO.find(id);
+        Article article = articleCatalogue.find(id);
         if (article != null) {
-            articleDAO.remove(article.getId());
+            articleCatalogue.remove(article.getId());
             return Response.ok().build();
         }
         return Response.noContent().build();
@@ -77,11 +73,11 @@ public class ArticleCatalogueResource {/*
     public Response update(@PathParam("projectId") long projectId,
         @PathParam("id") long id, @FormParam("title") String title,
         @FormParam("content") double content, @FormParam("editor") Person editor) {
-        Article oldArticle = articleDAO.find(id);
+        Article oldArticle = articleCatalogue.find(id);
         if(oldArticle != null) {
             addEditor(projectId, oldArticle, editor);
-            articleDAO.update(oldArticle);
-            return Response.ok(new ArticleProxy(product)).build();
+            articleCatalogue.update(oldArticle);
+            return Response.ok(new ArticleProxy(oldArticle)).build();
         }
         return Response.notModified("Article not found!").build();
     }
@@ -90,47 +86,35 @@ public class ArticleCatalogueResource {/*
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response find(@PathParam("id") long id) {
-        Product temp = privateFind(id);
+        Article temp = articleCatalogue.find(id);
         if (temp == null) {
             return Response.noContent().build();
         }
-        return Response.ok(new ProductProxy(temp)).build();
+        return Response.ok(new ArticleProxy(temp)).build();
     }
 
     @GET
     @Path("range")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getRange(@QueryParam("first") int first, @QueryParam("nItems") int nItems) {
-        return Response.ok(getRangePriv(first, nItems)).build();
-    }*/
+        return Response.ok(articleCatalogue.getRange(first, nItems)).build();
+    }
 
     /* Fungerar för JSON, men inte XML. Vad ska vi wrappa int:en från getCount med? */
-    /*@GET
+    @GET
     @Path("count")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getCount() {
-        return Response.ok(new PrimitiveJSONWrapper<>(catalogue.getCount())).build();
-    }
-    
-    private GenericEntity<List<ProductProxy>> getRangePriv(int first, int nItems) {
-        // From inclusive, to exclusive
-        List<Product> lst = catalogue.getRange(first, nItems);
-        List<ProductProxy> result = new LinkedList<>();
-        for(Product p : lst){
-            result.add(new ProductProxy(p));
-        }
-        GenericEntity<List<ProductProxy>> ge = new GenericEntity<List<ProductProxy>>
-                (result) {};
-        return ge;
+        return Response.ok(new PrimitiveJSONWrapper<>(articleCatalogue.getCount())).build();
     }
     
     private Article addEditor(long projectId, Article article, Person editor) {
         ArticleEdit simpleEditorEntry = new ArticleEdit(editor);
-        simpleEditorEntryDAO.add(simpleEditorEntry);
-        article.getEditorEntries().add(simpleEditorEntry);
+        articleEditCatalogue.add(simpleEditorEntry);
+        article.getArticleEditions().add(simpleEditorEntry);
         
-        projectDAO.find(projectId).getArticles().add(article);
+        projectCatalogue.find(projectId).getArticles().add(article);
         
         return article;
-    }*/
+    }
 }
