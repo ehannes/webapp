@@ -36,11 +36,11 @@ import javax.ws.rs.core.UriInfo;
 @Path("projects/{projectId}/wall/{wallPostId}/posts")
 public class PostCatalogueResource {
 
-    private final PostCatalogue postCatalogue = DAOFactory.getDAOFactory().getPostDAO();
+    private final PostCatalogue postCatalogue = DAOFactory.getDAOFactory().getPostCatalogue();
     private final WallPostCatalogue wallPostCatalogue =
-            DAOFactory.getDAOFactory().getWallPostDAO();
+            DAOFactory.getDAOFactory().getWallPostCatalogue();
     private final ProjectCatalogue projectCatalogue =
-            DAOFactory.getDAOFactory().getProjectDAO();
+            DAOFactory.getDAOFactory().getProjectCatalogue();
     @Context
     private UriInfo uriInfo;
     @Context

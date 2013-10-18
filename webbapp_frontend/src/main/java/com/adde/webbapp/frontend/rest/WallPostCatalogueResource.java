@@ -36,7 +36,7 @@ import javax.ws.rs.core.UriInfo;
 @Path("projects/{projectId}/wallPosts")
 public class WallPostCatalogueResource {
 
-    private final WallPostCatalogue wallPostCatalogue = DAOFactory.getDAOFactory().getWallPostDAO();
+    private final WallPostCatalogue wallPostCatalogue = DAOFactory.getDAOFactory().getWallPostCatalogue();
     @Context
     private UriInfo uriInfo;
     @Context
@@ -47,7 +47,7 @@ public class WallPostCatalogueResource {
 //        Object objPerson = session.getAttribute("person");
 //        if (objPerson != null) {
 //            Person person = (Person) objPerson;
-//            Project project = DAOFactory.getDAOFactory().getProjectDAO().find(projectId);
+//            Project project = DAOFactory.getDAOFactory().getProjectCatalogue().find(projectId);
 //            if (project.getAdmin().equals(objPerson) || project.getCollaborators().contains(person)) {
 //                return true;
 //            }

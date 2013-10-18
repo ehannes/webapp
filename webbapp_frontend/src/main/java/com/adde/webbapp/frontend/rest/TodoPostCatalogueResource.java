@@ -35,7 +35,7 @@ import javax.ws.rs.core.UriInfo;
 public class TodoPostCatalogueResource {
 
     private final TodoPostCatalogue todoPostCatalogue =
-            DAOFactory.getDAOFactory().getTodoPostDAO();
+            DAOFactory.getDAOFactory().getTodoPostCatalogue();
     @Context
     private UriInfo uriInfo;
     @Context
@@ -45,7 +45,7 @@ public class TodoPostCatalogueResource {
         return true;
 //        HttpSession session = request.getSession(true);
 //        Person person = (Person) session.getAttribute("person");
-//        Project project = DAOFactory.getDAOFactory().getProjectDAO().find(projectId);
+//        Project project = DAOFactory.getDAOFactory().getProjectCatalogue().find(projectId);
 //        return project != null && (person.equals(project.getAdmin())
 //                || project.getCollaborators().contains(person));
     }
@@ -148,7 +148,7 @@ public class TodoPostCatalogueResource {
             @PathParam("id") long id) {
 
         Person person = (Person) request.getSession().getAttribute("person");
-        Project project = DAOFactory.getDAOFactory().getProjectDAO().find(projectId);
+        Project project = DAOFactory.getDAOFactory().getProjectCatalogue().find(projectId);
         TodoPost todoPost = todoPostCatalogue.find(id);
 
         if (!allowed(projectId) || !project.getTodoPosts().contains(todoPost)
@@ -158,7 +158,7 @@ public class TodoPostCatalogueResource {
 
         //remove from project
         project.getTodoPosts().remove(todoPost);
-        DAOFactory.getDAOFactory().getProjectDAO().update(project);
+        DAOFactory.getDAOFactory().getProjectCatalogue().update(project);
 
         todoPostCatalogue.remove(todoPost.getId());
         return Response.ok().build();
@@ -192,9 +192,9 @@ public class TodoPostCatalogueResource {
             todoPost.setDeadline(deadline);
             todoPostCatalogue.update(todoPost);
             //add to project
-            Project project = DAOFactory.getDAOFactory().getProjectDAO().find(projectId);
+            Project project = DAOFactory.getDAOFactory().getProjectCatalogue().find(projectId);
             project.getTodoPosts().add(todoPost);
-            DAOFactory.getDAOFactory().getProjectDAO().update(project);
+            DAOFactory.getDAOFactory().getProjectCatalogue().update(project);
         } else {
             if(!old.getAuthor().equals(person)){
                 return Response.status(Response.Status.UNAUTHORIZED).build();

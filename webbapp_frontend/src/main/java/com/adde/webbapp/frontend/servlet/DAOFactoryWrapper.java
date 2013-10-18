@@ -29,29 +29,29 @@ public enum DAOFactoryWrapper {
     }
 
     public PersonCatalogue getPersonDAO() {
-        return d.getPersonDAO();
+        return d.getPersonCatalogue();
     }
 
     public ProjectCatalogue getProjectDAO() {
-        return d.getProjectDAO();
+        return d.getProjectCatalogue();
     }
 
     public PostCatalogue getPostDAO() {
-        return d.getPostDAO();
+        return d.getPostCatalogue();
     }
 
     public TodoPostCatalogue getTodoPostDAO() {
-        return d.getTodoPostDAO();
+        return d.getTodoPostCatalogue();
     }
 
     public ArticleCatalogue getArticleDAO() {
-        return d.getArticleDAO();
+        return d.getArticleCatalogue();
     }
 
     public WallPostCatalogue getWallPostDAO() {
-        return d.getWallPostDAO();
+        return d.getWallPostCatalogue();
     }
     public ArticleEditCatalogue getSimpleEditorEntryDAO() {
-        return d.getSimpleEditorEntryDAO();
+        return d.getArticleEditCatalogue();
     }
 }

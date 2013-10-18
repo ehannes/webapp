@@ -22,7 +22,7 @@ import javax.ws.rs.core.UriInfo;
  */
 @Path("persons")
 public class PersonCatalogueResource {
-   private final PersonCatalogue personDAO = DAOFactory.getDAOFactory().getPersonDAO();
+   private final PersonCatalogue personDAO = DAOFactory.getDAOFactory().getPersonCatalogue();
 
    @Context
    private UriInfo uriInfo;

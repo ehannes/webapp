@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 @Path("projects")
 public class ProjectCatalogueResource {
 
-    private final ProjectCatalogue projectCatalogue = DAOFactory.getDAOFactory().getProjectDAO();
+    private final ProjectCatalogue projectCatalogue = DAOFactory.getDAOFactory().getProjectCatalogue();
     @Context
     private UriInfo uriInfo;
 

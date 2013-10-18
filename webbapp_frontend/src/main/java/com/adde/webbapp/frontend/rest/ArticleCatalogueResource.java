@@ -33,9 +33,9 @@ import javax.ws.rs.core.UriInfo;
 @Path("articles") ///{projectId}/articles/{username}
 public class ArticleCatalogueResource {
     private final DAOFactory daoFactory = DAOFactory.getDAOFactory();
-    private final ArticleCatalogue articleCatalogue = daoFactory.getArticleDAO();
-    private final ArticleEditCatalogue articleEditCatalogue = daoFactory.getSimpleEditorEntryDAO();
-    //private final ProjectCatalogue projectCatalogue = daoFactory.getProjectDAO();
+    private final ArticleCatalogue articleCatalogue = daoFactory.getArticleCatalogue();
+    private final ArticleEditCatalogue articleEditCatalogue = daoFactory.getArticleEditCatalogue();
+    //private final ProjectCatalogue projectCatalogue = daoFactory.getProjectCatalogue();
     
     @Context
     private UriInfo uriInfo;
@@ -50,7 +50,7 @@ public class ArticleCatalogueResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(/*@FormParam("projectId") long projectId,*/ @FormParam("title") String title, 
         @FormParam("content") String content, @FormParam("editor") String username) { //Ta in person eller inte?
-        PersonCatalogue personCatalogue = daoFactory.getPersonDAO();
+        PersonCatalogue personCatalogue = daoFactory.getPersonCatalogue();
         Person editor = personCatalogue.getByUserName(username);
         if(editor != null) {
         
@@ -83,7 +83,7 @@ public class ArticleCatalogueResource {
     public Response update(//@PathParam("projectId") long projectId,
         @PathParam("id") long id, @FormParam("title") String title,
         @FormParam("content") double content, @FormParam("editor") String username) {
-        PersonCatalogue personCatalogue = daoFactory.getPersonDAO();
+        PersonCatalogue personCatalogue = daoFactory.getPersonCatalogue();
         Person editor = personCatalogue.getByUserName(username);
         
         Article oldArticle = articleCatalogue.find(id);
