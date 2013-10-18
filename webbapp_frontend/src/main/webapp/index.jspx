@@ -31,7 +31,7 @@
                 <jsp:directive.include file="WEB-INF/jsp/header.jspx" />
                 <div class="jumbotron">
                     <h1>Welcome!</h1>
-                    <p class="lead">Create projects and work together to get more productive! Sign up today!</p>
+                    <p class="lead">Create projects and work together to get more productive!</p>
                     <p><a class="btn btn-lg btn-success" href="fc?view=signup">Sign up!</a></p>
                 </div>
             </div>
