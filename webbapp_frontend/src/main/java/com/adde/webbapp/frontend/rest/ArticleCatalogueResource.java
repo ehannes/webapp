@@ -9,6 +9,8 @@ import com.adde.webbapp.model.entity.Article;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.ArticleEdit;
 import java.net.URI;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -28,12 +30,12 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author ehannes
  */
-@Path("articles") ///{projectId}/
+@Path("articles") ///{projectId}/articles/{username}
 public class ArticleCatalogueResource {
     private final DAOFactory daoFactory = DAOFactory.getDAOFactory();
     private final ArticleCatalogue articleCatalogue = daoFactory.getArticleDAO();
     private final ArticleEditCatalogue articleEditCatalogue = daoFactory.getSimpleEditorEntryDAO();
-    private final ProjectCatalogue projectCatalogue = daoFactory.getProjectDAO();
+    //private final ProjectCatalogue projectCatalogue = daoFactory.getProjectDAO();
     
     @Context
     private UriInfo uriInfo;
@@ -46,13 +48,14 @@ public class ArticleCatalogueResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response add(@FormParam("id") long projectId, @FormParam("title") String title,
+    public Response add(/*@FormParam("projectId") long projectId,*/ @FormParam("title") String title, 
         @FormParam("content") String content, @FormParam("editor") String username) { //Ta in person eller inte?
         PersonCatalogue personCatalogue = daoFactory.getPersonDAO();
         Person editor = personCatalogue.getByUserName(username);
+        Logger.getAnonymousLogger().log(Level.INFO, "editor: " + editor);
         
         Article article = new Article(title, content);
-        articleCatalogue.add(addEditor(projectId, article, editor));
+        articleCatalogue.add(addEditor(article, editor)); //projectId, 
 
         URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(article.getId())).build(article);
         return Response.created(uri).build();
@@ -74,7 +77,7 @@ public class ArticleCatalogueResource {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response update(@PathParam("projectId") long projectId,
+    public Response update(//@PathParam("projectId") long projectId,
         @PathParam("id") long id, @FormParam("title") String title,
         @FormParam("content") double content, @FormParam("editor") String username) {
         PersonCatalogue personCatalogue = daoFactory.getPersonDAO();
@@ -82,11 +85,11 @@ public class ArticleCatalogueResource {
         
         Article oldArticle = articleCatalogue.find(id);
         if(oldArticle != null) {
-            addEditor(projectId, oldArticle, editor);
+            addEditor(oldArticle, editor);//projectId, 
             articleCatalogue.update(oldArticle);
             return Response.ok(new ArticleProxy(oldArticle)).build();
         }
-        return Response.notModified("Article not found!").build();
+        return Response.noContent().build();
     }
 
     @GET
@@ -115,12 +118,12 @@ public class ArticleCatalogueResource {
         return Response.ok(new PrimitiveJSONWrapper<>(articleCatalogue.getCount())).build();
     }
     
-    private Article addEditor(long projectId, Article article, Person editor) {
+    private Article addEditor(Article article, Person editor) { //long projectId, 
         ArticleEdit simpleEditorEntry = new ArticleEdit(editor);
         articleEditCatalogue.add(simpleEditorEntry);
         article.getArticleEditions().add(simpleEditorEntry);
         
-        projectCatalogue.find(projectId).getArticles().add(article);
+        //projectCatalogue.find(projectId).getArticles().add(article);
         
         return article;
     }
