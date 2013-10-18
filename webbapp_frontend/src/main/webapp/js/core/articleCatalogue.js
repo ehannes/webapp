@@ -3,11 +3,11 @@
  * and open the template in the editor.
  */
 
-var ProjectCatalogue = function(baseUri) {
+var ArticleCatalogue = function(baseUri) {
     this.baseUri = baseUri;
 };
 
-ProjectCatalogue.prototype = (function(){
+ArticleCatalogue.prototype = (function(){
     
     return{
         get: function() {
@@ -20,14 +20,14 @@ ProjectCatalogue.prototype = (function(){
 //        getCount: function() {
 //            return $.getJSON(this.baseUri + "/count");
 //        },
-        add: function(name) {
-            return $.post(this.baseUri, {name: name});
+        add: function(title, content, editor) {
+            return $.post(this.baseUri, {title: title, content: content, editor: editor});
         },
-        update: function(id, name) {
+        update: function(id, title, content, editor) {
             return $.ajax({
                 url: this.baseUri + "/" + id,
                 type: 'PUT',
-                data: {name: name}
+                data: {title: title, content: content, editor: editor}
             });
         },
         remove: function(id) {
