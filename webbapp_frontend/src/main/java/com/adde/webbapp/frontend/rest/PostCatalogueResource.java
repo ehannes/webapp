@@ -27,7 +27,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-@Path("/inside/post")
+@Path("/post")
 public class PostCatalogueResource {
 
     private final PostCatalogue postDAO = DAOFactory.getDAOFactory().getPostDAO();
@@ -49,6 +49,7 @@ public class PostCatalogueResource {
     }
     
     @GET
+    @Path("/all")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getAll() {
         List<PostProxy> result = new LinkedList<>();
@@ -63,7 +64,7 @@ public class PostCatalogueResource {
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getRange(@QueryParam("first") int first,
-            @QueryParam("nItems") int nItems) {
+            @QueryParam("nItems") int nItems, @PathParam("page") int page) {
         if(first < 0 || (first + nItems) > postDAO.getCount()){
             return Response.status(Response.Status.BAD_REQUEST).build();
         } else{
