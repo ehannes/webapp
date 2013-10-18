@@ -4,9 +4,6 @@ import com.adde.webbapp.frontend.servlet.DAOFactoryWrapper;
 import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,8 +43,8 @@ public class AuthServlet extends HttpServlet {
                     if (person != null
                             && person.getPassword().equals(password)) {
                         HttpSession session = request.getSession(true);
-                        session.setAttribute("user", person);
-                        response.sendRedirect("fc?view=welcome");
+                        session.setAttribute("person", person);
+                        response.sendRedirect("rs");
                     }
                 }
                 request.getRequestDispatcher("WEB-INF/jsp/login");
