@@ -35,22 +35,22 @@ import javax.ws.rs.core.UriInfo;
 @Path("/inside/projects")
 public class ProjectCatalogueResource {
 
-    private final ProjectCatalogue projectDAO = DAOFactory.getDAOFactory().getProjectDAO();
+    private final ProjectCatalogue projectCatalogue = DAOFactory.getDAOFactory().getProjectDAO();
     @Context
     private UriInfo uriInfo;
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response get() {
-        List<Project> projects = projectDAO.getAll();
-        return Response.ok(toProductProxy(projects)).build();
+        List<Project> projects = projectCatalogue.getAll();
+        return Response.ok(toProjectProxy(projects)).build();
     }
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{id}")
     public Response find(@PathParam("id") long id) {
-        Project project = projectDAO.find(id);
+        Project project = projectCatalogue.find(id);
         GenericEntity<ProjectProxy> ge = new GenericEntity<ProjectProxy>(new ProjectProxy(project)) {
         };
 
@@ -67,7 +67,7 @@ public class ProjectCatalogueResource {
             @FormParam("admin") Person admin) {
         Project p = new Project(name, admin);
         try {
-            projectDAO.add(p);
+            projectCatalogue.add(p);
 
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(p.getId())).build(p);
             return Response.created(uri).build();
@@ -80,7 +80,7 @@ public class ProjectCatalogueResource {
     @Path("{id}")
     public Response remove(@PathParam("id") long id) {
         try {
-            projectDAO.remove(id);
+            projectCatalogue.remove(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -93,11 +93,11 @@ public class ProjectCatalogueResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response update(@PathParam("id") Long id, @FormParam("name") String name,
             @FormParam("admin") Person admin) {
-        Project oldProject = projectDAO.find(id);
+        Project oldProject = projectCatalogue.find(id);
         if (oldProject != null) {
             oldProject.setAdmin(admin);
             oldProject.setName(name);
-            projectDAO.update(oldProject);
+            projectCatalogue.update(oldProject);
             return Response.ok(new ProjectProxy(oldProject)).build();
         }
         return Response.notModified("Project not found").build();
@@ -107,10 +107,10 @@ public class ProjectCatalogueResource {
     @Path("count")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getCount() {
-        return Response.ok(new PrimitiveJSONWrapper(projectDAO.getCount())).build();
+        return Response.ok(new PrimitiveJSONWrapper(projectCatalogue.getCount())).build();
     }
 
-    private GenericEntity<List<ProjectProxy>> toProductProxy(List<Project> projects) {
+    private GenericEntity<List<ProjectProxy>> toProjectProxy(List<Project> projects) {
         List<ProjectProxy> projectProxies = new ArrayList<>();
         for (Project p : projects) {
             projectProxies.add(new ProjectProxy(p));
