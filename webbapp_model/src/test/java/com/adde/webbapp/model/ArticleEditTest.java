@@ -39,30 +39,30 @@ public class ArticleEditTest {
         }
         
         for(int i = 0; i < NR_OF_EDITORS; i++){
-            daoFactory.getPersonDAO().add(editorList.get(i));
+            daoFactory.getPersonCatalogue().add(editorList.get(i));
         }
         
         //No ArticleEdit at start
-        assertTrue(daoFactory.getPersonDAO().getAll().size() == NR_OF_EDITORS);
+        assertTrue(daoFactory.getPersonCatalogue().getAll().size() == NR_OF_EDITORS);
     }
     
     @After //Remember to remove all SimpleEditorEntries at end of all tests!
     public void after() {
         for(int i = 0; i < NR_OF_EDITORS; i++){
-            daoFactory.getPersonDAO().remove(editorList.get(i).getId());
+            daoFactory.getPersonCatalogue().remove(editorList.get(i).getId());
         }
         
         //No ArticleEdit after
-        assertTrue(daoFactory.getSimpleEditorEntryDAO().getAll().isEmpty());
+        assertTrue(daoFactory.getArticleEditCatalogue().getAll().isEmpty());
     } 
     
     @Test
     public void entryFunctions() {
         see = new ArticleEdit(editorList.get(0));
-        daoFactory.getSimpleEditorEntryDAO().add(see);
+        daoFactory.getArticleEditCatalogue().add(see);
         
         //Fetch from DB
-        ArticleEdit seeFromDB = daoFactory.getSimpleEditorEntryDAO().find(see.getId());
+        ArticleEdit seeFromDB = daoFactory.getArticleEditCatalogue().find(see.getId());
         long id = seeFromDB.getId();
         assertTrue(seeFromDB.getEditor().equals(editorList.get(0)));
         
@@ -71,52 +71,52 @@ public class ArticleEditTest {
         
         //Change editor, update and check if editor still changed
         seeFromDB.setEditor(editorList.get(1));
-        daoFactory.getSimpleEditorEntryDAO().update(seeFromDB);
-        seeFromDB = daoFactory.getSimpleEditorEntryDAO().find(id);
+        daoFactory.getArticleEditCatalogue().update(seeFromDB);
+        seeFromDB = daoFactory.getArticleEditCatalogue().find(id);
         assertFalse(seeFromDB.getEditor().equals(editorList.get(0)));
         
         //Date rounds to day. Will not see any difference in time here...
         Logger.getAnonymousLogger().log(Level.INFO, "Modified: {0}", see.getEditTime());
         seeFromDB.setEditTime(new GregorianCalendar());
-        daoFactory.getSimpleEditorEntryDAO().update(seeFromDB);
-        daoFactory.getSimpleEditorEntryDAO().find(id);
+        daoFactory.getArticleEditCatalogue().update(seeFromDB);
+        daoFactory.getArticleEditCatalogue().find(id);
         Logger.getAnonymousLogger().log(Level.INFO, "Modified: {0}", see.getEditTime());
         
         //Clean
-        daoFactory.getSimpleEditorEntryDAO().remove(id);
+        daoFactory.getArticleEditCatalogue().remove(id);
     }
     
     @Test
     public void simplePersist() {
         //Add 1
         see = new ArticleEdit(editorList.get(0));
-        daoFactory.getSimpleEditorEntryDAO().add(see);
+        daoFactory.getArticleEditCatalogue().add(see);
         
         //Find
-        ArticleEdit seeFromDatabase = daoFactory.getSimpleEditorEntryDAO().find(see.getId());
+        ArticleEdit seeFromDatabase = daoFactory.getArticleEditCatalogue().find(see.getId());
         assertTrue(seeFromDatabase.equals(see));
         
         //GetAll
-        List<ArticleEdit> seeList = daoFactory.getSimpleEditorEntryDAO().getAll();
+        List<ArticleEdit> seeList = daoFactory.getArticleEditCatalogue().getAll();
         assertTrue(seeList.size() == 1);
         
         //Remove
-        daoFactory.getSimpleEditorEntryDAO().remove(see.getId());
-        assertTrue(daoFactory.getSimpleEditorEntryDAO().getAll().isEmpty());
+        daoFactory.getArticleEditCatalogue().remove(see.getId());
+        assertTrue(daoFactory.getArticleEditCatalogue().getAll().isEmpty());
     }
     
     @Test
     public void addMultiples() {
         for(int i = 0; i < NR_OF_EDITORS; i++){
-            daoFactory.getSimpleEditorEntryDAO().add(new ArticleEdit(editorList.get(i)));
+            daoFactory.getArticleEditCatalogue().add(new ArticleEdit(editorList.get(i)));
         }
         
-        assertTrue(daoFactory.getSimpleEditorEntryDAO().getAll().size() == NR_OF_EDITORS);
+        assertTrue(daoFactory.getArticleEditCatalogue().getAll().size() == NR_OF_EDITORS);
         
-        List<ArticleEdit> allEntries = daoFactory.getSimpleEditorEntryDAO().getAll();
+        List<ArticleEdit> allEntries = daoFactory.getArticleEditCatalogue().getAll();
         for(ArticleEdit simpleEditorEntry : allEntries) {
-            daoFactory.getSimpleEditorEntryDAO().remove(simpleEditorEntry.getId());
+            daoFactory.getArticleEditCatalogue().remove(simpleEditorEntry.getId());
         }
-        assertTrue(daoFactory.getSimpleEditorEntryDAO().getAll().isEmpty());
+        assertTrue(daoFactory.getArticleEditCatalogue().getAll().isEmpty());
     }
 }

@@ -10,22 +10,22 @@ import java.util.logging.Logger;
  */
 public class DAOFactory {
 
-    private final ArticleCatalogue articleDAO;
-    private final PostCatalogue postDAO;
-    private final PersonCatalogue personDAO;
-    private final ProjectCatalogue projectDAO;
-    private final ArticleEditCatalogue simpleEditorEntryDAO;
-    private final TodoPostCatalogue todoPostDAO;
-    private final WallPostCatalogue wallPostDAO;
+    private final ArticleCatalogue articleCatalogue;
+    private final PostCatalogue postCatalogue;
+    private final PersonCatalogue personCatalogue;
+    private final ProjectCatalogue projectCatalogue;
+    private final ArticleEditCatalogue articleEditCatalogue;
+    private final TodoPostCatalogue todoPostCatalogue;
+    private final WallPostCatalogue wallPostCatalogue;
 
     private DAOFactory() {
-        articleDAO = ArticleCatalogue.newInstance();
-        postDAO = PostCatalogue.newInstance();
-        personDAO = PersonCatalogue.newInstance();
-        projectDAO = ProjectCatalogue.newInstance();
-        simpleEditorEntryDAO = ArticleEditCatalogue.newInstance();
-        todoPostDAO = TodoPostCatalogue.newInstance();
-        wallPostDAO = WallPostCatalogue.newInstance();
+        articleCatalogue = ArticleCatalogue.newInstance();
+        postCatalogue = PostCatalogue.newInstance();
+        personCatalogue = PersonCatalogue.newInstance();
+        projectCatalogue = ProjectCatalogue.newInstance();
+        articleEditCatalogue = ArticleEditCatalogue.newInstance();
+        todoPostCatalogue = TodoPostCatalogue.newInstance();
+        wallPostCatalogue = WallPostCatalogue.newInstance();
         Logger.getAnonymousLogger().log(Level.INFO, "DAOFactory alive {0}", this.hashCode());
     }
     
@@ -34,31 +34,31 @@ public class DAOFactory {
         return daoFactory;
     }
 
-    public ArticleCatalogue getArticleDAO() {
-        return articleDAO;
+    public ArticleCatalogue getArticleCatalogue() {
+        return articleCatalogue;
     }
 
-    public PostCatalogue getPostDAO() {
-        return postDAO;
+    public PostCatalogue getPostCatalogue() {
+        return postCatalogue;
     }
 
-    public PersonCatalogue getPersonDAO() {
-        return personDAO;
+    public PersonCatalogue getPersonCatalogue() {
+        return personCatalogue;
     }
 
-    public ProjectCatalogue getProjectDAO() {
-        return projectDAO;
+    public ProjectCatalogue getProjectCatalogue() {
+        return projectCatalogue;
     }
 
-    public ArticleEditCatalogue getSimpleEditorEntryDAO() {
-        return simpleEditorEntryDAO;
+    public ArticleEditCatalogue getArticleEditCatalogue() {
+        return articleEditCatalogue;
     }
 
-    public TodoPostCatalogue getTodoPostDAO() {
-        return todoPostDAO;
+    public TodoPostCatalogue getTodoPostCatalogue() {
+        return todoPostCatalogue;
     }
 
-    public WallPostCatalogue getWallPostDAO() {
-        return wallPostDAO;
+    public WallPostCatalogue getWallPostCatalogue() {
+        return wallPostCatalogue;
     }
 }

@@ -35,8 +35,8 @@ public class PostsTest {
         person1 = new Person("person1", "email1", "user1pw");
         person2 = new Person("person2", "email2", "user2pw");
 
-        daos.getPersonDAO().add(person1);
-        daos.getPersonDAO().add(person2);
+        daos.getPersonCatalogue().add(person1);
+        daos.getPersonCatalogue().add(person2);
 
         post1 = new Post(person1, STR1);
         post2 = new Post(person2, STR2);
@@ -44,38 +44,38 @@ public class PostsTest {
 
     @After
     public void teardown() {
-        assertTrue(daos.getProjectDAO().getCount() == 0);
-        assertTrue(daos.getWallPostDAO().getCount() == 0);
-        assertTrue(daos.getTodoPostDAO().getCount() == 0);
-        assertTrue(daos.getPostDAO().getCount() == 0);
+        assertTrue(daos.getProjectCatalogue().getCount() == 0);
+        assertTrue(daos.getWallPostCatalogue().getCount() == 0);
+        assertTrue(daos.getTodoPostCatalogue().getCount() == 0);
+        assertTrue(daos.getPostCatalogue().getCount() == 0);
 
-        daos.getPersonDAO().remove(person1.getId());
-        daos.getPersonDAO().remove(person2.getId());
+        daos.getPersonCatalogue().remove(person1.getId());
+        daos.getPersonCatalogue().remove(person2.getId());
     }
 
     @Test
     public void PostTest() {
-        daos.getPostDAO().add(post1);
-        daos.getPostDAO().add(post2);
+        daos.getPostCatalogue().add(post1);
+        daos.getPostCatalogue().add(post2);
         cal1 = post1.getTimeCreated();
         assertFalse(cal1 == null);
 
         //persistence tests
         Post post3 = new Post(person1, STR1);
         assertTrue(post3.getId() == null);
-        assertTrue(daos.getPostDAO().getCount() == 2);
-        daos.getPostDAO().add(post3);
+        assertTrue(daos.getPostCatalogue().getCount() == 2);
+        daos.getPostCatalogue().add(post3);
         assertFalse(post3.getId() == null);
-        assertTrue(daos.getPostDAO().getCount() == 3);
+        assertTrue(daos.getPostCatalogue().getCount() == 3);
 
         //removal from DB
-        daos.getPostDAO().remove(post3.getId());
-        assertTrue(daos.getPostDAO().getCount() == 2);
+        daos.getPostCatalogue().remove(post3.getId());
+        assertTrue(daos.getPostCatalogue().getCount() == 2);
 
         //persistance of duplicates test
-        int countBefore = daos.getPostDAO().getCount();
-        daos.getPostDAO().add(post1); //duplicate! shouldn't be added
-        assertTrue(daos.getPostDAO().getCount() == countBefore);
+        int countBefore = daos.getPostCatalogue().getCount();
+        daos.getPostCatalogue().add(post1); //duplicate! shouldn't be added
+        assertTrue(daos.getPostCatalogue().getCount() == countBefore);
 
         //basic tests
         assertTrue(post1.equals(post1));
@@ -93,20 +93,20 @@ public class PostsTest {
                     + "Interrupted on Thread.sleep");
             System.exit(1);
         }
-        daos.getPostDAO().setMsg(post1.getId(), STR2);
-        assertTrue(daos.getPostDAO().find(post1.getId()).getMsg().equals(STR2));
-        post1 = daos.getPostDAO().find(post1.getId());
+        daos.getPostCatalogue().setMsg(post1.getId(), STR2);
+        assertTrue(daos.getPostCatalogue().find(post1.getId()).getMsg().equals(STR2));
+        post1 = daos.getPostCatalogue().find(post1.getId());
         assertTrue(post1.getTimeCreated().equals(cal1));
         assertFalse(post1.getTimeModified().equals(cal1));
 
-        daos.getPostDAO().remove(post1.getId());
-        daos.getPostDAO().remove(post2.getId());
+        daos.getPostCatalogue().remove(post1.getId());
+        daos.getPostCatalogue().remove(post2.getId());
     }
 
     //Depends on previous test!!
     @Test
     public void WallPostTest() {
-        int initNrOfPostsInDB = daos.getPostDAO().getCount();
+        int initNrOfPostsInDB = daos.getPostCatalogue().getCount();
         wallPost1 = new WallPost(person1, STR1);
 
         //init values
@@ -115,19 +115,19 @@ public class PostsTest {
 
         //persist, should get an id
         assertTrue(wallPost1.getId() == null);
-        daos.getWallPostDAO().add(wallPost1);
+        daos.getWallPostCatalogue().add(wallPost1);
         assertFalse(wallPost1.getId() == null);
 
         //adding comments
         commentsTmp = new LinkedList<>();
-        daos.getPostDAO().add(post1);
-        daos.getPostDAO().add(post2);
-        assertFalse(daos.getPostDAO().find(post1.getId()) == null);
-        assertFalse(daos.getPostDAO().find(post2.getId()) == null);
+        daos.getPostCatalogue().add(post1);
+        daos.getPostCatalogue().add(post2);
+        assertFalse(daos.getPostCatalogue().find(post1.getId()) == null);
+        assertFalse(daos.getPostCatalogue().find(post2.getId()) == null);
         commentsTmp.add(post1);
         commentsTmp.add(post2);
         wallPost1.setComments(commentsTmp);
-        wallPost1 = daos.getWallPostDAO().update(wallPost1);
+        wallPost1 = daos.getWallPostCatalogue().update(wallPost1);
         commentsTmp = wallPost1.getComments();
         //Bug: Netbeans thinks commentsTmp is null two lines below if the line
         //below is assertFalse(commentsTmp == null).
@@ -137,14 +137,14 @@ public class PostsTest {
         //duplicates test
         commentsTmp.add(commentsTmp.get(0));
         wallPost1.setComments(commentsTmp);
-        wallPost1 = daos.getWallPostDAO().update(wallPost1);
+        wallPost1 = daos.getWallPostCatalogue().update(wallPost1);
         assertFalse(wallPost1.getComments() == null);
         assertTrue(wallPost1.getComments().size() == commentsTmp.size() - 1);
 
         //persist.remove working?
-        daos.getWallPostDAO().remove(wallPost1.getId());
-        assertTrue(daos.getWallPostDAO().getCount() == 0);
-        assertTrue(daos.getPostDAO().getCount() == initNrOfPostsInDB);
+        daos.getWallPostCatalogue().remove(wallPost1.getId());
+        assertTrue(daos.getWallPostCatalogue().getCount() == 0);
+        assertTrue(daos.getPostCatalogue().getCount() == initNrOfPostsInDB);
     }
 
     @Test
@@ -152,7 +152,7 @@ public class PostsTest {
         //storage in database
         todoPost1 = new TodoPost(person1, STR1);
         assertTrue(todoPost1.getId() == null);
-        daos.getTodoPostDAO().add(todoPost1);
+        daos.getTodoPostCatalogue().add(todoPost1);
         assertFalse(todoPost1.getId() == null);
         cal1 = todoPost1.getTimeCreated();
 
@@ -176,7 +176,7 @@ public class PostsTest {
         //duplicates
         list.add(person1);
         todoPost1.setAssignedTo(list);
-        todoPost1 = daos.getTodoPostDAO().update(todoPost1);
+        todoPost1 = daos.getTodoPostCatalogue().update(todoPost1);
         assertTrue(todoPost1.getAssignedTo().size() == 2);
 
         //deadline
@@ -184,6 +184,6 @@ public class PostsTest {
         assertTrue(todoPost1.getDeadline().equals(cal1));
         
         //remove from DB
-        daos.getTodoPostDAO().remove(todoPost1.getId());
+        daos.getTodoPostCatalogue().remove(todoPost1.getId());
     }
 }

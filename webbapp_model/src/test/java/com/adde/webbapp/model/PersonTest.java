@@ -26,7 +26,7 @@ public class PersonTest {
     @Before
     public void before() {
         DAOFactory daoFactory = DAOFactory.getDAOFactory();
-        personDAO = daoFactory.getPersonDAO();
+        personDAO = daoFactory.getPersonCatalogue();
         
         person1_pw = "HsdE3324!gh";
         person1 = new Person("testperson_username", "testperson@testpersons.com", person1_pw);

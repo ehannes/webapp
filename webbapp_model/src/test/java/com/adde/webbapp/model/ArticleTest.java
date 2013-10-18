@@ -28,9 +28,9 @@ public class ArticleTest {
     public void before() {
         Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- Before test!");
         daoFactory = DAOFactory.getDAOFactory();
-        personDAO = daoFactory.getPersonDAO();
-        articleDAO = daoFactory.getArticleDAO();
-        seeDAO = daoFactory.getSimpleEditorEntryDAO();
+        personDAO = daoFactory.getPersonCatalogue();
+        articleDAO = daoFactory.getArticleCatalogue();
+        seeDAO = daoFactory.getArticleEditCatalogue();
         person1 = new Person("person1", "email1", "pass1");
         personDAO.add(person1);
         person2 = new Person("person2", "email2", "pass1");

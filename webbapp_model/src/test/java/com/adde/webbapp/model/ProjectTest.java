@@ -45,11 +45,11 @@ public class ProjectTest {
     public void before() {
 
         DAOFactory daoFactory = DAOFactory.getDAOFactory();
-        projectDAO = daoFactory.getProjectDAO();
-        personDAO = daoFactory.getPersonDAO();
-        articleDAO = daoFactory.getArticleDAO();
-        todoPostDAO = daoFactory.getTodoPostDAO();
-        wallPostDAO = daoFactory.getWallPostDAO();
+        projectDAO = daoFactory.getProjectCatalogue();
+        personDAO = daoFactory.getPersonCatalogue();
+        articleDAO = daoFactory.getArticleCatalogue();
+        todoPostDAO = daoFactory.getTodoPostCatalogue();
+        wallPostDAO = daoFactory.getWallPostCatalogue();
 
         testUser = new Person("kalle", "kallemail", "ellak");
         collaborator = new Person("Colle", "Borator", "elloc");
