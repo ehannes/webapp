@@ -40,7 +40,7 @@ public class AuthFilter implements Filter {
         // the rest of the filter chain is invoked.
         HttpServletRequest HttpRequest = (HttpServletRequest) request;
         HttpSession session = HttpRequest.getSession(true);
-        Object user = session.getAttribute("user");
+        Object user = session.getAttribute("person");
         if(user == null) {
             request.getRequestDispatcher("WEB-INF/jsp/login.jspx").forward(request, response);
         }
