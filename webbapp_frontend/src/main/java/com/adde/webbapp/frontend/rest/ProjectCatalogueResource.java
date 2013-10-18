@@ -95,11 +95,8 @@ public class ProjectCatalogueResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response update(@PathParam("id") Long id, @FormParam("name") String name) {
-        HttpSession session = request.getSession(true);
-        Person person = (Person) session.getAttribute("person");
         Project oldProject = projectCatalogue.find(id);
         if (oldProject != null) {
-            oldProject.setAdmin(person);
             oldProject.setName(name);
             projectCatalogue.update(oldProject);
             return Response.ok(new ProjectProxy(oldProject)).build();

@@ -33,7 +33,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Joakim
  */
-@Path("projects/{projectId}/wallposts")
+@Path("projects/{projectId}/wallPosts")
 public class WallPostCatalogueResource {
 
     private final WallPostCatalogue wallPostCatalogue = DAOFactory.getDAOFactory().getWallPostDAO();
@@ -113,11 +113,8 @@ public class WallPostCatalogueResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response update(@PathParam("id") Long id, @FormParam("msg") String msg) {
-        HttpSession session = request.getSession(true);
-        Person person = (Person) session.getAttribute("person");
         WallPost oldWallPost = wallPostCatalogue.find(id);
         if (oldWallPost != null) {
-            oldWallPost.setAuthor(person);
             oldWallPost.setMsg(msg);
             wallPostCatalogue.update(oldWallPost);
             return Response.ok(new WallPostProxy(oldWallPost)).build();
