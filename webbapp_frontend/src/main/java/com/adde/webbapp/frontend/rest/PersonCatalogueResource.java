@@ -80,16 +80,19 @@ public class PersonCatalogueResource {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response update(@FormParam("username") String name,
+    public Response update(@PathParam("id") long id,
+            @FormParam("username") String username,
             @FormParam("email") String email,
             @FormParam("password") String password) {
-        try {
-            Person updatedPerson = new Person(name, email, password);
-            personDAO.update(updatedPerson);
-            return Response.ok(new PersonProxy(updatedPerson)).build();
-        } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-        }
+            Person personToUpdate = personDAO.find(id);
+            if (personToUpdate != null) {
+                personToUpdate.setUserName(username);
+                personToUpdate.setEmail(email);
+                personToUpdate.setPassword(password);
+                personDAO.update(personToUpdate);
+                return Response.ok(new PersonProxy(personToUpdate)).build();
+            }
+            return Response.noContent().build();
     }
     
     @GET
