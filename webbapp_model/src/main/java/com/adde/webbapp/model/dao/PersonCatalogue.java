@@ -9,6 +9,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 /**
  *
@@ -33,10 +35,14 @@ public class PersonCatalogue extends AbstractDAO<Person, Long> {
     
     public Person getByUserName(String username) {
         EntityManager em = getEntityManager();
-        Person found = em.createQuery("select p from Person p where"
+        try{
+            Query q = em.createQuery("select p from Person p where"
                 + " p.username = :username", Person.class).
-                setParameter("username", username).getSingleResult();
-        return found;
+                setParameter("username", username);
+            return (Person) q.getSingleResult();
+        } catch(NoResultException e){
+            return null;
+        }
     }
     
     public List<Person> getByFirstName(String firstname) {
@@ -57,9 +63,13 @@ public class PersonCatalogue extends AbstractDAO<Person, Long> {
 
     public Person getByEmail(String email) {
         EntityManager em = getEntityManager();
-        Person found = em.createQuery("select p from Person p where"
+        try{
+            Query q = em.createQuery("select p from Person p where"
                 + " p.email = :email", Person.class).
-                setParameter("email", email).getSingleResult();
-        return found;
+                setParameter("email", email);
+            return (Person) q.getSingleResult();
+        } catch(NoResultException e) {
+            return null;
+        }
     }
 }
