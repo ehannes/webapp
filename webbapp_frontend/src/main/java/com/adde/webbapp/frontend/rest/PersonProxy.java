@@ -21,6 +21,11 @@ public class PersonProxy {
     }
     
     @XmlElement(required = true)
+    public Long getId() {
+        return person.getId();
+    }
+    
+    @XmlElement(required = true)
     public String getUserName() {
         return person.getUserName();
     }
