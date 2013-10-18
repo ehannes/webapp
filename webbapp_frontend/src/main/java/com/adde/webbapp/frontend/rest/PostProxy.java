@@ -19,8 +19,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "PostType")
 public class PostProxy {
-    
-    // The wrapped product
+     
+   // The wrapped product
     private Post post;
 
     protected PostProxy() { }

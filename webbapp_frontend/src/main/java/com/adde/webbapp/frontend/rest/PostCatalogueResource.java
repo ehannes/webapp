@@ -6,11 +6,17 @@ package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.DAOFactory;
 import com.adde.webbapp.model.dao.PostCatalogue;
+import com.adde.webbapp.model.dao.ProjectCatalogue;
+import com.adde.webbapp.model.dao.WallPostCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.Post;
+import com.adde.webbapp.model.entity.Project;
+import com.adde.webbapp.model.entity.WallPost;
 import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -27,113 +33,208 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-@Path("/post")
+@Path("projects/{projectId}/wall/{wallPostId}/posts")
 public class PostCatalogueResource {
 
-    private final PostCatalogue postDAO = DAOFactory.getDAOFactory().getPostDAO();
+    private final PostCatalogue postCatalogue = DAOFactory.getDAOFactory().getPostDAO();
+    private final WallPostCatalogue wallPostCatalogue =
+            DAOFactory.getDAOFactory().getWallPostDAO();
+    private final ProjectCatalogue projectCatalogue =
+            DAOFactory.getDAOFactory().getProjectDAO();
     @Context
     private UriInfo uriInfo;
+    @Context
+    private HttpServletRequest request;
+
+    private boolean allowed(Long projectId) {
+        return true;
+//        HttpSession session = request.getSession(true);
+//        Person person = (Person) session.getAttribute("person");
+//        Project project = projectCatalogue.find(projectId);
+//        return project != null && (person.equals(project.getAdmin())
+//                || project.getCollaborators().contains(person));
+//        //getCollaborators can't be null when persisted.
+    }
+
+    //Does WallPost exist and does it belong to the project with id projectId?
+    private boolean validWallPost(Long projectId, Long wallPostId) {
+        return true;
+//        WallPost wp = wallPostCatalogue.find(wallPostId);
+//        Project project = projectCatalogue.find(projectId);
+//        return project != null && wp != null
+//                && project.getWallPosts().contains(wp);
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response add(@FormParam("msg") String msg, @FormParam("authorId") Long authorId) {
-        Person author = DAOFactory.getDAOFactory().getPersonDAO().find(authorId);
-        if(author == null){
-            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+    public Response add(@PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId,
+            @FormParam("msg") String msg) {
+        if (!allowed(projectId)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } else if (validWallPost(projectId, wallPostId)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        Post product = new Post(author, msg);
-        postDAO.add(product);
+        Person author = (Person) request.getSession().getAttribute("person");
+        Post post = new Post(author, msg);
+        postCatalogue.add(post);
+
+        //add post (comment) to wall post!
+        WallPost wp = wallPostCatalogue.find(wallPostId);
+        wp.getComments().add(post);
+        wallPostCatalogue.update(wp);
+
         // Tell client where new resource is (URI to)
-        URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(product.getId())).build(product);
+        URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(post.getId())).build(post);
         return Response.created(uri).build();
     }
-    
+
     @GET
-    @Path("/all")
+    @Path("all")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getAll() {
+    public Response getAll(@PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId) {
+        if (!allowed(projectId)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } else if (!validWallPost(projectId, wallPostId)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
         List<PostProxy> result = new LinkedList<>();
-            for(Post p : postDAO.getAll()){
-                result.add(new PostProxy(p));
-            }
-            GenericEntity ge = new GenericEntity<List<PostProxy>>
-                (result) {};
+        for (Post p : postCatalogue.getAll()) {
+            result.add(new PostProxy(p));
+        }
+        GenericEntity ge = new GenericEntity<List<PostProxy>>(result) {
+        };
         return Response.ok(ge).build();
     }
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getRange(@QueryParam("first") int first,
-            @QueryParam("nItems") int nItems, @PathParam("page") int page) {
-        if(first < 0 || (first + nItems) > postDAO.getCount()){
+    public Response getRange(
+            @PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId,
+            @QueryParam("first") int first, @QueryParam("nItems") int nItems) {
+
+        if (!allowed(projectId)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } else if (!validWallPost(projectId, wallPostId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
-        } else{
-            List<PostProxy> result = new LinkedList<>();
-            for(Post p : postDAO.getRange(first, nItems)){
-                result.add(new PostProxy(p));
-            }
-            GenericEntity ge = new GenericEntity<List<PostProxy>>
-                (result) {};
-            return Response.ok(ge).build();
         }
+
+        if (first < 0) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        } else if (first >= postCatalogue.getCount()) {
+            return Response.noContent().build();
+        }
+
+        List<PostProxy> result = new LinkedList<>();
+        for (Post p : postCatalogue.getRange(first, nItems)) {
+            result.add(new PostProxy(p));
+        }
+        GenericEntity ge = new GenericEntity<List<PostProxy>>(result) {
+        };
+        return Response.ok(ge).build();
     }
-    
+
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response find(@PathParam("id") long id) {
-        Post post = null;
-        for (Post tmpPost : postDAO.getAll()) {
-            if (tmpPost.getId() == id) {
-                post = tmpPost;
-                break;
-            }
+    public Response find(
+            @PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId,
+            @PathParam("id") long id) {
+
+        if (!allowed(projectId)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } else if (!validWallPost(projectId, wallPostId)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
+
+        Post post = postCatalogue.find(id);
         if (post == null) {
             return Response.noContent().build();
         }
         return Response.ok(new PostProxy(post)).build();
     }
-    
-    /* Fungerar för JSON, men inte XML. Vad ska vi wrappa int:en från getCount med? */
+
     @GET
     @Path("count")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getCount() {
-        return Response.ok(new PrimitiveJSONWrapper<>(postDAO.getCount())).build();
+    public Response getCount(
+            @PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId) {
+
+        if (!allowed(projectId)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } else if (!validWallPost(projectId, wallPostId)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        return Response.ok(new PrimitiveJSONWrapper<>(postCatalogue.getCount())).build();
     }
 
     @DELETE
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response remove(@PathParam("id") long id) {
-        Post post = postDAO.find(id);
-        if (post != null) {
-            postDAO.remove(post.getId());
-            return Response.ok().build();
+    public Response remove(
+            @PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId,
+            @PathParam("id") long id) {
+
+        if (!allowed(projectId)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } else if (!validWallPost(projectId, wallPostId)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        return Response.noContent().build();
+        WallPost wp = wallPostCatalogue.find(wallPostId);
+        Post post = postCatalogue.find(id);
+        Person person = (Person) request.getSession().getAttribute("person");
+
+        if (post == null) {
+            return Response.noContent().build();
+        } else if (!(wp.getAuthor().equals(person) || post.getAuthor().equals(person))) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
+        postCatalogue.remove(post.getId());
+        //remove from wallpost
+        wp.getComments().remove(post);
+        wallPostCatalogue.update(wp);
+        
+        return Response.ok().build();
     }
 
     @PUT
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response update(@PathParam("id") Long id,
-            @FormParam("msg") String msg, @FormParam("authorId") Long authorId) {
-        Post old = postDAO.find(id);
+    public Response update(
+            @PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId,
+            @PathParam("id") Long id,
+            @FormParam("msg") String msg) {
+
+        if (!allowed(projectId)) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        } else if (!validWallPost(projectId, wallPostId)) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+        Post old = postCatalogue.find(id);
         Post post;
+        Person person = (Person) request.getSession().getAttribute("person");
         if (old == null) {
-            Person author = DAOFactory.getDAOFactory().getPersonDAO().find(authorId);
-            if (author != null) {
-                post = new Post(author, msg);
-                postDAO.update(post);
-            }
-            return Response.notModified().build();
+            post = new Post(person, msg);
+            postCatalogue.update(post);
+            //add to wallpost
+            WallPost wp = wallPostCatalogue.find(wallPostId);
+            wp.getComments().add(old);
+            wallPostCatalogue.update(wp);
         } else {
+            if(!old.getAuthor().equals(person)){
+                return Response.status(Response.Status.UNAUTHORIZED).build();
+            }
             post = old;
-            post.setMsg(msg); //don't allow changing author...
-            postDAO.update(post);
+            post.setMsg(msg);
+            postCatalogue.update(post);
         }
         return Response.ok(new PostProxy(post)).build();
     }
