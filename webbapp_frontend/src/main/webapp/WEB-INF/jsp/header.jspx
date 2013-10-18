@@ -1,9 +1,10 @@
 <div class="header">
     <ul class="nav nav-pills pull-right">
-        <li class="active"><a href="/webbapp_frontend/">Home</a></li>
-        <li><a href="fc?view=about">About</a></li>
-        <li><a href="fc?view=contact">Contact</a></li>
-        <li><a href="fc?view=login">Log in</a></li>
+        <li><a id="homeButton" href="/webbapp_frontend/">Home</a></li>
+        <li><a id="aboutButton" href="fc?view=about">About</a></li>
+        <li><a id="contactButton" href="fc?view=contact">Contact</a></li>
+        <li><a id="signupButton" href="fc?view=signup">Sign up</a></li>
+        <li><a id="loginButton" href="fc?view=login">Log in</a></li>
     </ul>
     <h3 class="text-muted">Project Platform</h3>
 </div>
