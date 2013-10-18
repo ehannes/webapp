@@ -1,9 +1,6 @@
 import os
-#(adduser = "curl --data 'username=user' + i ' + '&email=user ' + i +
-#'@user.com' + '&password=sEDfg2345')
-#(adduser = 'curl --data "username=testuser&email=username@email.com
-#&password=sKe55" ')
 
+# Testing the Person resource
 url = 'http://localhost:8080/webbapp_frontend/rs/'
 resource = 'person'
 
