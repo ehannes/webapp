@@ -32,35 +32,35 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Joakim
  */
- @Path("/inside/projects")
+@Path("/inside/projects")
 public class ProjectDAOResource {
+
     private final ProjectDAO projectDAO = DAOFactory.getDAOFactory().getProjectDAO();
-    
     @Context
     private UriInfo uriInfo;
-   
+
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response get() {
         List<Project> projects = projectDAO.getAll();
         return Response.ok(toProductProxy(projects)).build();
     }
-    
+
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{id}")
     public Response find(@PathParam("id") long id) {
         Project project = projectDAO.find(id);
-                GenericEntity<ProjectProxy> ge = new GenericEntity<ProjectProxy>(new ProjectProxy(project)) {
+        GenericEntity<ProjectProxy> ge = new GenericEntity<ProjectProxy>(new ProjectProxy(project)) {
         };
-           
+
         if (project != null) {
             return Response.ok(ge).build();
         } else {
             return Response.noContent().build();
         }
     }
-    
+
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(@FormParam("name") String name,
@@ -68,15 +68,14 @@ public class ProjectDAOResource {
         Project p = new Project(name, admin);
         try {
             projectDAO.add(p);
-            
+
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(p.getId())).build(p);
             return Response.created(uri).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
- 
+
     @DELETE
     @Path("{id}")
     public Response remove(@PathParam("id") long id) {
@@ -87,22 +86,23 @@ public class ProjectDAOResource {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-    
+
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response update(@FormParam("name") String name,
+    public Response update(@PathParam("id") Long id, @FormParam("name") String name,
             @FormParam("admin") Person admin) {
-        try {
-            Project updatedProject = new Project(name, admin);
-            projectDAO.update(updatedProject);
-            return Response.ok(new ProjectProxy(updatedProject)).build();
-        } catch (IllegalArgumentException e) {
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        Project oldProject = projectDAO.find(id);
+        if (oldProject != null) {
+            oldProject.setAdmin(admin);
+            oldProject.setName(name);
+            projectDAO.update(oldProject);
+            return Response.ok(new ProjectProxy(oldProject)).build();
         }
+        return Response.notModified("Project not found").build();
     }
- 
+
     @GET
     @Path("count")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -110,7 +110,6 @@ public class ProjectDAOResource {
         return Response.ok(new PrimitiveJSONWrapper(projectDAO.getCount())).build();
     }
 
-    
     private GenericEntity<List<ProjectProxy>> toProductProxy(List<Project> projects) {
         List<ProjectProxy> projectProxies = new ArrayList<>();
         for (Project p : projects) {
@@ -120,5 +119,4 @@ public class ProjectDAOResource {
         };
         return ge;
     }
-    
 }

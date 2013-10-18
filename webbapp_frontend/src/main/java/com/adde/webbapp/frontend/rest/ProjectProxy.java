@@ -15,14 +15,12 @@ import javax.xml.bind.annotation.*;
  * @author hajo
  */
 @XmlRootElement(name = "project")
-//@XmlAccessorType(XmlAccessType.PROPERTY)
-@XmlType(name = "ProductType", propOrder = {})
+@XmlType(name = "ProjectType")
 public class ProjectProxy {
 
-    // The wrapped project
     private Project project;
 
-    protected ProjectProxy() { // Must have
+    protected ProjectProxy() { 
     }
 
     public ProjectProxy(Project project) {
