@@ -52,13 +52,16 @@ public class ArticleCatalogueResource {
         @FormParam("content") String content, @FormParam("editor") String username) { //Ta in person eller inte?
         PersonCatalogue personCatalogue = daoFactory.getPersonDAO();
         Person editor = personCatalogue.getByUserName(username);
-        Logger.getAnonymousLogger().log(Level.INFO, "editor: " + editor);
+        if(editor != null) {
         
-        Article article = new Article(title, content);
-        articleCatalogue.add(addEditor(article, editor)); //projectId, 
+            Article article = new Article(title, content);
+            articleCatalogue.add(addEditor(article, editor)); //projectId, 
 
-        URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(article.getId())).build(article);
-        return Response.created(uri).build();
+            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(article.getId())).build(article);
+            return Response.created(uri).build();
+        } else {
+            return Response.notModified("Editor not a known user!").build();
+        }
     }
 
     @DELETE
