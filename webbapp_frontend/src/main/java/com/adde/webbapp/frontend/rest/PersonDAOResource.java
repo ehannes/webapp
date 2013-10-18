@@ -34,6 +34,21 @@ public class PersonDAOResource {
         return Response.ok(toPersonProxy(persons)).build();
     }
     
+    @GET
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Path("{id}")
+    public Response find(@PathParam("id") long id) {
+        Person person = personDAO.find(id);
+                GenericEntity<PersonProxy> ge = new GenericEntity<PersonProxy>(new PersonProxy(person)) {
+        };
+           
+        if (person != null) {
+            return Response.ok(ge).build();
+        } else {
+            return Response.noContent().build();
+        }
+    }
+    
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(@FormParam("username") String name,
@@ -50,7 +65,39 @@ public class PersonDAOResource {
         }
     }
     
+    @DELETE
+    @Path("{id}")
+    public Response remove(@PathParam("id") long id) {
+        try {
+            personDAO.remove(id);
+            return Response.ok().build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
     
+    @PUT
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response update(@FormParam("username") String name,
+            @FormParam("email") String email,
+            @FormParam("password") String password) {
+        try {
+            Person updatedPerson = new Person(name, email, password);
+            personDAO.update(updatedPerson);
+            return Response.ok(new PersonProxy(updatedPerson)).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    @GET
+    @Path("count")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response getCount() {
+        return Response.ok(new PrimitiveJSONWrapper(personDAO.getCount())).build();
+    }
     
     private GenericEntity<List<PersonProxy>> toPersonProxy(List<Person> persons) {
         List<PersonProxy> personProxies = new ArrayList<>();
