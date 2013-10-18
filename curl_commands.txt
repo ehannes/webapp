@@ -1,14 +1,14 @@
 # Test get all
-curl -v http://localhost:8080/webbapp_frontend/rs/person/
+curl -v http://localhost:8080/webbapp_frontend/rs/persons/
 
 # Test GET
-curl -v http://localhost:8080/webbapp_frontend/rs/person/{id}
+curl -v http://localhost:8080/webbapp_frontend/rs/persons/{id}
 
 # Test POST
-curl --data "username=user&email=user@user.com&password=sDeTE35!" http://localhost:8080/webbapp_frontend/rs/person/
+curl --data "username=user&email=user@user.com&password=sDeTE35!"
+http://localhost:8080/webbapp_frontend/rs/persons/
 
 # Test DELETE
-curl -v -X DELETE http://localhost:8080/webbapp_frontend/rs/person/{id}
+curl -v -X DELETE http://localhost:8080/webbapp_frontend/rs/persons/{id}
 
 # Test PUT
-
