@@ -7,6 +7,7 @@ package com.adde.webbapp.frontend.rest;
 import com.adde.webbapp.model.dao.DAOFactory;
 import com.adde.webbapp.model.dao.WallPostCatalogue;
 import com.adde.webbapp.model.entity.Person;
+import com.adde.webbapp.model.entity.Project;
 import com.adde.webbapp.model.entity.WallPost;
 import java.net.URI;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Joakim
  */
-@Path("wallposts")
+@Path("projects/{projectId}/wallposts")
 public class WallPostCatalogueResource {
 
     private final WallPostCatalogue wallPostCatalogue = DAOFactory.getDAOFactory().getWallPostDAO();
@@ -41,9 +42,26 @@ public class WallPostCatalogueResource {
     @Context
     HttpServletRequest request;
 
+//    private boolean allowed(Long projectId) {
+//        HttpSession session = request.getSession(true);
+//        Object objPerson = session.getAttribute("person");
+//        if (objPerson != null) {
+//            Person person = (Person) objPerson;
+//            Project project = DAOFactory.getDAOFactory().getProjectDAO().find(projectId);
+//            if (project.getAdmin().equals(objPerson) || project.getCollaborators().contains(person)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response get() {
+//        public Response get(@PathParam("projectId") Long projectId) {
+//        if (!allowed(projectId)) {
+//            return Response.status(Response.Status.FORBIDDEN).build();
+//        }
+    public Response get(){
         List<WallPost> wallPosts = wallPostCatalogue.getAll();
         return Response.ok(toWallPostProxy(wallPosts)).build();
     }
