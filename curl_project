@@ -1,0 +1,17 @@
+Post:
+curl --data "name=testProject" http://localhost:8080/webbapp_frontend/rs/projects/
+
+Put:
+curl -v -X PUT -d "name=updatedName" http://localhost:8080/webbapp_frontend/rs/projects/{id}
+
+Get all:
+curl -v http://localhost:8080/webbapp_frontend/rs/projects
+
+Get single:
+curl -v http://localhost:8080/webbapp_frontend/rs/projects/{id}
+
+Get count:
+curl -v http://localhost:8080/webbapp_frontend/rs/projects/count
+
+Delete:
+curl -v -X DELETE http://localhost:8080/webbapp_frontend/rs/projects/{id}
