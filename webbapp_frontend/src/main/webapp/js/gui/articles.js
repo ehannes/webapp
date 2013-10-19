@@ -17,6 +17,15 @@ $(function() {
     function fail() {
         createErrorDialog("Can't list!!").dialog("open")
     }
+    
+    $("#btnArticles")
+            .button()
+            .click(function() {
+        nav.next(createTable, fail);
+        function fail() {
+            createErrorDialog("Can't list!!").dialog("open")
+        }
+    });
         
     $("#next-button")
             .button()
