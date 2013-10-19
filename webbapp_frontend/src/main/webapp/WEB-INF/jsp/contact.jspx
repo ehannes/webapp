@@ -31,7 +31,7 @@
                 <jsp:directive.include file="header.jspx" />
                 <div class="jumbotron">
                     <h1>Contact</h1>
-                    <p class="lead">Please feel free to contact us at info@addeinc.com</p>
+                    <p class="lead">Please don't contact us.</p>
                 </div>
             </div>
         </body>

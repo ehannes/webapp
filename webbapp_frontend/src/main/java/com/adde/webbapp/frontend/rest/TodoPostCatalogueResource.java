@@ -5,6 +5,7 @@
 package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.DAOFactory;
+import com.adde.webbapp.model.dao.ProjectCatalogue;
 import com.adde.webbapp.model.dao.TodoPostCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.Project;
@@ -13,8 +14,9 @@ import java.net.URI;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -36,20 +38,39 @@ public class TodoPostCatalogueResource {
 
     private final TodoPostCatalogue todoPostCatalogue =
             DAOFactory.getDAOFactory().getTodoPostCatalogue();
+    private final ProjectCatalogue projectCatalogue =
+            DAOFactory.getDAOFactory().getProjectCatalogue();
     @Context
     private UriInfo uriInfo;
     @Context
     private HttpServletRequest request;
 
     private boolean allowed(Long projectId) {
-        return true;
-//        HttpSession session = request.getSession(true);
-//        Person person = (Person) session.getAttribute("person");
-//        Project project = DAOFactory.getDAOFactory().getProjectCatalogue().find(projectId);
-//        return project != null && (person.equals(project.getAdmin())
-//                || project.getCollaborators().contains(person));
+        return projectId == 1337;
+        
+        /*
+        HttpSession session = request.getSession(true);
+        Person person = getPerson();
+        Project project = projectCatalogue.find(projectId);
+        return project != null && (person.equals(project.getAdmin())
+                || project.getCollaborators().contains(person));
+        */
     }
 
+    private Person getPerson(){
+        Logger.getAnonymousLogger().log(Level.INFO, "TodoPostResource: Looking for Person gustav...");
+        Person p = (Person) DAOFactory.getDAOFactory().getPersonCatalogue().getByUserName("gustav");
+        if(p == null){
+            Logger.getAnonymousLogger().log(Level.INFO, "TodoPostResource: Creating person gustav");
+            p = new Person("gustav", "gustav@adde.com", "adde");
+            DAOFactory.getDAOFactory().getPersonCatalogue().add(p);
+        } else{
+            Logger.getAnonymousLogger().log(Level.INFO, "TodoPostResource: Person gustav found.");
+        }
+        return p;
+        //return (Person) request.getSession().getAttribute("person");
+    }
+    
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(
@@ -59,7 +80,7 @@ public class TodoPostCatalogueResource {
         if (!allowed(projectId)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        Person author = (Person) request.getSession().getAttribute("person");
+        Person author = getPerson();
         TodoPost todoPost = new TodoPost(author, msg);
         todoPostCatalogue.add(todoPost);
 
@@ -69,7 +90,7 @@ public class TodoPostCatalogueResource {
     }
 
     @GET
-    @Path("/all")
+    @Path("all")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getAll(@PathParam("projectId") Long projectId) {
 
@@ -96,14 +117,14 @@ public class TodoPostCatalogueResource {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        if (first < 0) {
+        if (first < 0 || nItems < 0) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         } else if (first >= todoPostCatalogue.getCount()) {
             return Response.noContent().build();
         }
 
         List<TodoPostProxy> result = new LinkedList<>();
-        nItems = Math.min(first + nItems - 1, todoPostCatalogue.getCount());
+        nItems = Math.min(first + nItems, todoPostCatalogue.getCount());
         for (TodoPost p : todoPostCatalogue.getRange(first, nItems)) {
             result.add(new TodoPostProxy(p));
         }
@@ -147,8 +168,8 @@ public class TodoPostCatalogueResource {
             @PathParam("projectId") Long projectId,
             @PathParam("id") long id) {
 
-        Person person = (Person) request.getSession().getAttribute("person");
-        Project project = DAOFactory.getDAOFactory().getProjectCatalogue().find(projectId);
+        Person person = getPerson();
+        Project project = projectCatalogue.find(projectId);
         TodoPost todoPost = todoPostCatalogue.find(id);
 
         if (!allowed(projectId) || !project.getTodoPosts().contains(todoPost)
@@ -158,7 +179,7 @@ public class TodoPostCatalogueResource {
 
         //remove from project
         project.getTodoPosts().remove(todoPost);
-        DAOFactory.getDAOFactory().getProjectCatalogue().update(project);
+        projectCatalogue.update(project);
 
         todoPostCatalogue.remove(todoPost.getId());
         return Response.ok().build();
@@ -184,7 +205,7 @@ public class TodoPostCatalogueResource {
 
         TodoPost old = todoPostCatalogue.find(id);
         TodoPost todoPost;
-        Person person = (Person) request.getSession().getAttribute("person");
+        Person person = getPerson();
         GregorianCalendar deadline = new GregorianCalendar(year, month, day, hour, minute);
         
         if (old == null) {
@@ -192,9 +213,9 @@ public class TodoPostCatalogueResource {
             todoPost.setDeadline(deadline);
             todoPostCatalogue.update(todoPost);
             //add to project
-            Project project = DAOFactory.getDAOFactory().getProjectCatalogue().find(projectId);
+            Project project = projectCatalogue.find(projectId);
             project.getTodoPosts().add(todoPost);
-            DAOFactory.getDAOFactory().getProjectCatalogue().update(project);
+            projectCatalogue.update(project);
         } else {
             if(!old.getAuthor().equals(person)){
                 return Response.status(Response.Status.UNAUTHORIZED).build();

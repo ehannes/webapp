@@ -15,6 +15,8 @@ import com.adde.webbapp.model.entity.WallPost;
 import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -47,9 +49,9 @@ public class PostCatalogueResource {
     private HttpServletRequest request;
 
     private boolean allowed(Long projectId) {
-        return true;
+        return projectId==1337;
 //        HttpSession session = request.getSession(true);
-//        Person person = (Person) session.getAttribute("person");
+//        Person person = getPerson();
 //        Project project = projectCatalogue.find(projectId);
 //        return project != null && (person.equals(project.getAdmin())
 //                || project.getCollaborators().contains(person));
@@ -58,11 +60,25 @@ public class PostCatalogueResource {
 
     //Does WallPost exist and does it belong to the project with id projectId?
     private boolean validWallPost(Long projectId, Long wallPostId) {
-        return true;
+        return wallPostCatalogue.find(wallPostId) != null;
 //        WallPost wp = wallPostCatalogue.find(wallPostId);
 //        Project project = projectCatalogue.find(projectId);
 //        return project != null && wp != null
 //                && project.getWallPosts().contains(wp);
+    }
+    
+    private Person getPerson(){
+        Logger.getAnonymousLogger().log(Level.INFO, "PostResource: Looking for Person gustav...");
+        Person p = (Person) DAOFactory.getDAOFactory().getPersonCatalogue().getByUserName("gustav");
+        if(p == null){
+            Logger.getAnonymousLogger().log(Level.INFO, "PostResource: Creating person gustav");
+            p = new Person("gustav", "gustav@adde.com", "adde");
+            DAOFactory.getDAOFactory().getPersonCatalogue().add(p);
+        } else{
+            Logger.getAnonymousLogger().log(Level.INFO, "PostResource: Person gustav found.");
+        }
+        return p;
+        //return (Person) request.getSession().getAttribute("person");
     }
 
     @POST
@@ -75,7 +91,7 @@ public class PostCatalogueResource {
         } else if (validWallPost(projectId, wallPostId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-        Person author = (Person) request.getSession().getAttribute("person");
+        Person author = getPerson();
         Post post = new Post(author, msg);
         postCatalogue.add(post);
 
@@ -187,7 +203,7 @@ public class PostCatalogueResource {
         }
         WallPost wp = wallPostCatalogue.find(wallPostId);
         Post post = postCatalogue.find(id);
-        Person person = (Person) request.getSession().getAttribute("person");
+        Person person = getPerson();
 
         if (post == null) {
             return Response.noContent().build();
@@ -220,7 +236,7 @@ public class PostCatalogueResource {
         }
         Post old = postCatalogue.find(id);
         Post post;
-        Person person = (Person) request.getSession().getAttribute("person");
+        Person person = getPerson();
         if (old == null) {
             post = new Post(person, msg);
             postCatalogue.update(post);
