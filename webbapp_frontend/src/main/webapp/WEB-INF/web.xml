@@ -24,6 +24,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletAdaptor</servlet-name>
-        <url-pattern>/rs/*</url-pattern>
+        <url-pattern>/content/rs/*</url-pattern>
     </servlet-mapping>
 </web-app>
