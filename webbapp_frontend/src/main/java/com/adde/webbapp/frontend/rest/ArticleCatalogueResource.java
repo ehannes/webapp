@@ -86,11 +86,15 @@ public class ArticleCatalogueResource {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response update(//@PathParam("projectId") long projectId,
         @PathParam("id") long id, @FormParam("title") String title,
-        @FormParam("content") double content, @FormParam("editor") String username) {
+        @FormParam("content") String content, @FormParam("editor") String username) {
         PersonCatalogue personCatalogue = daoFactory.getPersonCatalogue();
         Person editor = personCatalogue.getByUserName(username);
         
         Article oldArticle = articleCatalogue.find(id);
+        oldArticle.setTitle(title);
+        oldArticle.setContent(content);
+        
+        // fix
         if(oldArticle != null) {
             addEditor(oldArticle, editor);//projectId, 
             articleCatalogue.update(oldArticle);
@@ -114,7 +118,9 @@ public class ArticleCatalogueResource {
     @Path("range")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getRange(@QueryParam("first") int first, @QueryParam("nItems") int nItems) {
-        return Response.ok(articleCatalogue.getRange(first, nItems)).build();
+        List<Article> articles = articleCatalogue.getRange(first, nItems);
+        return Response.ok(toArticleProxy(articles)).build();
+        //return Response.ok(articleCatalogue.getRange(first, nItems)).build();
     }
 
     /* Fungerar för JSON, men inte XML. Vad ska vi wrappa int:en från getCount med? */
@@ -125,6 +131,7 @@ public class ArticleCatalogueResource {
         return Response.ok(new PrimitiveJSONWrapper<>(articleCatalogue.getCount())).build();
     }
     
+    // Why return Article?
     private Article addEditor(Article article, Person editor) { //long projectId, 
         ArticleEdit simpleEditorEntry = new ArticleEdit(editor);
         articleEditCatalogue.add(simpleEditorEntry);

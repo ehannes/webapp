@@ -18,7 +18,7 @@ import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 /**
  *
- * @author eric
+ * @author Eric Ahlberg (eahlberg@gmail.com)
  */
 @Path("persons")
 public class PersonCatalogueResource {
