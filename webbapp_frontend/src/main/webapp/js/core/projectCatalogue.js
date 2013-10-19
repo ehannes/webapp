@@ -17,9 +17,9 @@ ProjectCatalogue.prototype = (function(){
 //        getByName: function(name) {
 //            return $.getJSON(this.baseUri + "/byname/" + name);
 //        },
-//        getCount: function() {
-//            return $.getJSON(this.baseUri + "/count");
-//        },
+        getCount: function() {
+            return $.getJSON(this.baseUri + "/count");
+        },
         add: function(name) {
             return $.post(this.baseUri, {name: name});
         },
