@@ -39,9 +39,18 @@ public class PersonCatalogue extends AbstractDAO<Person, Long> {
             Query q = em.createQuery("select p from Person p where"
                 + " p.username = :username", Person.class).
                 setParameter("username", username);
-            return (Person) q.getSingleResult();
+            Object object = q.getSingleResult();
+            if(object instanceof Person) {
+                return (Person) object;
+            }
+            return null;
+            //return (Person) q.getSingleResult();
         } catch(NoResultException e){
             return null;
+        } finally{
+            if(em != null){
+                em.close();
+            }
         }
     }
     
