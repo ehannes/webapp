@@ -26,25 +26,12 @@ public class FrontController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
 
         String view = request.getParameter("view");
-        String action = request.getParameter("action");
 
         DAOFactoryWrapper daoFactoryWrapper = (DAOFactoryWrapper) request.getServletContext().getAttribute("DAOFACTORY");
-        PersonCatalogue personDAO = daoFactoryWrapper.getPersonDAO();
+        PersonCatalogue personCatalogue = daoFactoryWrapper.getPersonDAO();
         
-        out.println("view: " + view + "action: " + action);
-
-        if (action != null) {
-            switch (action) {
-                case "validate":
-                    request.getRequestDispatcher("WEB-INF/jsp/welcome.jspx").forward(request, response);
-                    break;
-                default:
-                    ;
-            }
-        }
         // Navigation
         if (view != null) {
             switch (view) {
@@ -72,12 +59,14 @@ public class FrontController extends HttpServlet {
                     request.setAttribute("password", password);
                     request.setAttribute("email",email);
                     if (username != null && password != null) {
-                        personDAO.add(new Person(username, email, password));
+                        personCatalogue.add(new Person(username, email, password));
                     }
-                    request.getRequestDispatcher("WEB-INF/jsp/rs/welcome.jspx").forward(request, response);
+                    //request.getRequestDispatcher("WEB-INF/jsp/rs/welcome.jspx").forward(request, response);
+                    response.sendRedirect("content/main.xhtml");
                     break;
                 case "logedin":
-                    request.getRequestDispatcher("WEB-INF/jsp/rs/welcome.jspx").forward(request, response);
+                    //request.getRequestDispatcher("WEB-INF/jsp/rs/welcome.jspx").forward(request, response);
+                    response.sendRedirect("content/main.xhtml");
                     break;
                 default:
                     ;

@@ -1,5 +1,0 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <button type="button" class="btn btn-default navbar-btn">My projects</button>
-    <button type="button" class="btn btn-default navbar-btn">My account</button>
-    <button type="button" class="btn btn-default navbar-btn">Log out</button>
-</nav>
