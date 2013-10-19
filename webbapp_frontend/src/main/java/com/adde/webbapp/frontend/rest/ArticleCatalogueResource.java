@@ -57,7 +57,6 @@ public class ArticleCatalogueResource {
         PersonCatalogue personCatalogue = daoFactory.getPersonCatalogue();
         Person editor = personCatalogue.getByUserName(username);
         if(editor != null) {
-        
             Article article = new Article(title, content);
             articleCatalogue.add(addEditor(article, editor)); //projectId,
 
@@ -91,16 +90,15 @@ public class ArticleCatalogueResource {
         Person editor = personCatalogue.getByUserName(username);
         
         Article oldArticle = articleCatalogue.find(id);
-        oldArticle.setTitle(title);
-        oldArticle.setContent(content);
         
-        // fix
         if(oldArticle != null) {
-            addEditor(oldArticle, editor);//projectId, 
-            articleCatalogue.update(oldArticle);
+            oldArticle.setTitle(title);
+            oldArticle.setContent(content);
+            articleCatalogue.update(addEditor(oldArticle, editor));
             return Response.ok(new ArticleProxy(oldArticle)).build();
+        } else {
+            return Response.noContent().build();
         }
-        return Response.noContent().build();
     }
 
     @GET
@@ -133,8 +131,9 @@ public class ArticleCatalogueResource {
     
     // Why return Article?
     private Article addEditor(Article article, Person editor) { //long projectId, 
-        ArticleEdit simpleEditorEntry = new ArticleEdit(editor);
-        articleEditCatalogue.add(simpleEditorEntry);
+        ArticleEdit articleEdit = new ArticleEdit(editor);
+        articleEditCatalogue.add(articleEdit);
+        article.getArticleEditions().add(articleEdit);
         
         //projectCatalogue.find(projectId).getArticles().add(article);
         
