@@ -5,6 +5,7 @@
 package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.DAOFactory;
+import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.dao.WallPostCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.Project;
@@ -23,6 +24,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -33,7 +35,8 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Joakim
  */
-@Path("projects/{projectId}/wallPosts")
+//@Path("projects/{projectId}/wallPosts")
+@Path("wallposts")
 public class WallPostCatalogueResource {
 
     private final WallPostCatalogue wallPostCatalogue = DAOFactory.getDAOFactory().getWallPostCatalogue();
@@ -84,9 +87,14 @@ public class WallPostCatalogueResource {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(@FormParam("msg") String msg) {
-        HttpSession session = request.getSession(true);
-        Person person = (Person) session.getAttribute("person");
-        WallPost w = new WallPost(person, msg);
+        //HttpSession session = request.getSession(true);
+        //Person person = (Person) session.getAttribute("person");
+        
+        Person tmpPerson = new Person("tmpPerson", "tmp@tmp.com", "tM3512");
+        PersonCatalogue personCatalogue = DAOFactory.getDAOFactory().getPersonCatalogue();
+        personCatalogue.add(tmpPerson);
+        WallPost w = new WallPost(tmpPerson, msg);
+        //WallPost w = new WallPost(person, msg);
         try {
             wallPostCatalogue.add(w);
 
@@ -123,12 +131,21 @@ public class WallPostCatalogueResource {
     }
 
     @GET
+    @Path("range")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response getRange(@QueryParam("first") int first,
+            @QueryParam("nItems") int nItems) {
+        List<WallPost> wallposts = wallPostCatalogue.getRange(first, nItems);
+        return Response.ok(toWallPostProxy(wallposts)).build();
+    }
+    
+    @GET
     @Path("count")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getCount() {
         return Response.ok(new PrimitiveJSONWrapper(wallPostCatalogue.getCount())).build();
     }
-
+    
     private GenericEntity<List<WallPostProxy>> toWallPostProxy(List<WallPost> wallPosts) {
         List<WallPostProxy> wallPostProxies = new ArrayList<>();
         for (WallPost w : wallPosts) {

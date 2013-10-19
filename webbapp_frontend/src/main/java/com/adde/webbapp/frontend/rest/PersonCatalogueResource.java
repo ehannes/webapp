@@ -102,6 +102,15 @@ public class PersonCatalogueResource {
         return Response.ok(new PrimitiveJSONWrapper(personDAO.getCount())).build();
     }
     
+    @GET
+    @Path("range")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response getRange(@QueryParam("first") int first,
+            @QueryParam("nItems") int nItems) {
+        List<Person> persons = personDAO.getRange(first, nItems);
+        return Response.ok(toPersonProxy(persons)).build();
+    }
+    
     private GenericEntity<List<PersonProxy>> toPersonProxy(List<Person> persons) {
         List<PersonProxy> personProxies = new ArrayList<>();
         for (Person p : persons) {
