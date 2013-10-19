@@ -1,0 +1,26 @@
+### curl commands for TodoPost ###
+
+# getAll()
+curl -v http://localhost:8080/webbapp_frontend/rs/projects/1337/todo/all/
+
+# add
+curl -v -X POST -d "msg=INSERT_MESSAGE_HERE" http://localhost:8080/webbapp_frontend/rs/projects/1337/todo/
+
+# find (get by id)
+curl -v http://localhost:8080/webbapp_frontend/rs/projects/1337/todo/{id}
+
+# get count
+curl -v http://localhost:8080/webbapp_frontend/rs/projects/1337/todo/count
+
+# get range(first, nItems)
+curl -v http://localhost:8080/webbapp_frontend/rs/projects/1337/todo?first=0&nItems=1
+
+# remove by id (requires being logged in as the author)
+curl -v -X DELETE http://localhost:8080/webbapp_frontend/rs/projects/1337/todo/{id}
+
+# update (requires being the author, or if the todopost doesn't exist yet,
+# requires the projectId belonging to an existing project!
+# params possible to include for update:
+# ints: year, month (0-11), day, hour, minute
+# string: msg (message)
+curl -v -X PUT -d "insert desired params here!" http://localhost:8080/webbapp_frontend/rs/projects/1337/todo/{id}
