@@ -90,7 +90,6 @@ public class TodoPostCatalogueResource {
     }
 
     @GET
-    @Path("all")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getAll(@PathParam("projectId") Long projectId) {
 
@@ -108,6 +107,7 @@ public class TodoPostCatalogueResource {
     }
 
     @GET
+    @Path("range")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getRange(@PathParam("projectId") Long projectId,
             @QueryParam("first") int first,
