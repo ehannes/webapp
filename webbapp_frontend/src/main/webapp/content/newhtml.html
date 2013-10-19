@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Will output HTML5 -->
+<jsp:root 
+    xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns="http://www.w3.org/1999/xhtml"
+    version="2.0">
+
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
+    <jsp:output omit-xml-declaration="true" />
+    <jsp:output doctype-root-element="HTML" 
+                doctype-system="about:legacy-compat" />
+    <html>
+        <head>
+            <title>Person test...</title> 
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+            <!--<link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
+            <link rel="stylesheet" type="text/css" href="resources/css/style.css" />-->
+            <script type="text/javascript" src="../js/core/productCatalogue.js"></script>
+            <script type="text/javascript" src="../js/core/shop.js"></script>
+            <script type="text/javascript" src="../js/core/navigator.js"></script>
+            <script type="text/javascript" src="../js/core/personCatalogue.js"></script>
+            <script type="text/javascript" src="../js/gui/person.js"></script> 
+            <script type="text/javascript" src="../js/gui/index.js"></script>
+
+            <!-- Bootstrap -->
+            <link href="resources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+
+            <!-- Custom styles for this template -->
+            <link href="resources/css/non-responsive.css" rel="stylesheet"/>
+
+            <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!--[if lt IE 9]>
+              <script src="../../assets/js/html5shiv.js"></script>
+              <script src="../../assets/js/respond.min.js"></script>
+            <![endif]-->
+        </head>
+        <body>
+            <div class="container">
+                <jsp:directive.include file="headerinside.jspx" />
+                Hello there!
+                <button id="list-persons">List products</button>
+                <button id="add-product">Add Product</button>
+                <button id="prev-button">Previous</button> 
+                <button id="next-button">Next</button>
+                <table id="persons" class="ui-widget ui-widget-content">
+                    <thead>
+                        <tr class="ui-widget-header ">
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            </div>
+        </body>
+    </html>
+</jsp:root>

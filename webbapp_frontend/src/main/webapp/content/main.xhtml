@@ -5,22 +5,19 @@
     <head>
         <title>Components</title>
         <script type="text/javascript" src="../resources/lib/jquery-1.7.1.min.js"/> 
-        <script type="text/javascript" src="../resources/lib/jquery-ui-1.10.2.custom.min.js"/>
-        <script type="text/javascript" src="../resources/components/components.js"/>
+        <script type="text/javascript" src="../resources//lib/jquery-ui-1.10.2.custom.min.js"/>
+        <script type="text/javascript" src="../js/components/components.js"/>
+        <link href="../resources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+        
         <!-- Must have for this theme -->
         <link rel="stylesheet" type="text/css" href="../resources/css/jquery-ui-1.10.2.custom.css" />
-        <!--<link rel="stylesheet" type="text/css" href="resources/css/normalize.css" />-->
     </head>
     <body>
-        <h1>Using JQuery UI Components </h1>
-        <button id="btnShow">Show dialog</button>
-        <div id="dialog-message" title="Set this in code" hidden="hidden">
-            <p>
-                <span class="ui-icon ui-icon-circle-check" 
-                      style="float: left; margin: 0 7px 50px 0;">
-                </span> 
-                <span id="msg">Set this in code </span>           
-            </p>
-        </div>  
+        
+        <nav class="navbar navbar-default navbar-fixed-top text-center" role="navigation">
+            <button type="button" id="btnArticles" class="btn btn-default navbar-btn">Articles</button>
+            <!--<button type="button" class="btn btn-default navbar-btn">My account</button>
+            <button type="button" class="btn btn-default navbar-btn">Log out</button>-->
+        </nav>
     </body>
 </html>
