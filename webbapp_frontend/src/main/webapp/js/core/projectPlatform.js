@@ -1,5 +1,5 @@
 /* 
- * The shop as a Singleton
+ * The projectPlatform as a Singleton
  */
 // Global
 var projectPlatform = (function() {
