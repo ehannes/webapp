@@ -13,6 +13,8 @@ import com.adde.webbapp.model.entity.WallPost;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
@@ -35,8 +37,8 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Joakim
  */
-//@Path("projects/{projectId}/wallPosts")
-@Path("wallposts")
+@Path("projects/{projectId}/wallposts")
+//@Path("wallposts")
 public class WallPostCatalogueResource {
 
     private final WallPostCatalogue wallPostCatalogue = DAOFactory.getDAOFactory().getWallPostCatalogue();
@@ -90,9 +92,27 @@ public class WallPostCatalogueResource {
         //HttpSession session = request.getSession(true);
         //Person person = (Person) session.getAttribute("person");
         
+        
+        
+        /*
+        
         Person tmpPerson = new Person("tmpPerson", "tmp@tmp.com", "tM3512");
         PersonCatalogue personCatalogue = DAOFactory.getDAOFactory().getPersonCatalogue();
         personCatalogue.add(tmpPerson);
+        
+        */
+        
+        Logger.getAnonymousLogger().log(Level.INFO, "WallPostResource: Looking for Person gustav...");
+        Person tmpPerson = (Person) DAOFactory.getDAOFactory().getPersonCatalogue().getByUserName("gustav");
+        if(tmpPerson == null){
+            Logger.getAnonymousLogger().log(Level.INFO, "WallPostResource: Creating person gustav");
+            tmpPerson = new Person("gustav", "gustav@adde.com", "adde");
+            DAOFactory.getDAOFactory().getPersonCatalogue().add(tmpPerson);
+        } else{
+            Logger.getAnonymousLogger().log(Level.INFO, "WallPostResource: Person gustav found.");
+        }
+        
+        
         WallPost w = new WallPost(tmpPerson, msg);
         //WallPost w = new WallPost(person, msg);
         try {
