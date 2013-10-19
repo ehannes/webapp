@@ -4,7 +4,7 @@
  */
 
 // This is neede to debug dynamically downloaded JS in Chrome
-//@ sourceURL=articles.js
+
 $(function() {
     
 
@@ -200,5 +200,5 @@ $(function() {
 
 });
 
-
+//@ sourceURL=articles.js
 

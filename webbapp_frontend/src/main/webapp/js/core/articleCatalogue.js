@@ -7,8 +7,9 @@ var ArticleCatalogue = function(baseUri) {
     this.baseUri = baseUri;
 };
 
-ArticleCatalogue.prototype = (function(){
-    
+
+ArticleCatalogue.prototype = (function() {
+
     return{
         get: function() {
             return $.getJSON(this.baseUri + "/");
@@ -17,11 +18,14 @@ ArticleCatalogue.prototype = (function(){
 //        getByName: function(name) {
 //            return $.getJSON(this.baseUri + "/byname/" + name);
 //        },
-//        getCount: function() {
-//            return $.getJSON(this.baseUri + "/count");
-//        },
+        getCount: function() {
+            return $.getJSON(this.baseUri + "/count");
+        },
         add: function(title, content, editor) {
             return $.post(this.baseUri, {title: title, content: content, editor: editor});
+        },
+        addEditor: function(article, editor) {
+            return $.post(this.baseUri, {article: article, editor: editor});
         },
         update: function(id, title, content, editor) {
             return $.ajax({
@@ -38,9 +42,9 @@ ArticleCatalogue.prototype = (function(){
         },
         find: function(id) {
             return $.getJSON(this.baseUri + "/" + id);
+        },
+        getRange: function(first, nItems) {
+            return $.getJSON(this.baseUri + "/range/", {first: first, nItems: nItems});
         }
-//        getRange: function(start, nItems) {
-//            return $.getJSON(this.baseUri + "/range/", {start: start, nItems: nItems});
-//        }
     };
 }());
