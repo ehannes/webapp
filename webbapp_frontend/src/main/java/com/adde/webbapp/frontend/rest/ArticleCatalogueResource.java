@@ -9,6 +9,8 @@ import com.adde.webbapp.model.entity.Article;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.ArticleEdit;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
@@ -22,6 +24,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -39,13 +42,14 @@ public class ArticleCatalogueResource {
     
     @Context
     private UriInfo uriInfo;
-    
+
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getAll() {
-        return Response.ok(articleCatalogue.getRange(0, articleCatalogue.getCount())).build();
+    public Response get() {
+        List<Article> articles = articleCatalogue.getAll();
+        return Response.ok(toArticleProxy(articles)).build();
     }
-
+    
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(/*@FormParam("projectId") long projectId,*/ @FormParam("title") String title, 
@@ -55,7 +59,7 @@ public class ArticleCatalogueResource {
         if(editor != null) {
         
             Article article = new Article(title, content);
-            articleCatalogue.add(addEditor(article, editor)); //projectId, 
+            articleCatalogue.add(addEditor(article, editor)); //projectId,
 
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(article.getId())).build(article);
             return Response.created(uri).build();
@@ -124,10 +128,17 @@ public class ArticleCatalogueResource {
     private Article addEditor(Article article, Person editor) { //long projectId, 
         ArticleEdit simpleEditorEntry = new ArticleEdit(editor);
         articleEditCatalogue.add(simpleEditorEntry);
-        article.getArticleEditions().add(simpleEditorEntry);
         
         //projectCatalogue.find(projectId).getArticles().add(article);
         
         return article;
+    }
+    
+       private GenericEntity<List<ArticleProxy>> toArticleProxy(List<Article> articles) {
+        List<ArticleProxy> articleProxies = new ArrayList<>();
+        for (Article a : articles) {
+            articleProxies.add(new ArticleProxy(a));
+        }
+        return new GenericEntity<List<ArticleProxy>>(articleProxies){};
     }
 }
