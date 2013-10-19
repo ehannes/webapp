@@ -10,7 +10,7 @@ WallPostCatalogue.prototype = (function(){
     
     return{
         get: function() {
-            return $.getJSON(this.baseUri + "/");
+            return $.getJSON(this.baseUri);
         },
 // dont know if we need yet                
 //        getByName: function(name) {

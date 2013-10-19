@@ -1,8 +1,3 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 var TodoPostCatalogue = function(baseUri) {
     this.baseUri = baseUri;
 };
@@ -10,7 +5,7 @@ var TodoPostCatalogue = function(baseUri) {
 TodoPostCatalogue.prototype = (function() {
 
     return{
-        getAll: function() {
+        get: function() {
             return $.getJSON(this.baseUri);
         },
         getCount: function() {
@@ -23,12 +18,11 @@ TodoPostCatalogue.prototype = (function() {
         add: function(name) {
             return $.post(this.baseUri, {name: name});
         },
-        update: function(id, msg, year, month, day, hour, minute) {
+        update: function(id, msg) {
             return $.ajax({
                 url: this.baseUri + "/" + id,
                 type: 'PUT',
-                data: {id: id, msg: msg, year: year, month: month,
-                        day: day, hour: hour, minute: minute}
+                data: {msg: msg}
             });
         },
         remove: function(id) {
