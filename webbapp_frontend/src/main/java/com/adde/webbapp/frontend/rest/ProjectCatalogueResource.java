@@ -5,6 +5,7 @@
 package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.DAOFactory;
+import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.dao.ProjectCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.Project;
@@ -27,6 +28,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.servlet.http.HttpServletRequest;
+
 /**
  *
  * @author Joakim
@@ -37,10 +39,9 @@ public class ProjectCatalogueResource {
     private final ProjectCatalogue projectCatalogue = DAOFactory.getDAOFactory().getProjectCatalogue();
     @Context
     private UriInfo uriInfo;
-
     @Context
     HttpServletRequest request;
-    
+
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response get() {
@@ -68,6 +69,9 @@ public class ProjectCatalogueResource {
     public Response add(@FormParam("name") String name) {
         HttpSession session = request.getSession(true);
         Person person = (Person) session.getAttribute("person");
+// OBS ENDAST PERSON FÖR TEST
+//        Person person = new Person("apan", "apansson", "banana");
+//        PersonCatalogue.newInstance().add(person);
         Project p = new Project(name, person);
         try {
             projectCatalogue.add(p);

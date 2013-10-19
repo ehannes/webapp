@@ -2,12 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-var PersonCatalogue = function(baseUri) {
+var WallPostCatalogue = function(baseUri) {
     this.baseUri = baseUri;
 };
 
-PersonCatalogue.prototype = (function(){
+WallPostCatalogue.prototype = (function(){
     
     return{
         get: function() {
@@ -20,14 +19,14 @@ PersonCatalogue.prototype = (function(){
         getCount: function() {
             return $.getJSON(this.baseUri + "/count");
         },
-        add: function(username, email, password) {
-            return $.post(this.baseUri, {username: username, email: email, password: password});
+        add: function(msg) {
+            return $.post(this.baseUri, {msg: msg});
         },
-        update: function(id, username, email, password) {
+        update: function(id, msg) {
             return $.ajax({
                 url: this.baseUri + "/" + id,
                 type: 'PUT',
-                data: {username: username, email: email, password: password}
+                data: {msg: msg}
             });
         },
         remove: function(id) {
@@ -44,3 +43,4 @@ PersonCatalogue.prototype = (function(){
 //        }
     };
 }());
+
