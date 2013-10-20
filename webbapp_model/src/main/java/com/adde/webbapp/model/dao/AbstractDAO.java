@@ -20,32 +20,31 @@ public abstract class AbstractDAO<T, K> {
     private EntityManagerFactory emf;
     private final Class<T> clazz;
     private final String PU = "webapp_pu";
-    
-    protected AbstractDAO (Class<T> clazz) {
+
+    protected AbstractDAO(Class<T> clazz) {
         this.clazz = clazz;
         emf = Persistence.createEntityManagerFactory(PU);
     }
-    
-    protected EntityManager getEntityManager(){
+
+    protected EntityManager getEntityManager() {
         EntityManager em = emf.createEntityManager();
         return em;
     }
-    
+
     public void add(T t) {
         EntityManager em = null;
-        try{
+        try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(t);
             em.getTransaction().commit();
-        } catch(Exception ex){
+        } catch (Exception ex) {
             Logger.getAnonymousLogger().log(Level.INFO, "Exception type: {0}", ex.getClass().getName());
             Logger.getAnonymousLogger().log(Level.INFO, "this is {0}, {1}, ", new Object[]{this.getClass().toString(), this.getClass().getCanonicalName(), this.getClass().getName()});
             Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.add : "
                     + ex.getMessage(), this.getClass().getName());
-            System.exit(1);
-        } finally{
-            if(em != null){
+        } finally {
+            if (em != null) {
                 em.close();
             }
         }
@@ -53,18 +52,17 @@ public abstract class AbstractDAO<T, K> {
 
     public void remove(K id) {
         EntityManager em = null;
-        try{
-        em = getEntityManager();
-        em.getTransaction().begin();
-        T t = em.getReference(clazz, id);
-        em.remove(t);
-        em.getTransaction().commit();
-        } catch(Exception e){
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            T t = em.getReference(clazz, id);
+            em.remove(t);
+            em.getTransaction().commit();
+        } catch (Exception e) {
             Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.remove...\n"
                     + e.getMessage(), this.getClass().getName());
-            System.exit(1);
-        } finally{
-            if(em != null){
+        } finally {
+            if (em != null) {
                 em.close();
             }
         }
@@ -73,17 +71,16 @@ public abstract class AbstractDAO<T, K> {
     public T update(T t) {
         EntityManager em = null;
         T tmp = null;
-        try{
+        try {
             em = getEntityManager();
             em.getTransaction().begin();
             tmp = em.merge(t);
             em.getTransaction().commit();
-        } catch(Exception e){
+        } catch (Exception e) {
             Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.update...\n"
                     + e.getMessage(), this.getClass().getName());
-            System.exit(1);
-        } finally{
-            if(em != null){
+        } finally {
+            if (em != null) {
                 em.close();
             }
         }
@@ -91,31 +88,45 @@ public abstract class AbstractDAO<T, K> {
     }
 
     public T find(K id) {
-        EntityManager em = getEntityManager();
-        T t = em.find(clazz, id);
+        EntityManager em = null;
+        T t = null;
+        try {
+            em = getEntityManager();
+            t = em.find(clazz, id);
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.getRange...\n"
+                    + e.getMessage(), this.getClass().getName());
+            e.printStackTrace();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
         return t;
     }
-    
-    public List<T> getAll(){
-        return getRange(0,getCount());
+
+    public List<T> getAll() {
+        return getRange(0, getCount());
     }
 
     public List<T> getRange(int first, int nItems) {
-        EntityManager em = getEntityManager();
+        EntityManager em = null;
         List<T> found = new ArrayList<>();
-        try{
+        try {
+            em = getEntityManager();
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(clazz));
             Query q = em.createQuery(cq);
             q.setFirstResult(first);
             q.setMaxResults(nItems);
             found.addAll(q.getResultList());
-        } catch(Exception e){
+        } catch (Exception e) {
             Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.getRange...\n"
                     + e.getMessage(), this.getClass().getName());
-            System.exit(1);
-        } finally{
-            em.close();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
         return found;
     }
@@ -123,19 +134,18 @@ public abstract class AbstractDAO<T, K> {
     public int getCount() {
         EntityManager em = null;
         int count = -1;
-        try{
+        try {
             em = getEntityManager();
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             Root<T> rt = cq.from(clazz);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
-            count = ((Long)q.getSingleResult()).intValue();
-        } catch(Exception e){
+            count = ((Long) q.getSingleResult()).intValue();
+        } catch (Exception e) {
             Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.getCount...\n"
                     + e.getMessage(), this.getClass().getName());
-            System.exit(1);
-        } finally{
-            if(em != null){
+        } finally {
+            if (em != null) {
                 em.close();
             }
         }
