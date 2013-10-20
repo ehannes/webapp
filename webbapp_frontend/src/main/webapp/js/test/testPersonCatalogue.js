@@ -5,9 +5,8 @@
 // Possible test with curl first 
 asyncTest("PersonCatalogue.count", function() {
     var deferred = projectPlatform.getPersonCatalogue().getCount();
-    alert(deferred);
     deferred.done(function(nPersons) {
-        ok(nPersons.value === 11, "Test passed");
+        ok(nPersons.value === 4, "Test passed");
         //ok( true, "Test passed");
         start();
     });
