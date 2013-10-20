@@ -65,7 +65,7 @@ $(function() {
     }
     function clearFormDialogData() {
         $("#dialog-form #title").val("");
-        $("#dialog-form #title").val("");
+        $("#dialog-form #content").val("");
     }
 });
 

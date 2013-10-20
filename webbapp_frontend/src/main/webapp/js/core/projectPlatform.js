@@ -12,7 +12,7 @@ var projectPlatform = (function() {
     var wallPosts = new WallPostCatalogue(baseUri + "wallposts");
     var todoPosts = new TodoPostCatalogue(baseUri + "todoposts");
     var posts = new PostCatalogue(baseUri + "posts");
-    //var articles = new ArticleCatalogue(baseUri + "articles");
+    var articles = new ArticleCatalogue(baseUri + "articles");
 
     return {
         getProjectCatalogue: function() {

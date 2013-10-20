@@ -9,10 +9,6 @@ ArticleCatalogue.prototype = (function() {
         get: function() {
             return $.getJSON(this.baseUri + "/");
         },
-// dont know if we need yet                
-//        getByName: function(name) {
-//            return $.getJSON(this.baseUri + "/byname/" + name);
-//        },
         getCount: function() {
             return $.getJSON(this.baseUri + "/count");
         },
