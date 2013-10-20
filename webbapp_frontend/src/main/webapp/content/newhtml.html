@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--Will output HTML5 -->
-    <html xmlns="http://www.w3.org/1999/xhtml">
+<jsp:root 
+    xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns="http://www.w3.org/1999/xhtml"
+    version="2.0">
+
+    <jsp:directive.page contentType="text/html" pageEncoding="UTF-8" />
+    <jsp:output omit-xml-declaration="true" />
+    <jsp:output doctype-root-element="HTML" 
+                doctype-system="about:legacy-compat" />
+    <html>
         <head>
             <title>Person test...</title> 
-            <!--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>-->
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
             <!--<link rel="stylesheet" type="text/css" href="resources/css/layout.css" />
             <link rel="stylesheet" type="text/css" href="resources/css/style.css" />-->
-            <!--<script type="text/javascript" src="../js/components/components.js"></script>-->
-            <script type="text/javascript" src="../resources/lib/jquery-1.9.1.js"></script>
-            <script type="text/javascript" src="../resources/lib/jquery-ui-1.10.2.custom.js"></script>
-            <script type="text/javascript" src="../js/core/articleCatalogue.js"></script>
-            <script type="text/javascript" src="../js/core/personCatalogue.js"></script>
-            <script type="text/javascript" src="../js/core/projectCatalogue.js"></script>
-            <script type="text/javascript" src="../js/core/postCatalogue.js"></script>
-            <script type="text/javascript" src="../js/core/todoPostCatalogue.js"></script>
-            <script type="text/javascript" src="../js/core/wallPostCatalogue.js"></script>
-            <script type="text/javascript" src="../js/core/projectPlatform.js"></script>
+            <script type="text/javascript" src="../js/core/productCatalogue.js"></script>
+            <script type="text/javascript" src="../js/core/shop.js"></script>
             <script type="text/javascript" src="../js/core/navigator.js"></script>
-            <script type="text/javascript" src="../js/gui/persons.js"></script> 
-            <script type="text/javascript" src="../js/gui/testScript.js"></script> 
+            <script type="text/javascript" src="../js/core/personCatalogue.js"></script>
+            <script type="text/javascript" src="../js/gui/person.js"></script> 
+            <script type="text/javascript" src="../js/gui/index.js"></script>
 
             <!-- Bootstrap -->
-            <link href="../resources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+            <link href="resources/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
 
             <!-- Custom styles for this template -->
-            <link href="../resources/css/non-responsive.css" rel="stylesheet"/>
+            <link href="resources/css/non-responsive.css" rel="stylesheet"/>
 
             <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!--[if lt IE 9]>
@@ -36,12 +39,12 @@
         </head>
         <body>
             <div class="container">
+                <jsp:directive.include file="headerinside.jspx" />
                 Hello there!
                 <button id="list-persons">List products</button>
                 <button id="add-product">Add Product</button>
                 <button id="prev-button">Previous</button> 
                 <button id="next-button">Next</button>
-                <div id="teebody">Text hereasdfasdf!</div>
                 <table id="persons" class="ui-widget ui-widget-content">
                     <thead>
                         <tr class="ui-widget-header ">
@@ -57,3 +60,4 @@
             </div>
         </body>
     </html>
+</jsp:root>
