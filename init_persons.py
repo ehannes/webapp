@@ -1,7 +1,7 @@
 import os
 
 # Testing the Person resource
-base_url = 'http://localhost:8080/webbapp_frontend/rs/'
+base_url = 'http://localhost:8080/webbapp_frontend/content/rs/'
 resource = 'persons'
 LIMIT = 10
 
