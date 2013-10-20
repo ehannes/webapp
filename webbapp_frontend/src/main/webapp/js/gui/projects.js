@@ -3,20 +3,19 @@ $(function() {
 
     var pc = projectPlatform.getPersonCatalogue();
     
-    $("#showPersons")
+    $("#showProjects")
             .button()
             .click(function() {
         var deferred = pc.get();
         
-        deferred.done(function(persons) {
-            $.each(persons.Person, function(index, p) {
+        deferred.done(function(projects) {
+            $.each(projects.Project, function(index, p) {
                 console.log(p);
                 $("#data").append("<p>" + "date created: " + p.dateCreated + 
-                        " id: " + p.id + " <br/>email: " + p.email + 
-                        " username: " + p.username + " password: " + p.password +
-                        "</p>");
+                        " id: " + p.id + " <br/>name: " + p.name + 
+                         " admin: " + p.admin + "</p>");
             });
-            console.log(persons);
+            console.log(projects);
         });
         deferred.fail(function() {
             console.log("fail");
@@ -25,4 +24,4 @@ $(function() {
 
 });
 
-//@ sourceURL=persons.js
+//@ sourceURL=projects.js
