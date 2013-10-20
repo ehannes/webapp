@@ -7,10 +7,10 @@ var projectPlatform = (function() {
     var baseUri = "http://localhost:8080/webbapp_frontend/content/rs/";
     
     //don't know if it is right locations
-    var projects = new ProjectCatalogue(baseUri + "projects");
-    var wallPosts = new WallPostCatalogue(baseUri + "wallPosts");
     var persons = new PersonCatalogue(baseUri + "persons");
-    var todoPosts = new TodoPostCatalogue(baseUri + "todoPosts");
+    var projects = new ProjectCatalogue(baseUri + "projects");
+    var wallPosts = new WallPostCatalogue(baseUri + "wallposts");
+    var todoPosts = new TodoPostCatalogue(baseUri + "todoposts");
     var posts = new PostCatalogue(baseUri + "posts");
     //var articles = new ArticleCatalogue(baseUri + "articles");
 
