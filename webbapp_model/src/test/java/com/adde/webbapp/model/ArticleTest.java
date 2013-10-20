@@ -18,9 +18,9 @@ import org.junit.Test;
 
 public class ArticleTest {
     DAOFactory daoFactory;
-    PersonCatalogue personDAO;
-    ArticleCatalogue articleDAO;
-    ArticleEditCatalogue seeDAO;
+    PersonCatalogue personCatalogue;
+    ArticleCatalogue articleCatalogue;
+    ArticleEditCatalogue articleEditCatalogue;
     Article article1, article2;
     Person person1, person2;
     
@@ -28,85 +28,85 @@ public class ArticleTest {
     public void before() {
         Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- Before test!");
         daoFactory = DAOFactory.getDAOFactory();
-        personDAO = daoFactory.getPersonCatalogue();
-        articleDAO = daoFactory.getArticleCatalogue();
-        seeDAO = daoFactory.getArticleEditCatalogue();
+        personCatalogue = daoFactory.getPersonCatalogue();
+        articleCatalogue = daoFactory.getArticleCatalogue();
+        articleEditCatalogue = daoFactory.getArticleEditCatalogue();
         person1 = new Person("person1", "email1", "pass1");
-        personDAO.add(person1);
+        personCatalogue.add(person1);
         person2 = new Person("person2", "email2", "pass1");
-        personDAO.add(person2);
+        personCatalogue.add(person2);
 
         article1 = new Article("title1", "content1");
         article2 = new Article("title2", "content2");
         
         //Check
-        assertTrue(personDAO.getAll().size() == 2);
-        assertTrue(articleDAO.getAll().isEmpty());
+        assertTrue(personCatalogue.getAll().size() == 2);
+        assertTrue(articleCatalogue.getAll().isEmpty());
     }
     
     @After
     public void after() {
-        personDAO.remove(person1.getId());
-        personDAO.remove(person2.getId());
-        assertTrue(personDAO.getAll().isEmpty());
+        personCatalogue.remove(person1.getId());
+        personCatalogue.remove(person2.getId());
+        assertTrue(personCatalogue.getAll().isEmpty());
         Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- After test!");
     }
     
     @Test
     public void addAndAuthorContent() {
         Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- addAndAuthorContent!");
-        articleDAO.add(article1);
-        Article articleFromDB = articleDAO.find(article1.getId());
+        articleCatalogue.add(article1);
+        Article articleFromDB = articleCatalogue.find(article1.getId());
         Logger.getAnonymousLogger().log(Level.INFO, "Article1:{0}", articleFromDB.toString());
         
         //Correct Content?
         assertTrue(articleFromDB.getContent().equals("content1"));
         
         //Clean
-        articleDAO.remove(articleFromDB.getId());
-        assertTrue(articleDAO.getAll().isEmpty());
+        articleCatalogue.remove(articleFromDB.getId());
+        assertTrue(articleCatalogue.getAll().isEmpty());
     }
     
     @Test
     public void testUpdatedEditorsAndFind() {
         Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- testUpdatedEditorsAndFind!");
-        articleDAO.add(article1);
+        articleCatalogue.add(article1);
         
         //New Editor
-        Article articleFromDB = articleDAO.find(article1.getId());
+        Article articleFromDB = articleCatalogue.find(article1.getId());
         articleFromDB.setContent("updatedContent1");
         articleFromDB.setTitle("updatedTitle1");
         //Persist new ArticleEdit
         ArticleEdit see = new ArticleEdit(person2);
-        seeDAO.add(see);
+        articleEditCatalogue.add(see);
         //Add New ArticleEdit to Article
         List<ArticleEdit> editorEntry = articleFromDB.getArticleEditions();
         editorEntry.add(see);
         
-        articleDAO.update(articleFromDB);
+        articleCatalogue.update(articleFromDB);
         
         // Check if the updated content is correct
-        articleFromDB = articleDAO.find(article1.getId());
+        articleFromDB = articleCatalogue.find(article1.getId());
         assertTrue(articleFromDB.getTitle().equals("updatedTitle1"));
         assertTrue(articleFromDB.getContent().equals("updatedContent1"));
         
         // Check if the user has been added to the editors
-        articleDAO.update(articleFromDB);
-        articleFromDB = articleDAO.find(article1.getId());
+        articleCatalogue.update(articleFromDB);
+        articleFromDB = articleCatalogue.find(article1.getId());
         List<ArticleEdit> editorEntries = articleFromDB.getArticleEditions();
         assertTrue(editorEntries.size() == 1);
         assertTrue(editorEntries.get(0).getEditor().equals(person2));
         
         //getLatestEntry not working yet...
         /*Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- Before getLastEntry.................");
-        List<SimpleEditorEntry> simpleEditorEntry = articleDAO.getLatestEntry(article1);
+        List<SimpleEditorEntry> simpleEditorEntry = articleCatalogue.getLatestEntry(article1);
         Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- After getLastEntry.................");
         assertTrue(simpleEditorEntry != null);
         assertTrue(simpleEditorEntry.get(0).getEditor().equals(person2));*/
 
         //Clean
-        articleDAO.remove(article1.getId());
-        assertTrue(articleDAO.getAll().isEmpty());
+        articleCatalogue.remove(article1.getId());
+        assertTrue(articleCatalogue.getAll().isEmpty());
         Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- End testUpdatedEditorsAndFind!");
     }
     
@@ -114,13 +114,13 @@ public class ArticleTest {
     @Test
     public void printArticle() {
         Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- printArticle!");
-        articleDAO.add(article1);
-        Article articleFromDB = articleDAO.find(article1.getId());
+        articleCatalogue.add(article1);
+        Article articleFromDB = articleCatalogue.find(article1.getId());
         System.out.println(articleFromDB.toString());
         
         //Clean
-        articleDAO.remove(article1.getId());
-        assertTrue(articleDAO.getAll().isEmpty());
+        articleCatalogue.remove(article1.getId());
+        assertTrue(articleCatalogue.getAll().isEmpty());
         Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- End printArticle!");
     }
 }

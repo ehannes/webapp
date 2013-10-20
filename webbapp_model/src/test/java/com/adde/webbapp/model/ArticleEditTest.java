@@ -19,7 +19,7 @@ import org.junit.Test;
  */
 public class ArticleEditTest {
     DAOFactory daoFactory;
-    ArticleEdit see;
+    ArticleEdit articleEdit;
     ArrayList<String> nameList;
     ArrayList<Person> editorList;
     final int NR_OF_EDITORS = 20;
@@ -58,29 +58,29 @@ public class ArticleEditTest {
     
     @Test
     public void entryFunctions() {
-        see = new ArticleEdit(editorList.get(0));
-        daoFactory.getArticleEditCatalogue().add(see);
+        articleEdit = new ArticleEdit(editorList.get(0));
+        daoFactory.getArticleEditCatalogue().add(articleEdit);
         
         //Fetch from DB
-        ArticleEdit seeFromDB = daoFactory.getArticleEditCatalogue().find(see.getId());
-        long id = seeFromDB.getId();
-        assertTrue(seeFromDB.getEditor().equals(editorList.get(0)));
+        ArticleEdit articleEditFromDB = daoFactory.getArticleEditCatalogue().find(articleEdit.getId());
+        long id = articleEditFromDB.getId();
+        assertTrue(articleEditFromDB.getEditor().equals(editorList.get(0)));
         
         //Equality
-        assertTrue(seeFromDB.equals(see));
+        assertTrue(articleEditFromDB.equals(articleEdit));
         
         //Change editor, update and check if editor still changed
-        seeFromDB.setEditor(editorList.get(1));
-        daoFactory.getArticleEditCatalogue().update(seeFromDB);
-        seeFromDB = daoFactory.getArticleEditCatalogue().find(id);
-        assertFalse(seeFromDB.getEditor().equals(editorList.get(0)));
+        articleEditFromDB.setEditor(editorList.get(1));
+        daoFactory.getArticleEditCatalogue().update(articleEditFromDB);
+        articleEditFromDB = daoFactory.getArticleEditCatalogue().find(id);
+        assertFalse(articleEditFromDB.getEditor().equals(editorList.get(0)));
         
-        //Date rounds to day. Will not see any difference in time here...
-        Logger.getAnonymousLogger().log(Level.INFO, "Modified: {0}", see.getEditTime());
-        seeFromDB.setEditTime(new GregorianCalendar());
-        daoFactory.getArticleEditCatalogue().update(seeFromDB);
+        //Date rounds to day. Will not articleEdit any difference in time here...
+        Logger.getAnonymousLogger().log(Level.INFO, "Modified: {0}", articleEdit.getEditTime());
+        articleEditFromDB.setEditTime(new GregorianCalendar());
+        daoFactory.getArticleEditCatalogue().update(articleEditFromDB);
         daoFactory.getArticleEditCatalogue().find(id);
-        Logger.getAnonymousLogger().log(Level.INFO, "Modified: {0}", see.getEditTime());
+        Logger.getAnonymousLogger().log(Level.INFO, "Modified: {0}", articleEdit.getEditTime());
         
         //Clean
         daoFactory.getArticleEditCatalogue().remove(id);
@@ -89,19 +89,19 @@ public class ArticleEditTest {
     @Test
     public void simplePersist() {
         //Add 1
-        see = new ArticleEdit(editorList.get(0));
-        daoFactory.getArticleEditCatalogue().add(see);
+        articleEdit = new ArticleEdit(editorList.get(0));
+        daoFactory.getArticleEditCatalogue().add(articleEdit);
         
         //Find
-        ArticleEdit seeFromDatabase = daoFactory.getArticleEditCatalogue().find(see.getId());
-        assertTrue(seeFromDatabase.equals(see));
+        ArticleEdit seeFromDatabase = daoFactory.getArticleEditCatalogue().find(articleEdit.getId());
+        assertTrue(seeFromDatabase.equals(articleEdit));
         
         //GetAll
         List<ArticleEdit> seeList = daoFactory.getArticleEditCatalogue().getAll();
         assertTrue(seeList.size() == 1);
         
         //Remove
-        daoFactory.getArticleEditCatalogue().remove(see.getId());
+        daoFactory.getArticleEditCatalogue().remove(articleEdit.getId());
         assertTrue(daoFactory.getArticleEditCatalogue().getAll().isEmpty());
     }
     
