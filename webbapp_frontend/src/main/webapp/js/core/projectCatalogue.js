@@ -34,8 +34,8 @@ ProjectCatalogue.prototype = (function(){
         find: function(id) {
             return $.getJSON(this.baseUri + "/" + id);
         }
-//        getRange: function(start, nItems) {
-//            return $.getJSON(this.baseUri + "/range/", {start: start, nItems: nItems});
-//        }
+        getRange: function(start, nItems) {
+            return $.getJSON(this.baseUri + "/range/", {start: start, nItems: nItems});
+        }
     };
 }());

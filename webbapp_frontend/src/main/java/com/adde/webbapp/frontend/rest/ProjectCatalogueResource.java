@@ -28,6 +28,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.QueryParam;
 
 /**
  *
@@ -113,6 +114,15 @@ public class ProjectCatalogueResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getCount() {
         return Response.ok(new PrimitiveJSONWrapper(projectCatalogue.getCount())).build();
+    }
+
+    @GET
+    @Path("range")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Response getRange(@QueryParam("first") int first,
+            @QueryParam("nItems") int nItems) {
+        List<Project> projects = projectCatalogue.getRange(first, nItems);
+        return Response.ok(toProjectProxy(projects)).build();
     }
 
     private GenericEntity<List<ProjectProxy>> toProjectProxy(List<Project> projects) {
