@@ -58,7 +58,7 @@ public class TodoPostProxy {
     }
     
     @XmlElement (required = true)
-    public TodoPost.Priority getMsgs() {
+    public TodoPost.Priority getPriority() {
         return todoPost.getPriority();
     }
     

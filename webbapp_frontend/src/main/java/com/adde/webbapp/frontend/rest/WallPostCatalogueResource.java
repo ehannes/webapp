@@ -37,8 +37,8 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author Joakim
  */
-@Path("projects/{projectId}/wallposts")
-//@Path("wallposts")
+//@Path("projects/{projectId}/wallposts")
+@Path("wallposts")
 public class WallPostCatalogueResource {
 
     private final WallPostCatalogue wallPostCatalogue = DAOFactory.getDAOFactory().getWallPostCatalogue();

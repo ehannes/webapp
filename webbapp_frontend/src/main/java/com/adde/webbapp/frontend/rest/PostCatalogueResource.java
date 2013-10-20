@@ -35,7 +35,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-@Path("projects/{projectId}/wallposts/{wallPostId}/posts")
+//@Path("projects/{projectId}/wallposts/{wallPostId}/posts")
+@Path("posts")
 public class PostCatalogueResource {
 
     private final PostCatalogue postCatalogue = DAOFactory.getDAOFactory().getPostCatalogue();
@@ -85,22 +86,28 @@ public class PostCatalogueResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public Response add(@PathParam("projectId") Long projectId,
+    public Response add(/*@PathParam("projectId") Long projectId,*/
             @PathParam("wallPostId") Long wallPostId,
             @FormParam("msg") String msg) {
+        
+        /*
         if (!allowed(projectId)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } else if (!validWallPost(projectId, wallPostId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+        */
+        
         Person author = getPerson();
         Post post = new Post(author, msg);
         postCatalogue.add(post);
 
+        /*
         //add post (comment) to wall post!
         WallPost wp = wallPostCatalogue.find(wallPostId);
         wp.getComments().add(post);
         wallPostCatalogue.update(wp);
+        */
 
         // Tell client where new resource is (URI to)
         URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(post.getId())).build(post);
@@ -109,18 +116,25 @@ public class PostCatalogueResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getAll(@PathParam("projectId") Long projectId,
-            @PathParam("wallPostId") Long wallPostId) {
+    public Response getAll(/*@PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId*/) {
+        /*
         if (!allowed(projectId)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } else if (!validWallPost(projectId, wallPostId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+        */
+        
         List<PostProxy> result = new LinkedList<>();
-        WallPost wp = wallPostCatalogue.find(wallPostId);
-        for (Post p : wp.getComments()) {
+        
+        
+        //WallPost wp = wallPostCatalogue.find(wallPostId);
+        //for (Post p : wp.getComments()) {
+        for(Post p : postCatalogue.getAll()){
             result.add(new PostProxy(p));
         }
+        
         GenericEntity ge = new GenericEntity<List<PostProxy>>(result) {
         };
         return Response.ok(ge).build();
@@ -130,17 +144,20 @@ public class PostCatalogueResource {
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getRange(
-            @PathParam("projectId") Long projectId,
-            @PathParam("wallPostId") Long wallPostId,
+            /*@PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId,*/
             @QueryParam("first") int first, @QueryParam("nItems") int nItems) {
 
+        /*
         if (!allowed(projectId)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } else if (!validWallPost(projectId, wallPostId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+        */
         
-        List<Post> comments = wallPostCatalogue.find(wallPostId).getComments();
+        //List<Post> comments = wallPostCatalogue.find(wallPostId).getComments();
+        List<Post> comments = postCatalogue.getAll();
         
         if (first < 0) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -161,16 +178,18 @@ public class PostCatalogueResource {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response find(
-            @PathParam("projectId") Long projectId,
-            @PathParam("wallPostId") Long wallPostId,
+            /*@PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId,*/
             @PathParam("id") long id) {
 
+        /*
         if (!allowed(projectId)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } else if (!validWallPost(projectId, wallPostId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
-
+        */
+        
         Post post = postCatalogue.find(id);
         if (post == null) {
             return Response.noContent().build();
@@ -182,15 +201,19 @@ public class PostCatalogueResource {
     @Path("count")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getCount(
-            @PathParam("projectId") Long projectId,
-            @PathParam("wallPostId") Long wallPostId) {
+            /*@PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId*/) {
 
+        /*
         if (!allowed(projectId)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } else if (!validWallPost(projectId, wallPostId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         int nrOfComments = wallPostCatalogue.find(wallPostId).getComments().size();
+        */
+        
+        int nrOfComments = postCatalogue.getCount();
         return Response.ok(new PrimitiveJSONWrapper<>(nrOfComments)).build();
     }
 
@@ -198,31 +221,36 @@ public class PostCatalogueResource {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response remove(
-            @PathParam("projectId") Long projectId,
-            @PathParam("wallPostId") Long wallPostId,
+            /*@PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId,*/
             @PathParam("id") long id) {
 
+        /*
         if (!allowed(projectId)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } else if (!validWallPost(projectId, wallPostId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         WallPost wp = wallPostCatalogue.find(wallPostId);
+        */
+        
         Post post = postCatalogue.find(id);
         Person person = getPerson();
 
         if (post == null) {
             return Response.noContent().build();
-        } else if (!(wp.getAuthor().equals(person) || post.getAuthor().equals(person))) {
+        } else if (!(/*wp.getAuthor().equals(person) ||*/ post.getAuthor().equals(person))) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
-        } else if(!wp.getComments().contains(post)){
+        } /*else if(!wp.getComments().contains(post)){
             return Response.status(Response.Status.FORBIDDEN).build();
-        }
+        }*/
 
         postCatalogue.remove(post.getId());
+        
         //remove from wallpost
-        wp.getComments().remove(post);
-        wallPostCatalogue.update(wp);
+        //wp.getComments().remove(post);
+        
+        //wallPostCatalogue.update(wp);
         
         return Response.ok().build();
     }
@@ -232,30 +260,35 @@ public class PostCatalogueResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response update( 
-            @PathParam("projectId") Long projectId,
-            @PathParam("wallPostId") Long wallPostId,
+            /*@PathParam("projectId") Long projectId,
+            @PathParam("wallPostId") Long wallPostId,*/
             @PathParam("id") Long id,
             @FormParam("msg") String msg) {
 
+        /*
         if (!allowed(projectId)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         } else if (!validWallPost(projectId, wallPostId)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
+        */
+        
         Post old = postCatalogue.find(id);
         Post post;
         Person person = getPerson();
-        WallPost wp = wallPostCatalogue.find(wallPostId);
+        
+        //WallPost wp = wallPostCatalogue.find(wallPostId);
+        
         if (old == null) {
             post = new Post(person, msg);
             postCatalogue.update(post);
             //add to wallpost
-            wp.getComments().add(post);
-            wallPostCatalogue.update(wp);
+            //wp.getComments().add(post);
+            //wallPostCatalogue.update(wp);
         } else {
-            if(!wp.getComments().contains(old)){
-                return Response.status(Response.Status.BAD_REQUEST).build();
-            }
+            /*if(!wp.getComments().contains(old)){
+               return Response.status(Response.Status.BAD_REQUEST).build();
+            }*/
             if(!old.getAuthor().equals(person)){
                 return Response.status(Response.Status.UNAUTHORIZED).build();
             }
