@@ -1,10 +1,10 @@
 /* 
- * The shop as a Singleton
+ * The projectPlatform as a Singleton
  */
 // Global
 var projectPlatform = (function() {
 
-    var baseUri = "http://localhost:8080/webbapp_frontend/rs/";
+    var baseUri = "http://localhost:8080/webbapp_frontend/content/rs/";
     
     //don't know if it is right locations
     var projects = new ProjectCatalogue(baseUri + "projects");
@@ -12,7 +12,7 @@ var projectPlatform = (function() {
     var persons = new PersonCatalogue(baseUri + "persons");
     var todoPosts = new TodoPostCatalogue(baseUri + "todoPosts");
     var posts = new PostCatalogue(baseUri + "posts");
-    var articles = new ArticleCatalogue(baseUri + "articles");
+    //var articles = new ArticleCatalogue(baseUri + "articles");
 
     return {
         getProjectCatalogue: function() {

@@ -8,6 +8,8 @@ import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,14 +57,17 @@ public class FrontController extends HttpServlet {
                     String email = request.getParameter("email");
                     String password = request.getParameter("password");
 
-                    request.setAttribute("username", username);
-                    request.setAttribute("password", password);
-                    request.setAttribute("email",email);
-                    if (username != null && password != null) {
+                    if (username != null && email != null && password != null) {
+                        request.setAttribute("username", username);
+                        request.setAttribute("email",email);
+                        request.setAttribute("password", password);
                         personCatalogue.add(new Person(username, email, password));
+                        response.sendRedirect("content/main.xhtml");
+                    } else {
+                        Logger.getAnonymousLogger().log(Level.INFO, "Some user input was null!");
+                        request.getRequestDispatcher("WEB-INF/jsp/signup.jspx").forward(request, response);
                     }
                     //request.getRequestDispatcher("WEB-INF/jsp/rs/welcome.jspx").forward(request, response);
-                    response.sendRedirect("content/main.xhtml");
                     break;
                 case "logedin":
                     //request.getRequestDispatcher("WEB-INF/jsp/rs/welcome.jspx").forward(request, response);

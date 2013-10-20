@@ -1,8 +1,8 @@
-var TodoPostCatalogue = function(baseUri) {
+var PostCatalogue = function(baseUri) {
     this.baseUri = baseUri;
 };
 
-TodoPostCatalogue.prototype = (function() {
+PostCatalogue.prototype = (function() {
 
     return{
         get: function() {
