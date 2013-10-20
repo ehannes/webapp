@@ -12,7 +12,7 @@ var projectPlatform = (function() {
     var persons = new PersonCatalogue(baseUri + "persons");
     var todoPosts = new TodoPostCatalogue(baseUri + "todoPosts");
     var posts = new PostCatalogue(baseUri + "posts");
-    var articles = new ArticleCatalogue(baseUri + "articles");
+    //var articles = new ArticleCatalogue(baseUri + "articles");
 
     return {
         getProjectCatalogue: function() {

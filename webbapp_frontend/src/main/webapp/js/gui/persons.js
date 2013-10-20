@@ -48,6 +48,8 @@ $(function() {
         // Use JQuery and HTML
         $("tbody").empty();
         var tbody = $("tbody");
+        var txt = $("bhal");
+        $(txt).appendTo(tbody);
         $(persons).each(function() {
             var s = "<tr id='tr_" + this.id + "'><td>" + this.id +
                     "</td><td>" + this.name + "</td><td>" + this.email + "</td></tr>";
