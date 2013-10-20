@@ -22,7 +22,7 @@ import javax.ws.rs.core.UriInfo;
  */
 @Path("persons")
 public class PersonCatalogueResource {
-   private final PersonCatalogue personDAO = DAOFactory.getDAOFactory().getPersonCatalogue();
+   private final PersonCatalogue personCatalogue = DAOFactory.getDAOFactory().getPersonCatalogue();
 
    @Context
    private UriInfo uriInfo;
@@ -30,7 +30,7 @@ public class PersonCatalogueResource {
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response get() {
-        List<Person> persons = personDAO.getAll();
+        List<Person> persons = personCatalogue.getAll();
         return Response.ok(toPersonProxy(persons)).build();
     }
     
@@ -38,7 +38,7 @@ public class PersonCatalogueResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("{id}")
     public Response find(@PathParam("id") long id) {
-        Person person = personDAO.find(id);
+        Person person = personCatalogue.find(id);
                 GenericEntity<PersonProxy> ge = new GenericEntity<PersonProxy>(new PersonProxy(person)) {
         };
            
@@ -56,7 +56,7 @@ public class PersonCatalogueResource {
             @FormParam("password") String password) {
         Person person = new Person(name, email, password);
         try {
-            personDAO.add(person);
+            personCatalogue.add(person);
             
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(person.getId())).build(person);
             return Response.created(uri).build();
@@ -69,7 +69,7 @@ public class PersonCatalogueResource {
     @Path("{id}")
     public Response remove(@PathParam("id") long id) {
         try {
-            personDAO.remove(id);
+            personCatalogue.remove(id);
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
@@ -84,12 +84,12 @@ public class PersonCatalogueResource {
             @FormParam("username") String username,
             @FormParam("email") String email,
             @FormParam("password") String password) {
-            Person personToUpdate = personDAO.find(id);
+            Person personToUpdate = personCatalogue.find(id);
             if (personToUpdate != null) {
                 personToUpdate.setUserName(username);
                 personToUpdate.setEmail(email);
                 personToUpdate.setPassword(password);
-                personDAO.update(personToUpdate);
+                personCatalogue.update(personToUpdate);
                 return Response.ok(new PersonProxy(personToUpdate)).build();
             }
             return Response.noContent().build();
@@ -99,7 +99,7 @@ public class PersonCatalogueResource {
     @Path("count")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getCount() {
-        return Response.ok(new PrimitiveJSONWrapper(personDAO.getCount())).build();
+        return Response.ok(new PrimitiveJSONWrapper(personCatalogue.getCount())).build();
     }
     
     @GET
@@ -107,7 +107,7 @@ public class PersonCatalogueResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getRange(@QueryParam("first") int first,
             @QueryParam("nItems") int nItems) {
-        List<Person> persons = personDAO.getRange(first, nItems);
+        List<Person> persons = personCatalogue.getRange(first, nItems);
         return Response.ok(toPersonProxy(persons)).build();
     }
     

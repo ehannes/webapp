@@ -33,7 +33,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-@Path("projects/{projectId}/todo")
+@Path("projects/{projectId}/todoposts")
 public class TodoPostCatalogueResource {
 
     private final TodoPostCatalogue todoPostCatalogue =

@@ -15,8 +15,8 @@ TodoPostCatalogue.prototype = (function() {
             return $.getJSON(this.baseUri + "/range?first=" + first + 
                     "&nItems=" + nItems);
         },
-        add: function(name) {
-            return $.post(this.baseUri, {name: name});
+        add: function(msg) {
+            return $.post(this.baseUri, {msg: msg});
         },
         update: function(id, msg, year, month, day, hour, minute) {
             return $.ajax({
