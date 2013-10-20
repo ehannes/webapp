@@ -62,7 +62,7 @@ public class FrontController extends HttpServlet {
                         request.setAttribute("email",email);
                         request.setAttribute("password", password);
                         personCatalogue.add(new Person(username, email, password));
-                        response.sendRedirect("content/main.xhtml");
+                        response.sendRedirect("content/welcome.xhtml");
                     } else {
                         Logger.getAnonymousLogger().log(Level.INFO, "Some user input was null!");
                         request.getRequestDispatcher("WEB-INF/jsp/signup.jspx").forward(request, response);
@@ -71,7 +71,7 @@ public class FrontController extends HttpServlet {
                     break;
                 case "logedin":
                     //request.getRequestDispatcher("WEB-INF/jsp/rs/welcome.jspx").forward(request, response);
-                    response.sendRedirect("content/main.xhtml");
+                    response.sendRedirect("content/welcome.xhtml");
                     break;
                 default:
                     ;

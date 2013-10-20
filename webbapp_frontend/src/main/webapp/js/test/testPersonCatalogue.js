@@ -6,8 +6,8 @@
 asyncTest("PersonCatalogue.count", function() {
     var deferred = projectPlatform.getPersonCatalogue().getCount();
     alert(deferred);
-    deferred.done(function(nProducts) {
-        ok(nProducts.value === 11, "Test passed");
+    deferred.done(function(nPersons) {
+        ok(nPersons.value === 11, "Test passed");
         //ok( true, "Test passed");
         start();
     });
@@ -19,8 +19,8 @@ asyncTest("PersonCatalogue.count", function() {
 
 asyncTest("PersonCatalogue.getRange", function() {
     var deferred = projectPlatform.getPersonCatalogue().getRange(1, 3);
-    deferred.done(function(products) {
-        ok(products.length === 3, "Test passed");
+    deferred.done(function(persons) {
+        ok(persons.length === 3, "Test passed");
         //ok( true, "Test passed");
         start();
     });
@@ -33,8 +33,8 @@ asyncTest("PersonCatalogue.getRange", function() {
 
 asyncTest("PersonCatalogue.find", function() {
     var deferred = projectPlatform.getPersonCatalogue().find(1);
-    deferred.done(function(product) {
-        ok(product.id === 1, "Test passed");
+    deferred.done(function(person) {
+        ok(person.id === 1, "Test passed");
         start();
     });
     deferred.fail(function() {
