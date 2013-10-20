@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -37,8 +36,6 @@ public class Project extends AbstractEntity implements Serializable {
     @JoinTable(name="PROJECT_TODOPOST")
     @OneToMany(cascade = CascadeType.ALL)
     private List<TodoPost> todoPosts;
-
-    //private List<TodoPost> milestonePosts;
     
     public Project() {
     }
@@ -68,15 +65,6 @@ public class Project extends AbstractEntity implements Serializable {
         this.admin = newAdmin;
     }
 
-//    public void setAdmin(Person currentAdmin, Person newAdmin) throws Exception {
-//        if (currentAdmin.equals(admin)) {
-//            admin = newAdmin;
-//            collaborators.add(admin);
-//            collaborators.remove(newAdmin);
-//        }
-//        throw new Exception("Current admin in setAdmin was incorrect");
-//    }
-
     public Calendar getDateCreated() {
         return dateCreated;
     }
@@ -101,11 +89,6 @@ public class Project extends AbstractEntity implements Serializable {
         return wallPosts;
     }
     
-//    public List<TodoPost> getMilestonePosts() {
-//        return milestonePosts;
-//    }
-
-
     @Override
     public String toString() {
         return "Project{Name: " + name + "Admin: " + admin + " Id: " + super.toString()
