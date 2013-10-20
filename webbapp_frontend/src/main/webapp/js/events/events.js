@@ -4,7 +4,7 @@
 // This is guaranteed to be executed after the DOM has
 // been fully contructed. So ... connect controls and listeners here
 $(document).ready(function(){
-    $("#btnProjects").on("click", listeners.btnListener);
+    $("#btn1").on("click", listeners.btnListener);
     $("#btn2").on("dblclick", listeners.btnListener2); 
     // This button doesn't exist yet !!! Do it like this
     $(document).on("click", "#dynamic", listeners.btnListener);
