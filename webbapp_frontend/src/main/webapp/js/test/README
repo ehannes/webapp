@@ -1,0 +1,11 @@
+*** README ***
+
+Using QUnit for JavaScript testing, must run via Server
+same origin policy
+
+To run
+------
+Mark tests.html, right click > Run File
+
+This is a bit shaky, possible have to run many times.
+
