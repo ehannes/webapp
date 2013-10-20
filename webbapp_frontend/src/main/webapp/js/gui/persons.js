@@ -9,40 +9,54 @@
 // Run after DOM constructed (same as $(document).ready())
 $(function() {
 
+    var pc = projectPlatform.getPersonCatalogue();
     var nav = new Navigator(projectPlatform.getPersonCatalogue());
+    
     /*************************************
      * 
      * Components (from JQueryUI) and eventhandling
      */
-    $("#next-button")
+    
+    $("#showPersons")
             .button()
             .click(function() {
-        nav.next(createTable, fail);
-        function fail() {
-            createErrorDialog("Can't list!!");
-        }
+        var deferred = pc.get();
+        
+        deferred.done(function(persons) {
+            $.each(persons.Person, function(index, p) {
+                console.log(p);
+                $("#data").append("<p>" + "date created: " + p.dateCreated + 
+                        " id: " + p.id + " <br/>email: " + p.email + 
+                        " username: " + p.username + " password: " + p.password +
+                        "</p>");
+            });
+            console.log(persons);
+        });
+        deferred.fail(function() {
+            console.log("fail");
+        });
     });
 
-    $("#prev-button")
-            .button()
-            .click(function() {
-        nav.prev(createTable, fail);
-        function fail() {
-            createErrorDialog("Can't list!!");
-        }
-    });
-
-    $("#add-product")
+    /*$("#add-product")
             .button()
             .click(function() {
         createAddDialog();
-    });
+    });*/
 
     //$("#list-persons")
     //        .button()
     //        .click(function() {
     //    createTable();
     //});
+
+    function sendMessage(message) {
+        
+        //var message = "All forms are required";
+        alert(message);
+        /*$('#dialog-message').dialog('option', 'title', 'Delete product');
+        $("#dialog-message #msg").text(message);
+        return $('#dialog-message');*/
+    }
 
     function createTable(persons) {
         // Use JQuery and HTML
