@@ -6,14 +6,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 /**
- *
- * @author hajo
+ * @author ehannes
  */
 public abstract class AbstractDAO<T, K> {
 
@@ -35,17 +35,29 @@ public abstract class AbstractDAO<T, K> {
         EntityManager em = null;
         try {
             em = getEntityManager();
-            em.getTransaction().begin();
-            em.persist(t);
-            em.getTransaction().commit();
+            EntityTransaction transaction = em.getTransaction();
+            try {
+                transaction.begin();
+                em.persist(t);
+                transaction.commit();
+            } catch (Exception ex) {
+                Logger.getAnonymousLogger().log(Level.INFO, "Exception occured when"
+                        + " trying to get persist in AbstractDAO.add().");
+            } finally {
+                if (transaction.isActive()) {
+                    transaction.rollback();
+                    Logger.getAnonymousLogger().log(Level.INFO,
+                            "AbstractDAO.add: Rollback...");
+                }
+            }
         } catch (Exception ex) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Exception type: {0}", ex.getClass().getName());
-            Logger.getAnonymousLogger().log(Level.INFO, "this is {0}, {1}, ", new Object[]{this.getClass().toString(), this.getClass().getCanonicalName(), this.getClass().getName()});
-            Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.add : "
-                    + ex.getMessage(), this.getClass().getName());
+            Logger.getAnonymousLogger().log(Level.INFO, "Exception occured when"
+                    + " trying to get transaction or entityManager in AbstractDAO.add().");
         } finally {
             if (em != null) {
                 em.close();
+                Logger.getAnonymousLogger().log(Level.INFO,
+                            "AbstractDAO.add: Closing EntityManager...");
             }
         }
     }
@@ -54,16 +66,30 @@ public abstract class AbstractDAO<T, K> {
         EntityManager em = null;
         try {
             em = getEntityManager();
-            em.getTransaction().begin();
-            T t = em.getReference(clazz, id);
-            em.remove(t);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.remove...\n"
-                    + e.getMessage(), this.getClass().getName());
+            EntityTransaction transaction = em.getTransaction();
+            try {
+                transaction.begin();
+                T t = em.getReference(clazz, id);
+                em.remove(t);
+                transaction.commit();
+            } catch (Exception e) {
+                Logger.getAnonymousLogger().log(Level.INFO, "Exception occured when"
+                        + " trying to get remove in AbstractDAO.remove().");
+            } finally{
+                if(transaction.isActive()) {
+                    transaction.rollback();
+                    Logger.getAnonymousLogger().log(Level.INFO,
+                            "AbstractDAO.remove: Rollback...");
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.INFO, "Exception occured when"
+                    + " trying to get transaction or entityManager in AbstractDAO.remove().");
         } finally {
             if (em != null) {
                 em.close();
+                Logger.getAnonymousLogger().log(Level.INFO,
+                            "AbstractDAO.remove: Closing EntityManager...");
             }
         }
     }
@@ -71,17 +97,32 @@ public abstract class AbstractDAO<T, K> {
     public T update(T t) {
         EntityManager em = null;
         T tmp = null;
-        try {
+        try{
             em = getEntityManager();
-            em.getTransaction().begin();
-            tmp = em.merge(t);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.update...\n"
-                    + e.getMessage(), this.getClass().getName());
+            EntityTransaction transaction = em.getTransaction();
+            try{
+                em = getEntityManager();
+                em.getTransaction().begin();
+                tmp = em.merge(t);
+                em.getTransaction().commit();
+            } catch (Exception e) {
+                Logger.getAnonymousLogger().log(Level.INFO, "Exception occured when"
+                        + " trying to get merge in AbstractDAO.update().");
+            } finally{
+                if(transaction.isActive()) {
+                    transaction.rollback();
+                    Logger.getAnonymousLogger().log(Level.INFO,
+                            "AbstractDAO.update: Rollback...");
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getAnonymousLogger().log(Level.INFO, "Exception occured when"
+                    + " trying to get transaction or entityManager in AbstractDAO.update().");
         } finally {
             if (em != null) {
                 em.close();
+                Logger.getAnonymousLogger().log(Level.INFO,
+                            "AbstractDAO.update: Closing EntityManager...");
             }
         }
         return tmp;
@@ -94,12 +135,14 @@ public abstract class AbstractDAO<T, K> {
             em = getEntityManager();
             t = em.find(clazz, id);
         } catch (Exception e) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.getRange...\n"
-                    + e.getMessage(), this.getClass().getName());
+            Logger.getAnonymousLogger().log(Level.INFO, "Exception occured when"
+                        + " trying to get find or entityManager in AbstractDAO.find()");
             e.printStackTrace();
         } finally {
             if (em != null) {
                 em.close();
+                Logger.getAnonymousLogger().log(Level.INFO,
+                            "AbstractDAO.find: Closing EntityManager...");
             }
         }
         return t;
@@ -114,18 +157,26 @@ public abstract class AbstractDAO<T, K> {
         List<T> found = new ArrayList<>();
         try {
             em = getEntityManager();
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(clazz));
-            Query q = em.createQuery(cq);
-            q.setFirstResult(first);
-            q.setMaxResults(nItems);
-            found.addAll(q.getResultList());
+            try{
+                CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+                cq.select(cq.from(clazz));
+                Query q = em.createQuery(cq);
+                q.setFirstResult(first);
+                q.setMaxResults(nItems);
+                found.addAll(q.getResultList());
+            } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.INFO, "Exception occured"
+                        + " in AbstractDAO.getRange() " + e.getMessage());
+            }
         } catch (Exception e) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.getRange...\n"
-                    + e.getMessage(), this.getClass().getName());
+            Logger.getAnonymousLogger().log(Level.INFO, "Exception occured"
+                        + " in AbstractDAO.getRange() when trying to "
+                    + "get entityManager " + e.getMessage());
         } finally {
             if (em != null) {
                 em.close();
+                Logger.getAnonymousLogger().log(Level.INFO,
+                            "AbstractDAO.find: Closing EntityManager...");
             }
         }
         return found;
@@ -136,17 +187,25 @@ public abstract class AbstractDAO<T, K> {
         int count = -1;
         try {
             em = getEntityManager();
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<T> rt = cq.from(clazz);
-            cq.select(em.getCriteriaBuilder().count(rt));
-            Query q = em.createQuery(cq);
-            count = ((Long) q.getSingleResult()).intValue();
+            try{
+                CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+                Root<T> rt = cq.from(clazz);
+                cq.select(em.getCriteriaBuilder().count(rt));
+                Query q = em.createQuery(cq);
+                count = ((Long) q.getSingleResult()).intValue();
+            } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.INFO, "Exception occured"
+                        + " in AbstractDAO.getCount() " + e.getMessage());
+            }
         } catch (Exception e) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Error occurred in {0}.getCount...\n"
-                    + e.getMessage(), this.getClass().getName());
+            Logger.getAnonymousLogger().log(Level.INFO, "Exception occured"
+                        + " in AbstractDAO.getCount() when trying "
+                    + "to get entityManager " + e.getMessage());
         } finally {
             if (em != null) {
                 em.close();
+                Logger.getAnonymousLogger().log(Level.INFO,
+                            "AbstractDAO.find: Closing EntityManager...");
             }
         }
         return count;
