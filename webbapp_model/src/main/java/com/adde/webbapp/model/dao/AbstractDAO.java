@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -17,20 +15,17 @@ import javax.persistence.criteria.Root;
  */
 public abstract class AbstractDAO<T, K> {
 
-    private EntityManagerFactory emf;
     private final Class<T> clazz;
     private final String PU = "webapp_pu";
 
     protected AbstractDAO(Class<T> clazz) {
         this.clazz = clazz;
-        emf = Persistence.createEntityManagerFactory(PU);
     }
 
     protected EntityManager getEntityManager() {
-        EntityManager em = emf.createEntityManager();
-        return em;
+        return EMFUtil.createEntityManager();
     }
-
+    
     public void add(T t) {
         EntityManager em = null;
         try {

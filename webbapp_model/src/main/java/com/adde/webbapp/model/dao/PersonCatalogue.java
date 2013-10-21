@@ -14,7 +14,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author eric
+ * @author Eric Ahlberg (eahlberg@gmail.com)
  */
 public class PersonCatalogue extends AbstractDAO<Person, Long> {
 
@@ -44,7 +44,6 @@ public class PersonCatalogue extends AbstractDAO<Person, Long> {
                 return (Person) object;
             }
             return null;
-            //return (Person) q.getSingleResult();
         } catch(NoResultException e){
             return null;
         } finally{
