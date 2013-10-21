@@ -1,25 +1,25 @@
 # POST
 curl -v -d "title=articletitle&content=articlecontent&editor=user3"
-http://localhost:8080/webbapp_frontend/rs/articles
+http://localhost:8080/webbapp_frontend/content/rs/articles
 
 # GET
 # get single
-curl -v http://localhost:8080/webbapp_frontend/rs/articles/{id}
+curl -v http://localhost:8080/webbapp_frontend/content/rs/articles/{id}
 
 # get all
-curl -v http://localhost:8080/webbapp_frontend/rs/articles
+curl -v http://localhost:8080/webbapp_frontend/content/rs/articles
 
 # get count
-curl -v http://localhost:8080/webbapp_frontend/rs/articles/count
+curl -v http://localhost:8080/webbapp_frontend/content/rs/articles/count
 
 # get range
 curl -v
-"http://localhost:8080/webbapp_frontend/rs/articles/range?first=0&nItems=5"
+"http://localhost:8080/webbapp_frontend/content/rs/articles/range?first=0&nItems=5"
 
 # DELETE
-curl -v -X DELETE http://localhost:8080/webbapp_frontend/rs/articles/{id}
+curl -v -X DELETE http://localhost:8080/webbapp_frontend/content/rs/articles/{id}
 
 # PUT
 curl -v -X PUT -d "title=updatedtitle&content=updatedcontent&editor=user1"
-http://localhost:8080/webbapp_frontend/rs/articles/{id}
+http://localhost:8080/webbapp_frontend/content/rs/articles/{id}
 
