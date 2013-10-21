@@ -38,7 +38,7 @@ public class ProjectProxy {
     }
 
     @XmlElement(required = true)
-    public Person getPrice() {
+    public Person getAdmin() {
         return project.getAdmin();
     }
 
