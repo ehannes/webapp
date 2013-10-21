@@ -13,5 +13,8 @@ curl -v http://localhost:8080/webbapp_frontend/content/rs/projects/{id}
 Get count:
 curl -v http://localhost:8080/webbapp_frontend/content/rs/projects/count
 
+Get range:
+curl -v http://localhost:8080/webbapp_frontend/content/rs/projects/range?first={firstItemToGet}&nItems={nrOfItemsToGet}
+
 Delete:
 curl -v -X DELETE http://localhost:8080/webbapp_frontend/content/rs/projects/{id}
