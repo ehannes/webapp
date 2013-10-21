@@ -7,7 +7,6 @@
         <script type="text/javascript" src="../resources/lib/jquery-1.9.1.js"/>
         <script type="text/javascript" src="../resources/lib/jquery-ui-1.10.2.custom.js"/>
 
-        
         <script type="text/javascript" src="../js/core/articleCatalogue.js" ></script>
         <script type="text/javascript" src="../js/core/projectCatalogue.js" ></script>
         <script type="text/javascript" src="../js/core/wallPostCatalogue.js" ></script>
@@ -16,10 +15,9 @@
         <script type="text/javascript" src="../js/core/postCatalogue.js" ></script>
         <script type="text/javascript" src="../js/core/projectPlatform.js" ></script>
         <script type="text/javascript" src="../js/core/navigator.js" ></script>
-        <script type="text/javascript" src="../js/gui/persons.js" ></script>
+        <script type="text/javascript" src="../js/gui/newproject.js" ></script>
 
 
-        <script type="text/javascript" src="../js/events/events.js"/>
 
         <!-- Bootstrap core CSS -->
         <link href="../resources/css/bootstrap.css" rel="stylesheet"/>
@@ -47,6 +45,7 @@
                         <li><a href="articles.xhtml">All articles</a></li>
                         <li><a href="wallposts.xhtml">All wallposts</a></li>
                         <li><a href="todoposts.xhtml">All todoposts</a></li>
+
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown">
@@ -60,28 +59,15 @@
                 </div><!--/.nav-collapse -->
             </div>
 
-            <!-- Main component for a primary marketing message or call to action -->
-            
-            
-            <div class="container">
-                <div class="btn-group">
-                <button type="button" id ="showPersons" class="btn btn-info">Show all users</button>
-            </div>
-                <table class="table table-condensed">
-                    <thead>
-                        <tr>
-                        <th>Username</th>
-                        <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            
 
-        </div> <!-- /container -->
-
-
+            <form role="form" id="projectForm" method="POST">
+                <div class="form-group">
+                    <label for="projectName">Project name</label>
+                    <input type="text" class="form-control" id="projectName" placeholder="Enter project name"/>
+                </div>
+                <button type="submit" class="btn btn-sm btn-info" id="createProject">Create project</button> 
+            </form>
+        </div>
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
@@ -89,7 +75,3 @@
         <script src="../resources/js/bootstrap.min.js"></script>
     </body>
 </html>
-
-
-
-

@@ -61,6 +61,7 @@ public class FrontController extends HttpServlet {
                         request.setAttribute("username", username);
                         request.setAttribute("email",email);
                         request.setAttribute("password", password);
+                        session.setAttribute("username", username);
                         personCatalogue.add(new Person(username, email, password));
                         response.sendRedirect("content/welcome.xhtml");
                     } else {

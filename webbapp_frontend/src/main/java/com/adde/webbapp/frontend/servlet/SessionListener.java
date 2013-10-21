@@ -27,6 +27,6 @@ public class SessionListener implements HttpSessionListener {
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
         Logger.getAnonymousLogger().log(Level.INFO, "Session destroyed");
-        Logger.getAnonymousLogger().log(Level.INFO, se.getSession().getId()); 
+        Logger.getAnonymousLogger().log(Level.INFO, se.getSession().getId());
     }
 }
