@@ -9,6 +9,7 @@ import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.entity.Person;
 import java.net.URI;
 import java.util.*;
+import javax.persistence.Entity;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
@@ -56,6 +57,9 @@ public class PersonCatalogueResource {
             @FormParam("password") String password) {
         Person person = new Person(name, email, password);
         try {
+            if(personCatalogue.getByUserName(name) != null) {
+                return Response.notModified("Username already taken. Try again.").build();
+            }
             personCatalogue.add(person);
             
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(person.getId())).build(person);
