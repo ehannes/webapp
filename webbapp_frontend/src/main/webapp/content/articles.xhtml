@@ -7,7 +7,6 @@
         <script type="text/javascript" src="../resources/lib/jquery-1.9.1.js"/>
         <script type="text/javascript" src="../resources/lib/jquery-ui-1.10.2.custom.js"/>
 
-        
         <script type="text/javascript" src="../js/core/articleCatalogue.js" ></script>
         <script type="text/javascript" src="../js/core/projectCatalogue.js" ></script>
         <script type="text/javascript" src="../js/core/wallPostCatalogue.js" ></script>
@@ -16,7 +15,7 @@
         <script type="text/javascript" src="../js/core/postCatalogue.js" ></script>
         <script type="text/javascript" src="../js/core/projectPlatform.js" ></script>
         <script type="text/javascript" src="../js/core/navigator.js" ></script>
-        <script type="text/javascript" src="../js/gui/persons.js" ></script>
+        <script type="text/javascript" src="../js/gui/articles.js" ></script>
 
 
         <script type="text/javascript" src="../js/events/events.js"/>
@@ -62,20 +61,11 @@
 
             <!-- Main component for a primary marketing message or call to action -->
             <div class="btn-group">
-                <button type="button" id ="showPersons" class="btn btn-default">Show all users</button>
-                <button type="button" id ="findPerson" class="btn btn-default">Find user</button>
+                <button type="button" id="showArticles" class="btn btn-default">Show all articles</button>
             </div>
             
             <div class="container">
-                <table class="table table-condensed">
-                    <thead>
-                        <tr>
-                        <th>Username</th>
-                        <th>Email</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <div id="articles"></div>
             </div>
             
 
@@ -89,7 +79,3 @@
         <script src="../resources/js/bootstrap.min.js"></script>
     </body>
 </html>
-
-
-
-
