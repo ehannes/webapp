@@ -11,6 +11,12 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 /**
+ * This class is extended by all other DAO classes (called Catalogues in our
+ * case). This is a very important class since we often choose not to Override
+ * its methods in the subclasses when this implementation does the trick, and
+ * sometimes we do some processing in an implementation in the subclass and
+ * then call the method in this class.
+ * 
  * @author ehannes
  */
 public abstract class AbstractDAO<T, K> {

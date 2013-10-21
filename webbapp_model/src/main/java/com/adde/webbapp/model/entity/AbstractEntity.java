@@ -12,7 +12,10 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
 /**
- *
+ * This class is extended by all classes that are designed to be entities.
+ * It is quite convenient to have the id along with its annotations in this
+ * superclass. The annotations are for the database to generate the id for us.
+ * 
  * @author hannes
  */
 @MappedSuperclass
