@@ -53,9 +53,15 @@ public class ArticleCatalogueResource {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(/*@FormParam("projectId") long projectId,*/ @FormParam("title") String title, 
-        @FormParam("content") String content, @FormParam("editor") String username) { //Ta in person eller inte?
+        @FormParam("content") String content, @FormParam("editor") String username) {
+        
+        if(username == null || title == null || content == null){
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+        
         PersonCatalogue personCatalogue = daoFactory.getPersonCatalogue();
         Person editor = personCatalogue.getByUserName(username);
+        
         if(editor != null) {
             Article article = new Article(title, content);
             articleCatalogue.add(addEditor(article, editor)); //projectId,

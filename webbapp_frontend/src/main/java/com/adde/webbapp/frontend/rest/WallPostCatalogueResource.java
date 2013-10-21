@@ -59,14 +59,13 @@ public class WallPostCatalogueResource {
 //        }
 //        return false;
 //    }
-
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
 //        public Response get(@PathParam("projectId") Long projectId) {
 //        if (!allowed(projectId)) {
 //            return Response.status(Response.Status.FORBIDDEN).build();
 //        }
-    public Response get(){
+    public Response get() {
         List<WallPost> wallPosts = wallPostCatalogue.getAll();
         return Response.ok(toWallPostProxy(wallPosts)).build();
     }
@@ -91,28 +90,32 @@ public class WallPostCatalogueResource {
     public Response add(@FormParam("msg") String msg) {
         //HttpSession session = request.getSession(true);
         //Person person = (Person) session.getAttribute("person");
-        
-        
-        
+
+
+
         /*
         
-        Person tmpPerson = new Person("tmpPerson", "tmp@tmp.com", "tM3512");
-        PersonCatalogue personCatalogue = DAOFactory.getDAOFactory().getPersonCatalogue();
-        personCatalogue.add(tmpPerson);
+         Person tmpPerson = new Person("tmpPerson", "tmp@tmp.com", "tM3512");
+         PersonCatalogue personCatalogue = DAOFactory.getDAOFactory().getPersonCatalogue();
+         personCatalogue.add(tmpPerson);
         
-        */
-        
+         */
+
+        if (msg == null) {
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+
         Logger.getAnonymousLogger().log(Level.INFO, "WallPostResource: Looking for Person gustav...");
         Person tmpPerson = (Person) DAOFactory.getDAOFactory().getPersonCatalogue().getByUserName("gustav");
-        if(tmpPerson == null){
+        if (tmpPerson == null) {
             Logger.getAnonymousLogger().log(Level.INFO, "WallPostResource: Creating person gustav");
             tmpPerson = new Person("gustav", "gustav@adde.com", "adde");
             DAOFactory.getDAOFactory().getPersonCatalogue().add(tmpPerson);
-        } else{
+        } else {
             Logger.getAnonymousLogger().log(Level.INFO, "WallPostResource: Person gustav found.");
         }
-        
-        
+
+
         WallPost w = new WallPost(tmpPerson, msg);
         //WallPost w = new WallPost(person, msg);
         try {
@@ -143,7 +146,9 @@ public class WallPostCatalogueResource {
     public Response update(@PathParam("id") Long id, @FormParam("msg") String msg) {
         WallPost oldWallPost = wallPostCatalogue.find(id);
         if (oldWallPost != null) {
-            oldWallPost.setMsg(msg);
+            if (msg != null) {
+                oldWallPost.setMsg(msg);
+            }
             wallPostCatalogue.update(oldWallPost);
             return Response.ok(new WallPostProxy(oldWallPost)).build();
         }
@@ -158,14 +163,14 @@ public class WallPostCatalogueResource {
         List<WallPost> wallposts = wallPostCatalogue.getRange(first, nItems);
         return Response.ok(toWallPostProxy(wallposts)).build();
     }
-    
+
     @GET
     @Path("count")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getCount() {
         return Response.ok(new PrimitiveJSONWrapper(wallPostCatalogue.getCount())).build();
     }
-    
+
     private GenericEntity<List<WallPostProxy>> toWallPostProxy(List<WallPost> wallPosts) {
         List<WallPostProxy> wallPostProxies = new ArrayList<>();
         for (WallPost w : wallPosts) {

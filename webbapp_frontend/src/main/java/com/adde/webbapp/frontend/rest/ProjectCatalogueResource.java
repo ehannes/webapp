@@ -70,9 +70,15 @@ public class ProjectCatalogueResource {
     public Response add(@FormParam("name") String name) {
         //HttpSession session = request.getSession(true);
         //Person person = (Person) session.getAttribute("person");
+        
         // OBS ENDAST PERSON FÖR TEST
         Person person = new Person("apan", "apansson", "banana");
         PersonCatalogue.newInstance().add(person);
+        
+        if(name == null){
+            return Response.status(Response.Status.NOT_ACCEPTABLE).build();
+        }
+        
         Project p = new Project(name, person);
         try {
             projectCatalogue.add(p);
@@ -102,7 +108,9 @@ public class ProjectCatalogueResource {
     public Response update(@PathParam("id") Long id, @FormParam("name") String name) {
         Project oldProject = projectCatalogue.find(id);
         if (oldProject != null) {
-            oldProject.setName(name);
+            if (name != null) {
+                oldProject.setName(name);
+            }
             projectCatalogue.update(oldProject);
             return Response.ok(new ProjectProxy(oldProject)).build();
         }
