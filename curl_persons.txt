@@ -1,20 +1,20 @@
 # Test get all
-curl -v http://localhost:8080/webbapp_frontend/rs/persons/
+curl -v http://localhost:8080/webbapp_frontend/content/rs/persons
 
 ############# Test GET ###########
 # XML:
-curl -v http://localhost:8080/webbapp_frontend/rs/persons/{id}
+curl -v http://localhost:8080/webbapp_frontend/content/rs/persons/{id}
 
 # JSON
-curl -v -H "Accept: application/json" http://localhost:8080/webbapp_frontend/rs/persons/{id}
+curl -v -H "Accept: application/json" http://localhost:8080/webbapp_frontend/content/rs/persons/{id}
 
 
 ############# Test POST ###########
 # XML:
 curl --data "username=user&email=user@user.com&password=sDeTE35"
-http://localhost:8080/webbapp_frontend/rs/persons/
+http://localhost:8080/webbapp_frontend/content/rs/persons/
 
 # Test DELETE
-curl -v -X DELETE http://localhost:8080/webbapp_frontend/rs/persons/{id}
+curl -v -X DELETE http://localhost:8080/webbapp_frontend/content/rs/persons/{id}
 
 # Test PUT
