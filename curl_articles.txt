@@ -1,4 +1,5 @@
 # POST
+# Requires a person with username "user3" to be initialized before run
 curl -v -d "title=articletitle&content=articlecontent&editor=user3"
 http://localhost:8080/webbapp_frontend/content/rs/articles
 
