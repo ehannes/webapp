@@ -1,5 +1,9 @@
 ### curl commands for TodoPost ###
 
+### NOTE: ###
+# The validation of the project id is disabled due to filter problems,
+# enter id 1337 for an accepted id and any other id for an unaccepted project id.
+
 # getAll()
 curl -v http://localhost:8080/webbapp_frontend/content/rs/projects/1337/todo/all/
 
