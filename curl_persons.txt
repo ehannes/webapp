@@ -22,3 +22,6 @@ curl -v http://localhost:8080/webbapp_frontend/content/rs/persons/count
 ############ Test PUT ############
 curl -X PUT -d "username=user&email=user@user.com&password=sDeTE35" 
 http://localhost:8080/webbapp_frontend/content/rs/persons/
+
+########### Test GET: range #####
+curl -v http://localhost:8080/webbapp_frontend/content/rs/persons/range?first=0&nItems=5
