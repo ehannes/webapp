@@ -8,13 +8,17 @@ curl -v http://localhost:8080/webbapp_frontend/content/rs/persons/{id}
 # JSON
 curl -v -H "Accept: application/json" http://localhost:8080/webbapp_frontend/content/rs/persons/{id}
 
-
 ############# Test POST ###########
 # XML:
-curl --data "username=user&email=user@user.com&password=sDeTE35"
+curl -v -X POST -d "username=user&email=user@user.com&password=sDeTE35"
 http://localhost:8080/webbapp_frontend/content/rs/persons/
 
-# Test DELETE
+############# Test DELETE##########
 curl -v -X DELETE http://localhost:8080/webbapp_frontend/content/rs/persons/{id}
 
-# Test PUT
+############ Test GET: count #####
+curl -v http://localhost:8080/webbapp_frontend/content/rs/persons/count
+
+############ Test PUT ############
+curl -X PUT -d "username=user&email=user@user.com&password=sDeTE35" 
+http://localhost:8080/webbapp_frontend/content/rs/persons/
