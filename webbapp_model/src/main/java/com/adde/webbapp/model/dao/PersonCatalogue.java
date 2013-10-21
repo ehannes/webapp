@@ -8,8 +8,11 @@ import com.adde.webbapp.model.entity.Person;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Query;
 
 /**
@@ -43,6 +46,11 @@ public class PersonCatalogue extends AbstractDAO<Person, Long> {
             if(object instanceof Person) {
                 return (Person) object;
             }
+            return null;
+        } catch(NonUniqueResultException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, 
+                    "Multiple persons with the same username in database.");
+            e.printStackTrace();
             return null;
         } catch(NoResultException e){
             return null;
