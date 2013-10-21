@@ -18,7 +18,6 @@ import javax.servlet.annotation.WebListener;
  */
 @WebListener()
 public class ContextListener implements ServletContextListener {
-    //private static EntityManagerFactory emf;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
