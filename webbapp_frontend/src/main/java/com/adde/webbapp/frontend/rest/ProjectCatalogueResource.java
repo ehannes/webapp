@@ -68,18 +68,14 @@ public class ProjectCatalogueResource {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(@FormParam("name") String name) {
-        HttpSession session = request.getSession(true);
-        String username = (String) session.getAttribute("username");
-        Person person = DAOFactory.getDAOFactory().getPersonCatalogue().getByUserName(username);
         
-        // OBS ENDAST PERSON FÖR TEST
-        //Person person = new Person("apan", "apansson", "banana");
-        //PersonCatalogue.newInstance().add(person);
         //HttpSession session = request.getSession(true);
-        //Person person = (Person) session.getAttribute("person");
+        //String username = (String) session.getAttribute("username");
+        //Person person = DAOFactory.getDAOFactory().getPersonCatalogue().getByUserName(username);
         
         // OBS ENDAST PERSON FÖR TEST
-        //Person person = new Person("apan", "apansson", "banana");
+        Person person = new Person("apan", "apansson", "banana");
+
         PersonCatalogue.newInstance().add(person);
         
         if(name == null){
