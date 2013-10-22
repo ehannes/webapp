@@ -34,7 +34,8 @@ import javax.ws.rs.core.UriInfo;
 /**
  * This class had support for authentication of the user as well as
  * for the project id and any eventual todopost id. However, this has been
- * commented since we didn't get the filter working that well.
+ * removed since we didn't get the filter working that well.
+ * If you want to take a look, see branches from earlier than the 22/10 2013.
  * 
  * @author Gustav
  */
@@ -51,17 +52,6 @@ public class TodoPostCatalogueResource {
     @Context
     private HttpServletRequest request;
 
-    private boolean allowed(Long projectId) {
-        return true;
-        /*
-        HttpSession session = request.getSession(true);
-        Person person = getPerson();
-        Project project = projectCatalogue.find(projectId);
-        return project != null && (person.equals(project.getAdmin())
-                || project.getCollaborators().contains(person));
-        */
-    }
-
     private Person getPerson(){
         Logger.getAnonymousLogger().log(Level.INFO, "TodoPostResource: Looking for Person gustav...");
         Person p = (Person) DAOFactory.getDAOFactory().getPersonCatalogue().getByUserName("gustav");
@@ -73,18 +63,12 @@ public class TodoPostCatalogueResource {
             Logger.getAnonymousLogger().log(Level.INFO, "TodoPostResource: Person gustav found.");
         }
         return p;
-        //return (Person) request.getSession().getAttribute("person");
     }
     
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(
-            @FormParam("msg") String msg,
-            @PathParam("projectId") Long projectId) {
-
-        if (!allowed(projectId)) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
+            @FormParam("msg") String msg) {
         Person author = getPerson();
         TodoPost todoPost = new TodoPost(author, msg);
         todoPostCatalogue.add(todoPost);
@@ -96,12 +80,7 @@ public class TodoPostCatalogueResource {
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getAll(@PathParam("projectId") Long projectId) {
-
-        if (!allowed(projectId)) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }
-
+    public Response getAll() {
         List<TodoPostProxy> result = new LinkedList<>();
         for (TodoPost p : todoPostCatalogue.getAll()) {
             result.add(new TodoPostProxy(p));
@@ -114,13 +93,9 @@ public class TodoPostCatalogueResource {
     @GET
     @Path("range")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getRange(/*@PathParam("projectId") Long projectId,*/
+    public Response getRange(
             @QueryParam("first") int first,
             @QueryParam("nItems") int nItems) {
-
-        /*if (!allowed(projectId)) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }*/
 
         if (first < 0 || nItems < 0) {
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -142,12 +117,7 @@ public class TodoPostCatalogueResource {
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response find(
-            /*@PathParam("projectId") Long projectId,*/
             @PathParam("id") long id) {
-
-        /*if (!allowed(projectId)) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }*/
 
         TodoPost todoPost = todoPostCatalogue.find(id);
         if (todoPost == null) {
@@ -159,10 +129,7 @@ public class TodoPostCatalogueResource {
     @GET
     @Path("count")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response getCount(@PathParam("projectId") Long projectId) {
-        /*if (!allowed(projectId)) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }*/
+    public Response getCount() {
         return Response.ok(new PrimitiveJSONWrapper<>(todoPostCatalogue.getCount())).build();
     }
 
@@ -170,22 +137,14 @@ public class TodoPostCatalogueResource {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response remove(
-            /*@PathParam("projectId") Long projectId,*/
             @PathParam("id") long id) {
 
         Person person = getPerson();
-        //Project project = projectCatalogue.find(projectId);
         TodoPost todoPost = todoPostCatalogue.find(id);
 
-        if (/*!allowed(projectId) || !project.getTodoPosts().contains(todoPost)
-                ||*/ !todoPost.getAuthor().equals(person)) {
+        if (!todoPost.getAuthor().equals(person)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-
-        //remove from project
-        /*project.getTodoPosts().remove(todoPost);
-        projectCatalogue.update(project); */
-
         todoPostCatalogue.remove(todoPost.getId());
         return Response.ok().build();
     }
@@ -195,7 +154,6 @@ public class TodoPostCatalogueResource {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response update(
-            /*@PathParam("projectId") Long projectId,*/
             @PathParam("id") Long id,
             @FormParam("msg") String msg,
             @FormParam("year") int year,
@@ -203,10 +161,6 @@ public class TodoPostCatalogueResource {
             @FormParam("day") int day,
             @FormParam("hour") int hour,
             @FormParam("minute") int minute) {
-
-        /*if (!allowed(projectId)) {
-            return Response.status(Response.Status.UNAUTHORIZED).build();
-        }*/
 
         TodoPost old = todoPostCatalogue.find(id);
         TodoPost todoPost;
@@ -217,10 +171,6 @@ public class TodoPostCatalogueResource {
             todoPost = new TodoPost(person, msg);
             todoPost.setDeadline(deadline);
             todoPostCatalogue.update(todoPost);
-            //add to project
-            /*Project project = projectCatalogue.find(projectId);
-            project.getTodoPosts().add(todoPost);
-            projectCatalogue.update(project);*/
         } else {
             if(!old.getAuthor().equals(person)){
                 return Response.status(Response.Status.UNAUTHORIZED).build();

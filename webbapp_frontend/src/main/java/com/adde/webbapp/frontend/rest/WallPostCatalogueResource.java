@@ -28,6 +28,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
+ * This class had support for authentication of the user as well as
+ * for the project id and any eventual todopost id. However, this has been
+ * removed since we didn't get the filter working that well.
+ * If you want to take a look, see branches from earlier than the 22/10 2013.
  * 
  * @author Joakim
  */
@@ -66,19 +70,6 @@ public class WallPostCatalogueResource {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(@FormParam("msg") String msg) {
-        //HttpSession session = request.getSession(true);
-        //Person person = (Person) session.getAttribute("person");
-
-
-
-        /*
-        
-         Person tmpPerson = new Person("tmpPerson", "tmp@tmp.com", "tM3512");
-         PersonCatalogue personCatalogue = DAOFactory.getDAOFactory().getPersonCatalogue();
-         personCatalogue.add(tmpPerson);
-        
-         */
-
         if (msg == null) {
             return Response.status(Response.Status.NOT_ACCEPTABLE).build();
         }
@@ -95,7 +86,6 @@ public class WallPostCatalogueResource {
 
 
         WallPost w = new WallPost(tmpPerson, msg);
-        //WallPost w = new WallPost(person, msg);
         try {
             wallPostCatalogue.add(w);
 

@@ -28,7 +28,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.QueryParam;
 
 /**
- *
+ * This class had support for authentication of the user as well as
+ * for the project id and any eventual todopost id. However, this has been
+ * removed since we didn't get the filter working that well.
+ * If you want to take a look, see branches from earlier than the 22/10 2013.
+ * 
  * @author Joakim
  */
 @Path("projects")
@@ -65,11 +69,6 @@ public class ProjectCatalogueResource {
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response add(@FormParam("name") String name) {
-        
-        //HttpSession session = request.getSession(true);
-        //String username = (String) session.getAttribute("username");
-        //Person person = DAOFactory.getDAOFactory().getPersonCatalogue().getByUserName(username);
-        
         // OBS ENDAST PERSON FÖR TEST
         Person person = new Person("apan", "apansson", "banana");
 
