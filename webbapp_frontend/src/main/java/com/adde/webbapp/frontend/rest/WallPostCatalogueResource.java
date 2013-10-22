@@ -1,14 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.dao.WallPostCatalogue;
 import com.adde.webbapp.model.entity.Person;
-import com.adde.webbapp.model.entity.Project;
 import com.adde.webbapp.model.entity.WallPost;
 import java.net.URI;
 import java.util.ArrayList;
@@ -16,7 +11,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -34,9 +28,6 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
- * This class had support for authentication of the user as well as
- * for the project id and any eventual todopost id. However, this has been
- * commented since we didn't get the filter working that well.
  * 
  * @author Joakim
  */
@@ -50,24 +41,8 @@ public class WallPostCatalogueResource {
     @Context
     HttpServletRequest request;
 
-//    private boolean allowed(Long projectId) {
-//        HttpSession session = request.getSession(true);
-//        Object objPerson = session.getAttribute("person");
-//        if (objPerson != null) {
-//            Person person = (Person) objPerson;
-//            Project project = DAOFactory.getDAOFactory().getProjectCatalogue().find(projectId);
-//            if (project.getAdmin().equals(objPerson) || project.getCollaborators().contains(person)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//        public Response get(@PathParam("projectId") Long projectId) {
-//        if (!allowed(projectId)) {
-//            return Response.status(Response.Status.FORBIDDEN).build();
-//        }
     public Response get() {
         List<WallPost> wallPosts = wallPostCatalogue.getAll();
         return Response.ok(toWallPostProxy(wallPosts)).build();

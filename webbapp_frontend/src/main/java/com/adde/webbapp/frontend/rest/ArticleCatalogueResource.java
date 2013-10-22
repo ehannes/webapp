@@ -2,7 +2,6 @@ package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.ArticleCatalogue;
 import com.adde.webbapp.model.dao.DAOFactory;
-import com.adde.webbapp.model.dao.ProjectCatalogue;
 import com.adde.webbapp.model.dao.ArticleEditCatalogue;
 import com.adde.webbapp.model.dao.PersonCatalogue;
 import com.adde.webbapp.model.entity.Article;
@@ -11,8 +10,6 @@ import com.adde.webbapp.model.entity.ArticleEdit;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
@@ -124,24 +121,19 @@ public class ArticleCatalogueResource {
     public Response getRange(@QueryParam("first") int first, @QueryParam("nItems") int nItems) {
         List<Article> articles = articleCatalogue.getRange(first, nItems);
         return Response.ok(toArticleProxy(articles)).build();
-        //return Response.ok(articleCatalogue.getRange(first, nItems)).build();
     }
 
-    /* Fungerar för JSON, men inte XML. Vad ska vi wrappa int:en från getCount med? */
     @GET
     @Path("count")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response getCount() {
         return Response.ok(new PrimitiveJSONWrapper<>(articleCatalogue.getCount())).build();
     }
-    
-    // Why return Article?
-    private Article addEditor(Article article, Person editor) { //long projectId, 
+
+    private Article addEditor(Article article, Person editor) {
         ArticleEdit articleEdit = new ArticleEdit(editor);
         articleEditCatalogue.add(articleEdit);
         article.getArticleEditions().add(articleEdit);
-        
-        //projectCatalogue.find(projectId).getArticles().add(article);
         
         return article;
     }

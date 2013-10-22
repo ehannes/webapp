@@ -1,14 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.dao.DAOFactory;
 import com.adde.webbapp.model.dao.ProjectCatalogue;
 import com.adde.webbapp.model.dao.TodoPostCatalogue;
 import com.adde.webbapp.model.entity.Person;
-import com.adde.webbapp.model.entity.Project;
 import com.adde.webbapp.model.entity.TodoPost;
 import java.net.URI;
 import java.util.GregorianCalendar;
