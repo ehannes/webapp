@@ -16,7 +16,6 @@ import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ArticleTest {
@@ -39,9 +38,9 @@ public class ArticleTest {
     
     @Before
     public void before() {
-        Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- Before test!");
         daoFactory = DAOFactory.getDAOFactory();
         
+        //Init Articles and persons
         personCatalogue = daoFactory.getPersonCatalogue();
         articleCatalogue = daoFactory.getArticleCatalogue();
         articleEditCatalogue = daoFactory.getArticleEditCatalogue();
@@ -64,12 +63,10 @@ public class ArticleTest {
         personCatalogue.remove(person2.getId());
         
         assertTrue(personCatalogue.getAll().isEmpty());
-        Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- After test!");
     }
     
     @Test
-    public void addAndAuthorContent() {
-        Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- addAndAuthorContent!");
+    public void addArticleAndContent() {
         articleCatalogue.add(article1);
         Article articleFromDB = articleCatalogue.find(article1.getId());
         Logger.getAnonymousLogger().log(Level.INFO, "Article1:{0}", articleFromDB.toString());
@@ -84,7 +81,6 @@ public class ArticleTest {
     
     @Test
     public void testUpdatedEditorsAndFind() {
-        Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- testUpdatedEditorsAndFind!");
         articleCatalogue.add(article1);
         
         //New Editor
@@ -111,24 +107,14 @@ public class ArticleTest {
         List<ArticleEdit> editorEntries = articleFromDB.getArticleEditions();
         assertTrue(editorEntries.size() == 1);
         assertTrue(editorEntries.get(0).getEditor().equals(person2));
-        
-        //getLatestEntry not working yet...
-        /*Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- Before getLastEntry.................");
-        List<SimpleEditorEntry> simpleEditorEntry = articleCatalogue.getLatestEntry(article1);
-        Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- After getLastEntry.................");
-        assertTrue(simpleEditorEntry != null);
-        assertTrue(simpleEditorEntry.get(0).getEditor().equals(person2));*/
 
         //Clean
         articleCatalogue.remove(article1.getId());
         assertTrue(articleCatalogue.getAll().isEmpty());
-        Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- End testUpdatedEditorsAndFind!");
     }
     
-    // Just for checking the printed output, not really a test
-    @Test
+    @Test // Just for checking the printed output, not really a test
     public void printArticle() {
-        Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- printArticle!");
         articleCatalogue.add(article1);
         Article articleFromDB = articleCatalogue.find(article1.getId());
         System.out.println(articleFromDB.toString());
@@ -136,6 +122,5 @@ public class ArticleTest {
         //Clean
         articleCatalogue.remove(article1.getId());
         assertTrue(articleCatalogue.getAll().isEmpty());
-        Logger.getAnonymousLogger().log(Level.INFO, "----TEST---- End printArticle!");
     }
 }

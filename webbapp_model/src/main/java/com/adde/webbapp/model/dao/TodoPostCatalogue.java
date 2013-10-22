@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adde.webbapp.model.dao;
 
 import com.adde.webbapp.model.entity.Person;

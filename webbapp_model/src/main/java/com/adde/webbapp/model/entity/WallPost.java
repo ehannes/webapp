@@ -10,10 +10,7 @@ public class WallPost extends Post {
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Post> comments;
 
-    //To satisfy requirements of @Entity annotation. Don't ever use it!
-    public WallPost() {
-        this(null, null);
-    }
+    public WallPost() {}
     
     public WallPost(Person author, String msg){
         super(author, msg);

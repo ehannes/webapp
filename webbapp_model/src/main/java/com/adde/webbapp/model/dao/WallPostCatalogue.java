@@ -8,7 +8,6 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
-//use to fetch comments on wallposts from database.
 public class WallPostCatalogue extends AbstractDAO<WallPost, Long> {
 
     private WallPostCatalogue() {
@@ -26,12 +25,7 @@ public class WallPostCatalogue extends AbstractDAO<WallPost, Long> {
         wp.setTimeModified(c);
         super.add(wp);
     }
-
-    /*public List<WallPost> getWallPostByProject(Project p){
-     List<WallPost> result = new LinkedList<>();
-        
-     return result;
-     }*/
+    
     public List<WallPost> getByPerson(Person p) {
         List<WallPost> result = new LinkedList<>();
         for (WallPost wp : getAll()) {

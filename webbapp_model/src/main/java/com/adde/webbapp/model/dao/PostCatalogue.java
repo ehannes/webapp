@@ -30,10 +30,6 @@ public class PostCatalogue extends AbstractDAO<Post, Long> {
         add(new Post(author, msg));
     }
 
-    /*public List<Post> getByWallPost(WallPost wp){
-     List<Post> result = new LinkedList<>();
-     return result;
-     }*/
     public List<Post> getByAuthor(Person p) {
         List<Post> result = new LinkedList<>();
         for (Post post : getAll()) {

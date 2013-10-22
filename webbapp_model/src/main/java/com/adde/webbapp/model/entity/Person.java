@@ -9,14 +9,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Simple user.
- * Test
- * 
- * Ideer till framtiden:
- * Fler attribut: kort beskrivning, företag, klass, ålder, username osv...
- * Nickname unique, should not be able to change name.
- * Assuming here that username is unique, checked in GUI and not here.
- * 
  * @author ehannes
  */
 @Entity
@@ -94,11 +86,11 @@ public class Person extends AbstractEntity implements Serializable {
         return dateCreated;
     }
     
-    /*@Override
+    @Override
     public String toString(){
         return super.toString() + ", username: " + username + ", first name: " + 
                 firstname + ", last name: " + ", email: " + email + dateToString();
-    }*/
+    }
     
     private String dateToString() {
         return ", user created " + dateCreated.get(GregorianCalendar.DAY_OF_MONTH)

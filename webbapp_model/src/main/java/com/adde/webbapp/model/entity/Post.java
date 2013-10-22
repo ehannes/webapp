@@ -18,10 +18,7 @@ public class Post extends AbstractEntity implements Serializable {
     private Calendar timeModified;
     private String msg;
 
-    //necessary to be an entity, NEVER USE!!!
-    public Post() {
-        this(null,null);
-    }
+    public Post() {}
     
     public Post(Person author, String msg){
         this.author = author;

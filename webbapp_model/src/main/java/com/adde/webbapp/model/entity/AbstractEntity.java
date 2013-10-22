@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adde.webbapp.model.entity;
 
 import javax.persistence.Column;
@@ -9,14 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.NotNull;
 
 /**
  * This class is extended by all classes that are designed to be entities.
  * It is quite convenient to have the id along with its annotations in this
  * superclass. The annotations are for the database to generate the id for us.
  * 
- * @author hannes
+ * @author ehannes
  */
 @MappedSuperclass
 public abstract class AbstractEntity {
@@ -39,7 +34,6 @@ public abstract class AbstractEntity {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof AbstractEntity)) {
             return false;
         }

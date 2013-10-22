@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adde.webbapp.model;
 
 import com.adde.webbapp.model.dao.ArticleCatalogue;
@@ -24,7 +20,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- *
  * @author Joakim
  */
 public class ProjectTest {
@@ -87,7 +82,7 @@ public class ProjectTest {
         assertTrue(wallPostCatalogue.getAll().size() == 1);
     }
 
-    @After //Remember to remove all SimpleEditorEntries at end of all tests!
+    @After
     public void after() {
 
         for (Project p : projectCatalogue.getAll()) {

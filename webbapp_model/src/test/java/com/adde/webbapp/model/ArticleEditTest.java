@@ -59,7 +59,7 @@ public class ArticleEditTest {
         assertTrue(daoFactory.getPersonCatalogue().getAll().size() == NR_OF_EDITORS);
     }
     
-    @After //Remember to remove all SimpleEditorEntries at end of all tests!
+    @After //Remove all ArticleEdits at end of all tests!
     public void after() {
         for(int i = 0; i < NR_OF_EDITORS; i++){
             daoFactory.getPersonCatalogue().remove(editorList.get(i).getId());
@@ -70,7 +70,7 @@ public class ArticleEditTest {
     } 
     
     @Test
-    public void entryFunctions() {
+    public void basicFunctions() {
         articleEdit = new ArticleEdit(editorList.get(0));
         daoFactory.getArticleEditCatalogue().add(articleEdit);
         
@@ -82,7 +82,7 @@ public class ArticleEditTest {
         //Equality
         assertTrue(articleEditFromDB.equals(articleEdit));
         
-        //Change editor, update and check if editor still changed
+        //Change editor, update and check if editor is changed
         articleEditFromDB.setEditor(editorList.get(1));
         daoFactory.getArticleEditCatalogue().update(articleEditFromDB);
         articleEditFromDB = daoFactory.getArticleEditCatalogue().find(id);

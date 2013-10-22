@@ -17,7 +17,6 @@ public class TodoPost extends Post {
     @ManyToMany(cascade = {CascadeType.REFRESH})
     private List<Person> assignedTo;
 
-    //To satisfy requirements of @Entity annotation. Don't ever use it!
     public TodoPost() {
         this(null,null);
     }

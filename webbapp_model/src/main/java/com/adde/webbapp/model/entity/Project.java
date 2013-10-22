@@ -14,8 +14,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
- *
  * @author Joakim Danielsson
  */
 @Entity
@@ -43,7 +41,6 @@ public class Project extends AbstractEntity implements Serializable {
     public Project(String name, Person admin) {
         this.name = name;
         this.admin = admin;
-        
         this.collaborators = new ArrayList<>();
         this.articles = new ArrayList<>();
         this.wallPosts = new ArrayList<>();

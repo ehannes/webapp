@@ -11,6 +11,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
+ * Belongs to Article. Adds feature to track editors
+ * to an Article (when and who).
+ * 
  * @author ehannes
  */
 @Entity
