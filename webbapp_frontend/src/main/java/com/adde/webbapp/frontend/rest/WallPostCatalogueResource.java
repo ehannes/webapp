@@ -34,7 +34,10 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
- *
+ * This class had support for authentication of the user as well as
+ * for the project id and any eventual todopost id. However, this has been
+ * commented since we didn't get the filter working that well.
+ * 
  * @author Joakim
  */
 //@Path("projects/{projectId}/wallposts")
