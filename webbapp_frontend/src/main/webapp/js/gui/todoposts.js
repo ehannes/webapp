@@ -2,12 +2,7 @@
 $(function() {
 
     var todoPostCatalogue = projectPlatform.getTodoPostCatalogue();
-    var nav = new Navigator(projectPlatform.getTodoPostCatalogue());
     
-    /*************************************
-     * 
-     * Components (from JQueryUI) and eventhandling
-     */
     
     $("#showPersons")
             .button()
@@ -29,29 +24,7 @@ $(function() {
         });
     });
 
-    /*$("#add-todoPost")
-            .button()
-            .click(function() {
-        createAddDialog();
-    });*/
-
-    //$("#list-todoPosts")
-    //        .button()
-    //        .click(function() {
-    //    createTable();
-    //});
-
-    function sendMessage(message) {
-        
-        //var message = "All forms are required";
-        alert(message);
-        /*$('#dialog-message').dialog('option', 'msg', 'Delete todoPost');
-        $("#dialog-message #msg").text(message);
-        return $('#dialog-message');*/
-    }
-
     function createTable(persons) {
-        // Use JQuery and HTML
         $("tbody").empty();
         var tbody = $("tbody");
         $(persons).each(function() {
@@ -68,5 +41,4 @@ $(function() {
     }
 });
 
-// This is neede to debug dynamically downloaded JS in Chrome
 //@ sourceURL=persons.js
