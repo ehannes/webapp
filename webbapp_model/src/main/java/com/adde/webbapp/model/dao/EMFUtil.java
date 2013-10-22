@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.adde.webbapp.model.dao;
 
 import javax.persistence.EntityManager;
@@ -9,7 +5,11 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- *
+ * Utility class for the creation of the EntityManagerFactory and EntityManagers.
+ * The createEntityManagerFactory method should  be called once in the beginning
+ * of application startup and destroyEntityManager method needs to be called at
+ * shutdown.
+ * 
  * @author Eric Ahlberg (eahlberg@gmail.com)
  */
 public class EMFUtil {
