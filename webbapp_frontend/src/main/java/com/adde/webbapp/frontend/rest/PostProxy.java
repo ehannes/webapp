@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.adde.webbapp.frontend.rest;
 
 import com.adde.webbapp.model.entity.Person;
@@ -13,14 +10,12 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-//For translation from XML to JSON
 
 @XmlRootElement(name = "Post")
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "PostType")
 public class PostProxy {
-     
-   // The wrapped product
+
     private Post post;
 
     protected PostProxy() { }

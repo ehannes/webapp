@@ -9,11 +9,6 @@ import java.util.Calendar;
 import java.util.List;
 import javax.xml.bind.annotation.*;
 
-/**
- * Need this because translation from XML to JSON
- *
- * @author hajo
- */
 @XmlRootElement(name = "project")
 @XmlType(name = "ProjectType")
 public class ProjectProxy {

@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.adde.webbapp.frontend.rest;
 
-//For translation from XML to JSON
 
 import com.adde.webbapp.model.entity.Person;
 import com.adde.webbapp.model.entity.TodoPost;
@@ -23,7 +19,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "PostType")
 public class TodoPostProxy {
     
-    // The wrapped product
     private TodoPost todoPost;
 
     protected TodoPostProxy() { }
