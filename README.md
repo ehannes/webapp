@@ -19,7 +19,7 @@ as instructions for testing with cURL can be found [here](../../).
 Additional resources
 =======
 
-More info can be found in the project report [here](../..).
+More info can be found in the project report [here](../../).
 UML-diagram can be found [here](../../wiki/UML-diagram).
 
 
